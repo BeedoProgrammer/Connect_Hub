@@ -1,0 +1,11 @@
+!.gitignore
+
+*
+
+!src/
+!src/**
+
+nbproject/
+nbproject/private/
+build/
+dist/
