@@ -1,5 +1,7 @@
 package Backend;
 
+import java.util.*;
+
 public class User {
     private long userId;
     private String email;
@@ -7,6 +9,7 @@ public class User {
     private String password;
     private String dateOfBirth;
     private boolean status;
+    private ArrayList<Long> friendUserId;
 
     public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
         this.userId = userId;
@@ -15,6 +18,7 @@ public class User {
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
+        friendUserId = new ArrayList<>();
     }
     
     public void changeStatus(){
@@ -23,7 +27,7 @@ public class User {
         else
             status = true;
     }
-
+    
     public long getUserId() {
         return userId;
     }
@@ -42,6 +46,10 @@ public class User {
 
     public String getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public ArrayList<Long> getFriendUserId() {
+        return friendUserId;
     }
 
     public boolean isStatus() {
@@ -70,5 +78,9 @@ public class User {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public void setFriendUserId(ArrayList<Long> friendUserId) {
+        this.friendUserId = friendUserId;
     }
 }
