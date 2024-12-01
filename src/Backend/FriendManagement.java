@@ -9,15 +9,13 @@ public class FriendManagement {
         this.userDetails = userDetails;
     }
     
-    public boolean sendFriendRequest(String message){
-        if("accept".equals(message))
+    public boolean sendFriendRequest(String message, User friend){
+        if("accept".equals(message)){
+            userDetails.getFriendUserId().add(friend.getUserId());
+            friend.getFriendUserId().add(userDetails.getUserId());
             return true;
+        }
         else
             return false;
-    }
-    
-    public void addFriend(User friend){
-        userDetails.getFriendUserId().add(friend.getUserId());
-        friend.getFriendUserId().add(userDetails.getUserId());
     } 
 }
