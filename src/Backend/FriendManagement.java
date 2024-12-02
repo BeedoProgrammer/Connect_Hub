@@ -14,21 +14,19 @@ public class FriendManagement {
         return true; // Friend request sent 
     }
 
-    public static boolean declineFriendRequest(User sender, User recipient) {
-        // need to ensure relation is pending
-        if (recipient.hasRelationshipWith(sender.getUserId())&& recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDING) {
-            
-            recipient.getRelationships().remove(sender.getUserId());
-            sender.getRelationships().remove(recipient.getUserId());
+    public static boolean declineFriendRequest(User sender, User recipient) { ///
+        //reciver is pending with sender
+        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDING) {
+             recipient.removeRelationship(sender.getUserId());
+             sender.removeRelationship(recipient.getUserId());
             return true; //  declined
         }
         return false; // we didnt have a pending relation
     }
 
-    public static boolean acceptFriendRequest(User sender, User recipient) {
-        // need to ensure relation is pending
-        if (recipient.hasRelationshipWith(sender.getUserId())
-                && recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDING) {
+    public static boolean acceptFriendRequest(User sender, User recipient) {  ///
+        // reciever is pending with sender
+        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDING) {
             sender.addRelationship(recipient.getUserId(), FriendshipStatus.ACCEPTED);
             recipient.addRelationship(sender.getUserId(), FriendshipStatus.ACCEPTED);
             return true; //  accepted
@@ -53,10 +51,8 @@ public static boolean removeFriend(User sender, User recipient) {
     if (!recipient.hasRelationshipWith(sender.getUserId()) || recipient.getRelationshipStatus(sender.getUserId())!=FriendshipStatus.ACCEPTED) {
         return false;
     }
-
-    // we have relationship accepted so remove from both of us 
-    sender.getRelationships().remove(recipient.getUserId());
-    recipient.getRelationships().remove(sender.getUserId());
+    recipient.removeRelationship(sender.getUserId());
+    sender.removeRelationship(recipient.getUserId());
     return true; //  removed 
 }
 }
