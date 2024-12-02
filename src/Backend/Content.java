@@ -11,13 +11,14 @@ public abstract class Content {
     private LocalDateTime timestamp;
     
     private String contentString;
-    private BufferedImage contentImage;
+    private String contentImagePath;
 
-    public Content(long contentId, long authorId, String contentString, BufferedImage contentImage) {
+
+    public Content(long contentId, long authorId, String contentString, String contentImagePath) {
         this.contentId = contentId;
         this.authorId = authorId;
         this.contentString = contentString;
-        this.contentImage = contentImage;
+        this.contentImagePath = contentImagePath;
         this.timestamp = LocalDateTime.now();
     }
     
@@ -57,12 +58,12 @@ public abstract class Content {
         this.contentString = contentString;
     }
 
-    public BufferedImage getContentImage() {
-        return contentImage;
+    public String getContentImagePath() {
+        return contentImagePath;
     }
 
-    public void setContentImage(BufferedImage contentImage) {
-        this.contentImage = contentImage;
+    public void setContentImagePath(String contentImagePath) {
+        this.contentImagePath = contentImagePath;
     }
     
 }
