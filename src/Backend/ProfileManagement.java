@@ -23,7 +23,7 @@ public class ProfileManagement {
     }
     
     public ArrayList<Post> getPosts(){
-        ArrayList<Post> postData = postDatabase.getAllData();
+        ArrayList<Post> postData = postDatabase.getPosts();
         ArrayList<Post> posts = new ArrayList<>();
         
         for(int i = 0; i < postData.size(); i++){
@@ -35,7 +35,7 @@ public class ProfileManagement {
     }
     
     public ArrayList<Story> getStories(){
-        ArrayList<Story> storyData = storyDatabase.getAllData();
+        ArrayList<Story> storyData = storyDatabase.getStories();
         ArrayList<Story> stories = new ArrayList<>();
         
         for(int i = 0; i < storyData.size(); i++){
@@ -47,7 +47,7 @@ public class ProfileManagement {
     }
     
    public ArrayList<User> getListOfFriends(){
-       ArrayList<User> userData = userDatabase.getAllData();
+       ArrayList<User> userData = userDatabase.getUsers();
         for(int i = 0; i < userData.size(); i++){
             if(userDetails.getFriendUserId().contains(userData.get(i).getUserId()) && userData.get(i).getFriendUserId().contains(userDetails.getUserId()))
                 friends.add(userData.get(i));
