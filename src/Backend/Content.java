@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public abstract class Content {
-    private String contentId;
-    private String authorId;
+    private long contentId;
+    private long authorId;
     private LocalDateTime timestamp;
     
     private String contentString;
     private BufferedImage contentImage;
 
-    public Content(String contentId, String authorId, String contentString, BufferedImage contentImage) {
+    public Content(long contentId, long authorId, String contentString, BufferedImage contentImage) {
         this.contentId = contentId;
         this.authorId = authorId;
         this.contentString = contentString;
@@ -25,19 +25,19 @@ public abstract class Content {
         
     }
 
-    public String getContentId() {
+    public long getContentId() {
         return contentId;
     }
 
-    public void setContentId(String contentId) {
+    public void setContentId(long contentId) {
         this.contentId = contentId;
     }
 
-    public String getAuthorId() {
+    public long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(long authorId) {
         this.authorId = authorId;
     }
 
