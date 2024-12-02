@@ -19,6 +19,7 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         this.relationships = new HashMap<>();
+     
 
     }
 
@@ -91,4 +92,7 @@ public class User {
      public FriendshipStatus getRelationshipStatus(long userId) {
         return this.relationships.get(userId);
     }  
+       public void removeRelationship(long userId) {
+        this.relationships.remove(userId);
+    }
 }
