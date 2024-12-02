@@ -4,8 +4,15 @@
  */
 package NewsFeed;
 
-import Backend.Content;
+import Backend.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import Utilities.*;
 
 /**
  *
@@ -13,11 +20,74 @@ import java.util.ArrayList;
  */
 public class previewerPanel extends javax.swing.JPanel {
     ArrayList<Content> myContent;
+    Dimension myDimensions;
     
-    public previewerPanel() {
+    public previewerPanel(int width, int height) {
         initComponents();
+        myDimensions = new Dimension(width, height);
         // myContent = Database.getContent();
+        // TEMP
         myContent = new ArrayList<>();
+        myContent.add(new Post("123", "8451", "COntentttt", null));
+        myContent.add(new Post("124", "8910", "COntent 2", null));
+        
+        
+    }
+    
+    private int getTotalHeight(JLabel authorLabel, BufferedImage image, JTextArea postText){
+        int lineCount = postText.getLineCount();
+        FontMetrics metrics = postText.getFontMetrics(postText.getFont());
+        int lineHeight = metrics.getHeight();
+        int textHeight = lineCount * lineHeight;
+        
+        int imageHeight = 0;
+        if (image != null) {
+            imageHeight = image.getHeight();
+        }
+        metrics = authorLabel.getFontMetrics(authorLabel.getFont());
+        int labelHeight = metrics.getHeight();
+        int padding = 30;
+        
+        return textHeight + imageHeight + labelHeight + padding;
+    }
+    
+    private JPanel showPost(Post myPost){
+        JPanel postPanel = new JPanel();
+        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+        postPanel.setBackground(Color.lightGray);
+        
+        JLabel authorLabel = new JLabel(myPost.getAuthorId());
+        authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);        
+        postPanel.add(authorLabel);
+        
+        BufferedImage myImage = myPost.getContentImage();
+        if (myImage != null){
+            if(myImage.getWidth() > this.myDimensions.getWidth()){
+                 myImage = ImageFunctions.resizeImage(myImage, (int)this.myDimensions.getWidth(), 0);                    
+            }
+            JLabel imageLabel = new JLabel(new ImageIcon(myImage));
+            JPanel imagePanel = new JPanel();
+            imagePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+            imagePanel.add(imageLabel);
+            imagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            postPanel.add(imagePanel);
+        }
+        
+        JTextArea postText = new JTextArea(myPost.getContentString());
+        postText.setLineWrap(true);
+        postText.setWrapStyleWord(true);
+        postText.setEditable(false);
+        postText.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        postPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        postPanel.add(postText);
+        
+        int height = this.getTotalHeight(authorLabel, myImage, postText);
+        postPanel.setPreferredSize(new Dimension(this.myDimensions.width, height));
+        postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        postPanel.revalidate();
+        postPanel.repaint();
+        return postPanel;
     }
 
     /**
@@ -40,7 +110,38 @@ public class previewerPanel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    public static void main(String[] args) throws IOException {
+        // Example usage
+        JFrame frame = new JFrame("Newsfeed");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 600);
 
+        // Create a sample BufferedImage (replace with your actual image loading logic)
+        BufferedImage sampleImage = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics g = sampleImage.getGraphics();
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, 200, 100);
+        g.dispose();
+
+        sampleImage = ImageIO.read(new File("picture.jpg"));
+//        sampleImage = resizeImage(sampleImage, 400, 266);
+        
+        // Create a sample post panel
+        Post myPost = new Post("First Post","John Doe" ,"This is a sample post text.", sampleImage);
+        Post myPost2 = new Post("First Post","Joe" ,"This is a sample post text.", null);
+        
+        previewerPanel myPanel = new previewerPanel(400, 200);
+        JPanel post = myPanel.showPost(myPost);
+        JPanel post2 = myPanel.showPost(myPost2);
+        
+        
+        // Add the post panel to the frame
+        frame.getContentPane().setLayout(new FlowLayout());
+        frame.getContentPane().add(post);
+        frame.getContentPane().add(post2);
+        frame.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
