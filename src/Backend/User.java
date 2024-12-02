@@ -1,17 +1,18 @@
 package Backend;
 
+import java.time.*;
 import java.util.*;
 
 public class User {
     private long userId;
     private String email;
     private String username;
-    private String password;
-    private String dateOfBirth;
+    private char[] password;
+    private LocalDate dateOfBirth;
     private boolean status;
     private ArrayList<Long> friendUserId;
 
-    public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
+    public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
         this.userId = userId;
         this.email = email;
         this.username = username;
@@ -40,11 +41,11 @@ public class User {
         return username;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -68,11 +69,11 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char [] password) {
         this.password = password;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

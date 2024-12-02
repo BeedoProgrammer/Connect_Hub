@@ -22,12 +22,28 @@ public class ProfileManagement {
         this.storyDatabase = storyDatabase;
     }
     
-    public Post getPosts(){
+    public ArrayList<Post> getPosts(){
         ArrayList<Post> postData = postDatabase.getAllData();
+        ArrayList<Post> posts = new ArrayList<>();
+        
+        for(int i = 0; i < postData.size(); i++){
+            if(postData.get(i).getAuthorId() == userDetails.getUserId())
+                posts.add(postData.get(i));
+        }
+        
+        return posts;
     }
     
-    public Story getStories(){
+    public ArrayList<Story> getStories(){
         ArrayList<Story> storyData = storyDatabase.getAllData();
+        ArrayList<Story> stories = new ArrayList<>();
+        
+        for(int i = 0; i < storyData.size(); i++){
+            if(storyData.get(i).getAuthorId() == userDetails.getUserId())
+                stories.add(storyData.get(i));
+        }
+        
+        return stories;
     }
     
    public ArrayList<User> getListOfFriends(){
