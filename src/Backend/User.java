@@ -3,14 +3,14 @@ package Backend;
 import java.util.*;
 
 public class User {
+
     private long userId;
     private String email;
     private String username;
     private String password;
     private String dateOfBirth;
     private boolean status;
-    private ArrayList<Long> friendUserId;
-
+ private HashMap<Long, FriendshipStatus> relationships;
     public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
         this.userId = userId;
         this.email = email;
@@ -18,16 +18,18 @@ public class User {
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
-        friendUserId = new ArrayList<>();
+        this.relationships = new HashMap<>();
+
     }
-    
-    public void changeStatus(){
-        if(status)
+
+    public void changeStatus() {
+        if (status) {
             status = false;
-        else
+        } else {
             status = true;
+        }
     }
-    
+
     public long getUserId() {
         return userId;
     }
@@ -46,10 +48,6 @@ public class User {
 
     public String getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public ArrayList<Long> getFriendUserId() {
-        return friendUserId;
     }
 
     public boolean isStatus() {
@@ -80,7 +78,17 @@ public class User {
         this.status = status;
     }
 
-    public void setFriendUserId(ArrayList<Long> friendUserId) {
-        this.friendUserId = friendUserId;
+   public HashMap<Long, FriendshipStatus> getRelationships() {
+        return relationships;
     }
+
+     public void addRelationship(long userId, FriendshipStatus status) {
+        this.relationships.put(userId, status);
+    }
+       public boolean hasRelationshipWith(long userId) {
+        return this.relationships.containsKey(userId);
+    }
+     public FriendshipStatus getRelationshipStatus(long userId) {
+        return this.relationships.get(userId);
+    }  
 }
