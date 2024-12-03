@@ -2,26 +2,26 @@ package Backend;
 
 import java.util.*;
 
-public class User {
+    public class User {
 
-    private long userId;
-    private String email;
-    private String username;
-    private String password;
-    private String dateOfBirth;
-    private boolean status;
- private HashMap<Long, FriendshipStatus> relationships;
-    public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
-        this.userId = userId;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.status = status;
-        this.relationships = new HashMap<>();
-     
+        private long userId;
+        private String email;
+        private String username;
+        private String password;
+        private String dateOfBirth;
+        private boolean status;
+     private HashMap<Long, FriendshipStatus> relationships;
+        public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
+            this.userId = userId;
+            this.email = email;
+            this.username = username;
+            this.password = password;
+            this.dateOfBirth = dateOfBirth;
+            this.status = status;
+            this.relationships = new HashMap<>();
 
-    }
+
+        }
 
     public void changeStatus() {
         if (status) {

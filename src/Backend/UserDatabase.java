@@ -26,6 +26,10 @@ public class UserDatabase {
         return true;  // User successfully added
     }
 
+    public static HashMap<Long, User> getUsersDatabase() {
+        return usersDatabase;
+    }
+
     // Method to retrieve a user by their ID
     public static User getUserById(long userId) {
         return usersDatabase.get(userId);  // Return the user object or null if not found
