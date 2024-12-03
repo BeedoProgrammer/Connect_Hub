@@ -9,7 +9,8 @@ package Backend;
  * @author user
  */
 public enum FriendshipStatus {
-    PENDING,
+    PENDINGSENDER,
     ACCEPTED,
-    BLOCKED
+    BLOCKED,
+    PENDINGRECIEVER
 }
