@@ -48,11 +48,11 @@ public class FriendManagement {
 
 public static boolean removeFriend(User sender, User recipient) {
     // If no existing relationship, or existing but not accepted
-    if (!recipient.hasRelationshipWith(sender.getUserId()) || recipient.getRelationshipStatus(sender.getUserId())!=FriendshipStatus.ACCEPTED) {
-        return false;
-    }
-    recipient.removeRelationship(sender.getUserId());
+    if (recipient.getRelationshipStatus(sender.getUserId())==FriendshipStatus.ACCEPTED) {
+        recipient.removeRelationship(sender.getUserId());
     sender.removeRelationship(recipient.getUserId());
     return true; //  removed 
+    }
+  return false;
 }
 }
