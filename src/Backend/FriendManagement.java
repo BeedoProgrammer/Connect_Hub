@@ -9,14 +9,14 @@ public class FriendManagement {
             }
 
         // Add the pending relationship if we dont have a relation
-        sender.addRelationship(recipient.getUserId(), FriendshipStatus.PENDING);
-        recipient.addRelationship(sender.getUserId(), FriendshipStatus.PENDING);
+        sender.addRelationship(recipient.getUserId(), FriendshipStatus.PENDINGSENDER);
+        recipient.addRelationship(sender.getUserId(), FriendshipStatus.PENDINGRECIEVER);
         return true; // Friend request sent 
     }
 
     public static boolean declineFriendRequest(User sender, User recipient) { ///
         //reciver is pending with sender
-        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDING) {
+        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDINGRECIEVER) {
              recipient.removeRelationship(sender.getUserId());
              sender.removeRelationship(recipient.getUserId());
             return true; //  declined
@@ -26,7 +26,7 @@ public class FriendManagement {
 
     public static boolean acceptFriendRequest(User sender, User recipient) {  ///
         // reciever is pending with sender
-        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDING) {
+        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDINGRECIEVER) {
             sender.addRelationship(recipient.getUserId(), FriendshipStatus.ACCEPTED);
             recipient.addRelationship(sender.getUserId(), FriendshipStatus.ACCEPTED);
             return true; //  accepted
