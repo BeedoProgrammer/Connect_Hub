@@ -1,5 +1,6 @@
 package Backend;
 
+import java.time.*;
 import java.util.*;
 
     public class User {
@@ -19,12 +20,11 @@ import java.util.*;
             this.dateOfBirth = dateOfBirth;
             this.status = status;
             this.relationships = new HashMap<>();
-
-
         }
 
     public void changeStatus() {
         if (status) {
+
             status = false;
         } else {
             status = true;
@@ -43,11 +43,11 @@ import java.util.*;
         return username;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -67,11 +67,11 @@ import java.util.*;
         this.username = username;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char [] password) {
         this.password = password;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
