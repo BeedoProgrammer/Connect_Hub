@@ -49,12 +49,14 @@ public class ProfileManagement {
     
    public ArrayList<User> getListOfFriends(){
        ArrayList<User> userData = userDatabase.getUsers();
-        for(int i = 0; i < userData.size(); i++){
-            if(userDetails.getFriendUserId().contains(userData.get(i).getUserId()) && userData.get(i).getFriendUserId().contains(userDetails.getUserId()))
-                friends.add(userData.get(i));
+       ArrayList<User> friends = new ArrayList<>();
+       
+       for(int i = 0; i < userData.size(); i++){
+           if(userDetails.getRelationshipStatus(userData.get(i).getUserId()) == FriendshipStatus.ACCEPTED)
+               friends.add(userData.get(i));
         }
-        
-        return friends;
+       
+       return friends;
     }
 }
 
