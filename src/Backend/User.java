@@ -10,6 +10,7 @@ public class User {
     private char[] password;
     private LocalDate dateOfBirth;
     private boolean status;
+    private String profilePhoto;
     private ArrayList<Long> friendUserId;
 
     public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
