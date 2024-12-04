@@ -14,7 +14,7 @@ import java.util.*;
         private String CoverPhoto;
         private boolean status;
         private HashMap<Long, FriendshipStatus> relationships;
-        
+
         public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
             this.email = email;

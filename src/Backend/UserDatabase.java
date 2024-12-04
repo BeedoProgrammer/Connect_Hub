@@ -29,24 +29,28 @@ public class UserDatabase extends Database {
             users.add(getUserFromMap((Map)jsonUsers.get(i)));
         }
     }
-    private User getUserFromMap(Map<String,String> mapOfUser) {
-        String userIdString = mapOfUser.get("userId");
-            String emailString = mapOfUser.get("email");
-            String userNameString = mapOfUser.get("userName");
-            String passwordString = mapOfUser.get("password");
-            String dateOfBirthString = mapOfUser.get("dateOfBirth");
-            String statusString = mapOfUser.get("status");
-            return new User(Long.parseLong(userIdString), emailString, userNameString, passwordString.toCharArray(), LocalDate.parse(dateOfBirthString), Boolean.parseBoolean(statusString));
+    private User getUserFromMap(Map<String,Object> mapOfUser) {
+        long userId = (long)mapOfUser.get("userId");
+            String email = (String)mapOfUser.get("email");
+            String userName = (String)mapOfUser.get("userName");
+            char[] password = (char[])mapOfUser.get("password");
+            LocalDate dateOfBirth = (LocalDate)mapOfUser.get("dateOfBirth");
+            boolean status = (boolean)mapOfUser.get("status");
+            HashMap<Long,FriendshipStatus> relationships = (HashMap<Long,FriendshipStatus>)mapOfUser.get("status");
+            User tempUser = new User(userId, email, userName, password, dateOfBirth, status);
+            tempUser.setRelationships(relationships);
+            return tempUser;
     }
     // impelement method to get user as hashmap??
-    private Map<String,String> getMapFromUser(User user) {
-        Map<String,String> tempUserMap = new HashMap<>();
+    private Map<String,Object> getMapFromUser(User user) {
+        Map<String,Object> tempUserMap = new HashMap<>();
         tempUserMap.put("userId", String.valueOf(user.getUserId()));
         tempUserMap.put("email", user.getEmail());
         tempUserMap.put("userName", user.getUsername());
         tempUserMap.put("password", new String(user.getPassword()));
         tempUserMap.put("dateOfBirth", user.getDateOfBirth().toString());
         tempUserMap.put("status", String.valueOf(user.isStatus())); // isStatus?? not getStatus or isOnline??
+        tempUserMap.put("relationships", user.getRelationships());
         return tempUserMap;
     }
     public void saveToFile() throws FileNotFoundException, IOException, ParseException {    // saves useres arraylist into json format file
