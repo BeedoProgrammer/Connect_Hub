@@ -10,8 +10,11 @@ import java.util.*;
         private String username;
         private char[] password;
         private LocalDate dateOfBirth;
+        private String profilePic;
+        private String CoverPhoto;
         private boolean status;
-     private HashMap<Long, FriendshipStatus> relationships;
+        private HashMap<Long, FriendshipStatus> relationships;
+
         public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
             this.email = email;
@@ -51,8 +54,20 @@ import java.util.*;
         return dateOfBirth;
     }
 
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public String getCoverPhoto() {
+        return CoverPhoto;
+    }
+
     public boolean isStatus() {
         return status;
+    }
+    
+    public HashMap<Long, FriendshipStatus> getRelationships() {
+        return relationships;
     }
 
     public void setUserId(long userId) {
@@ -79,20 +94,31 @@ import java.util.*;
         this.status = status;
     }
 
-   public HashMap<Long, FriendshipStatus> getRelationships() {
-        return relationships;
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
-     public void addRelationship(long userId, FriendshipStatus status) {
+    public void setCoverPhoto(String CoverPhoto) {
+        this.CoverPhoto = CoverPhoto;
+    }
+
+    public void setRelationships(HashMap<Long, FriendshipStatus> relationships) {
+        this.relationships = relationships;
+    }
+    
+    public void addRelationship(long userId, FriendshipStatus status) {
         this.relationships.put(userId, status);
     }
-       public boolean hasRelationshipWith(long userId) {
+    
+    public boolean hasRelationshipWith(long userId) {
         return this.relationships.containsKey(userId);
     }
-     public FriendshipStatus getRelationshipStatus(long userId) {
+       
+    public FriendshipStatus getRelationshipStatus(long userId) {
         return this.relationships.get(userId);
-    }  
-       public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
+    } 
+     
+    public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
         this.relationships.remove(userId);
     }
 }
