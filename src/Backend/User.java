@@ -8,11 +8,11 @@ import java.util.*;
         private long userId;
         private String email;
         private String username;
-        private String password;
-        private String dateOfBirth;
+        private char[] password;
+        private LocalDate dateOfBirth;
         private boolean status;
      private HashMap<Long, FriendshipStatus> relationships;
-        public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
+        public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
             this.email = email;
             this.username = username;
