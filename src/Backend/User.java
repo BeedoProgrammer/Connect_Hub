@@ -12,19 +12,49 @@ import java.util.*;
         private LocalDate dateOfBirth;
         private String profilePic;
         private String CoverPhoto;
+        private String bio;
         private boolean status;
         private HashMap<Long, FriendshipStatus> relationships;
+        private UserDatabase userDatabase;
 
-        public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
-            this.userId = userId;
-            this.email = email;
-            this.username = username;
-            this.password = password;
-            this.dateOfBirth = dateOfBirth;
-            this.status = status;
-            this.relationships = new HashMap<>();
-        }
+    public User(String email, String username, char[] password, LocalDate dateOfBirth, UserDatabase userDatabase) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.userDatabase = userDatabase;
+        relationships = new HashMap<>();
+        userId = generateID();
+        bio = "";
+        profilePic = "";
+        CoverPhoto = "";
+        status = true;
+    }
 
+    private long generateID(){
+        ArrayList<User> userData = userDatabase.getUsers();
+        boolean flag = true;
+        Random random = new Random();
+        long uniqueId;
+
+        do {
+            uniqueId = Math.abs(random.nextLong());
+            boolean isUnique = true;
+            
+            for(int i = 0; i < userData.size(); i++){
+                if (uniqueId == userData.get(i).getUserId()){
+                    isUnique = false;
+                    break;
+                }
+            }
+
+            if(isUnique)
+                break;    
+        }while (true);
+
+        return uniqueId;
+    }
+    
     public void changeStatus() {
         if (status) {
 
@@ -34,6 +64,14 @@ import java.util.*;
         }
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public UserDatabase getUserDatabase() {
+        return userDatabase;
+    }
+    
     public long getUserId() {
         return userId;
     }
@@ -104,6 +142,14 @@ import java.util.*;
 
     public void setRelationships(HashMap<Long, FriendshipStatus> relationships) {
         this.relationships = relationships;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setUserDatabase(UserDatabase userDatabase) {
+        this.userDatabase = userDatabase;
     }
     
     public void addRelationship(long userId, FriendshipStatus status) {
