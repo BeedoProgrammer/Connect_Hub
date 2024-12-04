@@ -3,33 +3,34 @@ package Backend;
 import java.time.*;
 import java.util.*;
 
-public class User {
-    private long userId;
-    private String email;
-    private String username;
-    private char[] password;
-    private LocalDate dateOfBirth;
-    private boolean status;
-    private String profilePhoto;
-    private ArrayList<Long> friendUserId;
+    public class User {
 
-    public User(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
-        this.userId = userId;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.status = status;
-        friendUserId = new ArrayList<>();
-    }
-    
-    public void changeStatus(){
-        if(status)
+        private long userId;
+        private String email;
+        private String username;
+        private String password;
+        private String dateOfBirth;
+        private boolean status;
+     private HashMap<Long, FriendshipStatus> relationships;
+        public User(long userId, String email, String username, String password, String dateOfBirth, boolean status) {
+            this.userId = userId;
+            this.email = email;
+            this.username = username;
+            this.password = password;
+            this.dateOfBirth = dateOfBirth;
+            this.status = status;
+            this.relationships = new HashMap<>();
+        }
+
+    public void changeStatus() {
+        if (status) {
+
             status = false;
-        else
+        } else {
             status = true;
+        }
     }
-    
+
     public long getUserId() {
         return userId;
     }
@@ -48,10 +49,6 @@ public class User {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public ArrayList<Long> getFriendUserId() {
-        return friendUserId;
     }
 
     public boolean isStatus() {
@@ -82,7 +79,20 @@ public class User {
         this.status = status;
     }
 
-    public void setFriendUserId(ArrayList<Long> friendUserId) {
-        this.friendUserId = friendUserId;
+   public HashMap<Long, FriendshipStatus> getRelationships() {
+        return relationships;
+    }
+
+     public void addRelationship(long userId, FriendshipStatus status) {
+        this.relationships.put(userId, status);
+    }
+       public boolean hasRelationshipWith(long userId) {
+        return this.relationships.containsKey(userId);
+    }
+     public FriendshipStatus getRelationshipStatus(long userId) {
+        return this.relationships.get(userId);
+    }  
+       public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
+        this.relationships.remove(userId);
     }
 }

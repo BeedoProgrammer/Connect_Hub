@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
 public class StoryDatabase extends Database {
     private ArrayList<Story> stories;
 
@@ -21,6 +22,7 @@ public class StoryDatabase extends Database {
         super(fileName);
         stories = new ArrayList<>();
     }
+
     public void readFromFile() throws FileNotFoundException, IOException, ParseException {    // modifies stories arraylist
         this.stories.clear(); // remove all previous elements from list
         JSONArray jsonStories = new JSONArray();
@@ -66,4 +68,5 @@ public class StoryDatabase extends Database {
     public ArrayList<Story> getStories() {
         return stories;
     }
+
 }

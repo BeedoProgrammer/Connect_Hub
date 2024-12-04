@@ -12,6 +12,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.util.ArrayList;
+
+
 public class PostDatabase extends Database {
     private ArrayList<Post> posts;
 
@@ -19,6 +22,7 @@ public class PostDatabase extends Database {
         super(fileName);
         posts = new ArrayList<>();
     }
+
     public void readFromFile() throws FileNotFoundException, IOException, ParseException {    // modifies posts arraylist
         this.posts.clear(); // remove all previous elements from list
         JSONArray jsonPosts = new JSONArray();
@@ -64,4 +68,5 @@ public class PostDatabase extends Database {
     public ArrayList<Post> getPosts() {
         return posts;
     }
+
 }
