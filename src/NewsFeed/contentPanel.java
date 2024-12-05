@@ -19,11 +19,11 @@ import javax.swing.border.EmptyBorder;
  *
  * @author Abdel
  */
-public class previewPanel{
+public class contentPanel{
     ArrayList<Content> myContent;
     Dimension myDimensions;
     
-    public previewPanel(Dimension myDimension, ArrayList<Content> myContent) {
+    public contentPanel(Dimension myDimension, ArrayList<Content> myContent) {
         this.myDimensions = myDimension;
         this.myContent = myContent;
     }
@@ -51,12 +51,13 @@ public class previewPanel{
         postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         postPanel.setBackground(Color.lightGray);
         
-        JLabel authorLabel = new JLabel(myPost.getAuthorId());
+        String name = new UserDatabase("lol").getUserFromId(myPost.getAuthorId()).getUsername();
+        JLabel authorLabel = new JLabel();
         authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         postPanel.add(authorLabel);
-        
-        BufferedImage myImage = myPost.getContentImage();
-        if (myImage != null){
+        BufferedImage myImage = null;
+        try{
+            myImage = ImageIO.read(new File(myPost.getContentImagePath()));
             if(myImage.getWidth() > this.myDimensions.getWidth()){
                  myImage = ImageFunctions.resizeImage(myImage, (int)this.myDimensions.getWidth(), 0);                    
             }
@@ -66,8 +67,7 @@ public class previewPanel{
             imagePanel.add(imageLabel);
             imagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             postPanel.add(imagePanel);
-
-        }
+        }catch(Exception e){}
         
         JTextArea postText = new JTextArea(myPost.getContentString());
         postText.setLineWrap(true);
@@ -113,18 +113,14 @@ public class previewPanel{
         JFrame frame = new JFrame("Newsfeed");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
-
-
-        BufferedImage sampleImage = ImageIO.read(new File("picture.jpg"));
-        BufferedImage sampleImage2 = ImageIO.read(new File("picture2.jpg"));
         
-        Post myPost = new Post("First Post","John Doe" ,"This is a sample post text.", sampleImage);
-        Post myPost2 = new Post("First Post","Joe" ,"This is a sample post text.", null);
+        Post myPost = new Post(1250,1111 ,"This is a sample post text.", "picture.jpg");
+        Post myPost2 = new Post(5120,8901 ,"This is a sample post text.", null);
         
         ArrayList<Content> myContent = new ArrayList<>();
         myContent.add(myPost);
         myContent.add(myPost2);
-        myContent.add(new Story("3rd Post","Abdo" ,"This is a sample Story text.", sampleImage2));
+        myContent.add(new Story(1231,8901 ,"This is a sample Story text.", "picture2.jpg"));
         myContent.add(myPost2);
         myContent.add(myPost2);
         myContent.add(myPost2);
@@ -135,7 +131,7 @@ public class previewPanel{
         myContent.add(myPost2);
         myContent.add(myPost2);
         
-        JScrollPane preview =  new previewPanel(new Dimension(400, 600), myContent).getContentScrollable();
+        JScrollPane preview =  new contentPanel(new Dimension(400, 600), myContent).getContentScrollable();
         
         frame.add(preview, BorderLayout.CENTER);
         frame.setVisible(true);
