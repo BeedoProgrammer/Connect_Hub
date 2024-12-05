@@ -61,7 +61,7 @@ public class StoryDatabase extends Database {
         tempStoryMap.put("contentImagePath", story.getContentImagePath());
         return tempStoryMap;
     }
-    public void addStroy(Story story) throws IOException, FileNotFoundException, ParseException {
+    public void addStory(Story story) throws IOException, FileNotFoundException, ParseException {
         stories.add(story);
         saveToFile();
     }
