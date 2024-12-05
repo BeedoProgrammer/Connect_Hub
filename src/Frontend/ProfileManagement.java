@@ -3,6 +3,8 @@ package Frontend;
 import javax.swing.*;
 import java.awt.*;
 import Backend.*;
+import frontend.LogIn;
+import frontend.SignIn;
 import java.io.*;
 import java.time.*;
 
@@ -10,6 +12,7 @@ public class ProfileManagement extends javax.swing.JFrame {
     static User user;
 
     public ProfileManagement(String title, User user) {
+        super(title);
         this.user = user;
         initComponents();
     }
@@ -45,7 +48,6 @@ public class ProfileManagement extends javax.swing.JFrame {
                 }};
                 coverPhoto = new javax.swing.JButton();
                 profilePic = new javax.swing.JButton();
-                textField = new javax.swing.JTextField();
                 updatePassword = new javax.swing.JButton();
                 panel3 = new javax.swing.JPanel();
                 seeMore = new javax.swing.JButton();
@@ -53,6 +55,7 @@ public class ProfileManagement extends javax.swing.JFrame {
                 logout = new javax.swing.JButton();
                 bio = new javax.swing.JButton();
                 bioText = new java.awt.TextArea();
+                Jpanel1 = new javax.swing.JLabel();
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -113,11 +116,6 @@ public class ProfileManagement extends javax.swing.JFrame {
                     }
                 });
 
-                textField.setBackground(new java.awt.Color(255, 255, 255));
-                textField.setForeground(new java.awt.Color(0, 0, 0));
-                textField.setText("Bio");
-                textField.setEditable(false);
-
                 updatePassword.setBackground(new java.awt.Color(0, 0, 0));
                 updatePassword.setForeground(new java.awt.Color(255, 255, 255));
                 updatePassword.setText("Update Password");
@@ -167,7 +165,7 @@ public class ProfileManagement extends javax.swing.JFrame {
                 );
                 panel4Layout.setVerticalGroup(
                     panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 387, Short.MAX_VALUE)
                 );
 
                 logout.setBackground(new java.awt.Color(0, 0, 0));
@@ -193,6 +191,11 @@ public class ProfileManagement extends javax.swing.JFrame {
                 bioText.setEditable(false);
                 bioText.setText(user.getBio());
 
+                Jpanel1.setBackground(new java.awt.Color(255, 255, 255));
+                Jpanel1.setForeground(new java.awt.Color(0, 0, 0));
+                Jpanel1.setText("      Bio");
+                Jpanel1.setOpaque(true);
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
@@ -208,11 +211,11 @@ public class ProfileManagement extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41)
-                                        .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(Jpanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(bio)
-                                        .addGap(0, 35, Short.MAX_VALUE))
+                                        .addGap(0, 43, Short.MAX_VALUE))
                                     .addComponent(bioText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -239,8 +242,8 @@ public class ProfileManagement extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bio, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(bio, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Jpanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bioText, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -249,7 +252,7 @@ public class ProfileManagement extends javax.swing.JFrame {
                                 .addComponent(updatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 4, Short.MAX_VALUE))
+                                .addGap(0, 5, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(panel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
@@ -363,15 +366,25 @@ public class ProfileManagement extends javax.swing.JFrame {
             public void run() {
                 UserDatabase userDatabase = new UserDatabase("");
                 char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-                User user = new User("sdad", "sdad", charArray, LocalDate.of(1990, 3, 15), userDatabase);
-                ProfileManagement profileManagement = new ProfileManagement("Profile Management", user);
-                profileManagement.setLocationRelativeTo(null);
-                profileManagement.setVisible(true);
+                User user = new User("sdad@gmail.com", "sdad", charArray, LocalDate.of(1990, 3, 15), userDatabase);
+                
+                //ProfileManagement profileManagement = new ProfileManagement("Profile Management", user);
+                //profileManagement.setLocationRelativeTo(null);
+                //profileManagement.setVisible(true);
+                
+                //LogIn logIn = new LogIn("LogIn", user);
+                //logIn.setLocationRelativeTo(null);
+                //logIn.setVisible(true);
+                
+                SignIn signIn = new SignIn("LogIn", user, userDatabase);
+                signIn.setLocationRelativeTo(null);
+                signIn.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Jpanel1;
     private javax.swing.JButton bio;
     private java.awt.TextArea bioText;
     private javax.swing.JButton coverPhoto;
@@ -383,7 +396,6 @@ public class ProfileManagement extends javax.swing.JFrame {
     private javax.swing.JPanel panel4;
     private javax.swing.JButton profilePic;
     private javax.swing.JButton seeMore;
-    private javax.swing.JTextField textField;
     private javax.swing.JButton updatePassword;
     // End of variables declaration//GEN-END:variables
 }
