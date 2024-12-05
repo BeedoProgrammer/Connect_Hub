@@ -160,7 +160,7 @@ public class SignUp extends javax.swing.JFrame {
         // TODO add your handling code here:
         char[] Pass = password.getPassword();
         char[] Pass1 = password1.getPassword();
-        
+        /// overide method valideFields
         if(Validation.isEmpty(username.getText()) || Validation.isEmpty(Pass.toString()) || Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass1.toString()) || date.getDate() == null)
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
         else if(!Validation.isEmail(email.getText()))
@@ -169,7 +169,7 @@ public class SignUp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Please enter the same password");
         else{
             boolean exists = false;
-            ArrayList<User> userData = userDatabase.getUsers();
+            ArrayList<User> userData = userDatabase.getUsers();                     /// can check using getUser
             for(int i = 0; i < userData.size(); i++){
                 if(username.getText().equals(userData.get(i).getUsername())){
                     exists = true;
