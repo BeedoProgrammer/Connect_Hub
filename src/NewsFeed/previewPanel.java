@@ -135,7 +135,7 @@ public class previewPanel{
         myContent.add(myPost2);
         myContent.add(myPost2);
         
-        JScrollPane preview =  new previewerPanel(new Dimension(400, 600), myContent).getContentScrollable();
+        JScrollPane preview =  new previewPanel(new Dimension(400, 600), myContent).getContentScrollable();
         
         frame.add(preview, BorderLayout.CENTER);
         frame.setVisible(true);
