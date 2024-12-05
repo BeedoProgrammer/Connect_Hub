@@ -4,11 +4,11 @@ import Backend.*;
 import java.util.*;
 import javax.swing.*;
 
-public class SignIn extends javax.swing.JFrame {
+public class SignUp extends javax.swing.JFrame {
     User user;
     private UserDatabase userDatabase;
     
-    public SignIn(String title, User user, UserDatabase userDatabase) {
+    public SignUp(String title, User user, UserDatabase userDatabase) {
         super(title);
         this.user = user;
         this.userDatabase = userDatabase;
@@ -22,7 +22,7 @@ public class SignIn extends javax.swing.JFrame {
         username = new javax.swing.JTextField();
         Jpanel1 = new javax.swing.JLabel();
         Jpanel2 = new javax.swing.JLabel();
-        signin = new javax.swing.JButton();
+        signup = new javax.swing.JButton();
         password = new javax.swing.JPasswordField();
         Jpanel3 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
@@ -52,13 +52,13 @@ public class SignIn extends javax.swing.JFrame {
         Jpanel2.setText("           Password");
         Jpanel2.setOpaque(true);
 
-        signin.setBackground(new java.awt.Color(0, 0, 0));
-        signin.setForeground(new java.awt.Color(255, 255, 255));
-        signin.setText("Sign in");
-        signin.setFocusPainted(false);
-        signin.addActionListener(new java.awt.event.ActionListener() {
+        signup.setBackground(new java.awt.Color(0, 0, 0));
+        signup.setForeground(new java.awt.Color(255, 255, 255));
+        signup.setText("Sign Up");
+        signup.setFocusPainted(false);
+        signup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signinActionPerformed(evt);
+                signupActionPerformed(evt);
             }
         });
 
@@ -110,7 +110,7 @@ public class SignIn extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
             .addGroup(layout.createSequentialGroup()
                 .addGap(140, 140, 140)
-                .addComponent(signin, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,7 +133,7 @@ public class SignIn extends javax.swing.JFrame {
                     .addComponent(Jpanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(password1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(signin, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
 
@@ -144,7 +144,7 @@ public class SignIn extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameActionPerformed
 
-    private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
+    private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
         // TODO add your handling code here:
         char[] Pass = password.getPassword();
         char[] Pass1 = password1.getPassword();
@@ -165,7 +165,7 @@ public class SignIn extends javax.swing.JFrame {
         else{
             //this.dispose();
         }
-    }//GEN-LAST:event_signinActionPerformed
+    }//GEN-LAST:event_signupActionPerformed
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
@@ -191,7 +191,7 @@ public class SignIn extends javax.swing.JFrame {
     private javax.swing.JTextField email;
     private javax.swing.JPasswordField password;
     private javax.swing.JPasswordField password1;
-    private javax.swing.JButton signin;
+    private javax.swing.JButton signup;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import Backend.*;
 import frontend.LogIn;
-import frontend.SignIn;
+import frontend.SignUp;
 import java.io.*;
 import java.time.*;
 
@@ -376,9 +376,9 @@ public class ProfileManagement extends javax.swing.JFrame {
                 //logIn.setLocationRelativeTo(null);
                 //logIn.setVisible(true);
                 
-                SignIn signIn = new SignIn("LogIn", user, userDatabase);
-                signIn.setLocationRelativeTo(null);
-                signIn.setVisible(true);
+                SignUp signUp = new SignUp("LogIn", user, userDatabase);
+                signUp.setLocationRelativeTo(null);
+                signUp.setVisible(true);
             }
         });
     }
