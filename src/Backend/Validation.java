@@ -8,7 +8,7 @@ public interface Validation{
             if (!Character.isDigit(str.charAt(i)))
                 return false;
         }
-        return true; 
+        return true;
     }
     
     public static boolean isEmpty(String str) {
