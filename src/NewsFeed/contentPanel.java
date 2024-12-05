@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Utilities.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.EmptyBorder;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -48,11 +51,15 @@ public class contentPanel{
     private JPanel createPostPanel(Content myPost){
         JPanel postPanel = new JPanel();
         postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-        postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        postPanel.setBackground(Color.lightGray);
+        postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));        
+        UserDatabase myD = UserDatabase.getInstance();
+        try {
+            myD.readFromFile();
+        } catch (Exception ex) {}
         
-        String name = new UserDatabase("lol").getUserFromId(myPost.getAuthorId()).getUsername();
-        JLabel authorLabel = new JLabel();
+        System.out.println(myD.getUsers());
+        String name = myD.getUserFromId(myPost.getAuthorId()).getUsername();
+        JLabel authorLabel = new JLabel(name);
         authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         postPanel.add(authorLabel);
         BufferedImage myImage = null;
@@ -114,13 +121,13 @@ public class contentPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
         
-        Post myPost = new Post(1250,1111 ,"This is a sample post text.", "picture.jpg");
-        Post myPost2 = new Post(5120,8901 ,"This is a sample post text.", null);
+        Post myPost = new Post(1250,1L ,"This is a sample post text.", "picture.jpg");
+        Post myPost2 = new Post(5120,1L ,"This is a sample post text.", null);
         
         ArrayList<Content> myContent = new ArrayList<>();
         myContent.add(myPost);
         myContent.add(myPost2);
-        myContent.add(new Story(1231,8901 ,"This is a sample Story text.", "picture2.jpg"));
+        myContent.add(new Story(1231,1L ,"This is a sample Story text.", "picture2.jpg"));
         myContent.add(myPost2);
         myContent.add(myPost2);
         myContent.add(myPost2);

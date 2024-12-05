@@ -21,7 +21,7 @@ public class UserDatabase extends Database {
     
     public static UserDatabase getInstance() {
         if (instance == null) {
-            instance = new UserDatabase("users.json");
+            instance = new UserDatabase("files/users.json");
         }
         return instance;
     }

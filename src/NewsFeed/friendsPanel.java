@@ -72,8 +72,6 @@ public class friendsPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
         
-        
-        
         frame.add(preview, BorderLayout.CENTER);
         frame.setVisible(true);
     }
