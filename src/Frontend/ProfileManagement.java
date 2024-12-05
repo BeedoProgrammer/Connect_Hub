@@ -364,7 +364,7 @@ public class ProfileManagement extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UserDatabase userDatabase = new UserDatabase("");
+                UserDatabase userDatabase = UserDatabase.getInstance();
                 char[] charArray = {'H', 'e', 'l', 'l', 'o'};
                 User user = new User.UserBuilder(1234, "john.doe@example.com", "johndoe", charArray, LocalDate.of(1990, 5, 20), true)
                         .bio("Just a regular guy.")
