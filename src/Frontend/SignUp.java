@@ -163,8 +163,10 @@ public class SignUp extends javax.swing.JFrame {
         
         if(Validation.isEmpty(username.getText()) || Validation.isEmpty(Pass.toString()) || Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass1.toString()) || date.getDate() == null)
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
-        else if(!Validation.isEmail(email.getText()))
+        else if(!Validation.isValidEmail(email.getText()))
             JOptionPane.showMessageDialog(rootPane, "Enter correct Email!");
+        else if(!Validation.isValidUsername(username.getText()))
+            JOptionPane.showMessageDialog(rootPane, "Username must be atleast 5 characters and must contain atleast one letter and one number(no special characters allowed except underscore)!");
         else if(!Arrays.equals(Pass, Pass1))
             JOptionPane.showMessageDialog(rootPane, "Please enter the same password");
         else{
