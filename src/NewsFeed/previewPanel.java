@@ -19,11 +19,11 @@ import javax.swing.border.EmptyBorder;
  *
  * @author Abdel
  */
-public class previewerPanel{
+public class previewPanel{
     ArrayList<Content> myContent;
     Dimension myDimensions;
     
-    public previewerPanel(Dimension myDimension, ArrayList<Content> myContent) {
+    public previewPanel(Dimension myDimension, ArrayList<Content> myContent) {
         this.myDimensions = myDimension;
         this.myContent = myContent;
     }
@@ -108,22 +108,6 @@ public class previewerPanel{
         return scrollPane;
     }
     
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-    }// </editor-fold>//GEN-END:initComponents
-    
     public static void main(String[] args) throws IOException {
         // Example usage
         JFrame frame = new JFrame("Newsfeed");
@@ -156,7 +140,5 @@ public class previewerPanel{
         frame.add(preview, BorderLayout.CENTER);
         frame.setVisible(true);
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+              
 }
