@@ -3,41 +3,39 @@ package Backend;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class Content {
-    private String contentId;
-    private String authorId;
+    private long contentId;
+    private long authorId;
     private LocalDateTime timestamp;
     
     private String contentString;
-    private BufferedImage contentImage;
+    private String contentImagePath;
 
-    public Content(String contentId, String authorId, String contentString, BufferedImage contentImage) {
+
+    public Content(long contentId, long authorId, String contentString, String contentImagePath) {
         this.contentId = contentId;
         this.authorId = authorId;
         this.contentString = contentString;
-        this.contentImage = contentImage;
+        this.contentImagePath = contentImagePath;
         this.timestamp = LocalDateTime.now();
     }
     
-    public void displayContent() {
-        
-    }
-
-    public String getContentId() {
+    public long getContentId() {
         return contentId;
     }
 
-    public void setContentId(String contentId) {
+    public void setContentId(long contentId) {
         this.contentId = contentId;
     }
 
-    public String getAuthorId() {
+    public long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(long authorId) {
         this.authorId = authorId;
     }
 
@@ -57,12 +55,12 @@ public abstract class Content {
         this.contentString = contentString;
     }
 
-    public BufferedImage getContentImage() {
-        return contentImage;
+    public String getContentImagePath() {
+        return contentImagePath;
     }
 
-    public void setContentImage(BufferedImage contentImage) {
-        this.contentImage = contentImage;
+    public void setContentImagePath(String contentImagePath) {
+        this.contentImagePath = contentImagePath;
     }
     
 }

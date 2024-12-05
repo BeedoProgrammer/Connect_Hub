@@ -4,6 +4,8 @@
 
 !src/
 !src/**
+!lib/
+!lib/**
 
 nbproject/
 nbproject/private/
