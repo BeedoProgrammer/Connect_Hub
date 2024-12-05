@@ -15,6 +15,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -163,8 +165,8 @@ public class FriendManagementPage extends javax.swing.JFrame {
     }
     private void initializeSuggestionCandidates(User currentUser) {
         suggestionCandidates.clear();
-    HashMap<Long, User> usersDatabase = UserDatabase.getUsersDatabase();
-    HashMap<Long, FriendshipStatus> relationships = currentUser.getRelationships();
+    HashMap<Long, User> usersDatabase = UserDatabase.getUsersDatabase(); //temporary
+//    HashMap<Long, FriendshipStatus> relationships = currentUser.getRelationships();
 
     for (User user : usersDatabase.values()) { // Iterate through User objects
         if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
@@ -173,28 +175,27 @@ public class FriendManagementPage extends javax.swing.JFrame {
         }
     }
 }
-    private void populateSuggestionsPanel(User currentUser) {
-        SuggestionsPanel.removeAll();
-
-        int suggestionCount = 0;
-
-        // Iterate over suggestion candidates
-        for (Long userId : suggestionCandidates) {
-            if (suggestionCount == 1) {
-                break; 
-            }
-            User suggestedUser = UserDatabase.getUsersDatabase().get(userId); // get User of suggestion with id 
-            
-                JPanel suggestionPanel = createSuggestionPanel(currentUser, suggestedUser);
-                
-                SuggestionsPanel.add(suggestionPanel);
-                suggestionCount++;
-            
+   private void populateSuggestionsPanel(User currentUser) {
+    SuggestionsPanel.removeAll();
+    SuggestionsPanel.setLayout(new GridBagLayout()); // Set GridBagLayout
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.anchor = GridBagConstraints.CENTER; 
+    gbc.fill = GridBagConstraints.HORIZONTAL; 
+    int suggestionCount = 0;
+    for (Long userId : suggestionCandidates) {
+        if (suggestionCount == 1) {
+            break;
         }
-
-        SuggestionsPanel.revalidate();
-        SuggestionsPanel.repaint();
+        User suggestedUser = UserDatabase.getUsersDatabase().get(userId);
+        JPanel suggestionPanel = createSuggestionPanel(currentUser, suggestedUser);
+        SuggestionsPanel.add(suggestionPanel, gbc); // Add with constraints
+        suggestionCount++;
     }
+    SuggestionsPanel.revalidate();
+    SuggestionsPanel.repaint();
+}
 
     private JPanel createSuggestionPanel(User currentUser, User suggestedUser) {
         JPanel suggestionPanel = new JPanel();
@@ -228,17 +229,6 @@ public class FriendManagementPage extends javax.swing.JFrame {
 
         return suggestionPanel;
     }
-  
- 
-
-    
-
- 
-
-   
-
-   
-
     private User getFriendById(long userId) {
         return UserDatabase.getUserById(userId);
     }
