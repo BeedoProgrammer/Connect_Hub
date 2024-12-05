@@ -2,6 +2,7 @@ package frontend;
 
 import Backend.*;
 import javax.swing.*;
+import java.util.*;
 
 public class LogIn extends javax.swing.JFrame {
     User user;
@@ -109,8 +110,8 @@ public class LogIn extends javax.swing.JFrame {
         
         if(Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass.toString()))
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
-        else if(!email.getText().equals(user.getUsername()) || !Pass.equals(user.getPassword()))
-            JOptionPane.showMessageDialog(rootPane, "Wrong username or password!");
+        else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
+            JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
         else{
             //this.dispose();
         }

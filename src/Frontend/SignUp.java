@@ -167,36 +167,42 @@ public class SignUp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Enter correct Email!");
         else if(!Arrays.equals(Pass, Pass1))
             JOptionPane.showMessageDialog(rootPane, "Please enter the same password");
-        else if(!username.getText().equals("")){
+        else{
+            boolean exists = false;
             ArrayList<User> userData = userDatabase.getUsers();
             for(int i = 0; i < userData.size(); i++){
-                if(username.getText().equals(userData.get(i).getUsername()))
-                    JOptionPane.showMessageDialog(rootPane, "Username already taken");
+                if(username.getText().equals(userData.get(i).getUsername())){
+                    exists = true;
+                    break;
+                }
             }
-        }
-        else{
-            ArrayList<User> userData = userDatabase.getUsers();
-            boolean flag = true;
-            Random random = new Random();
-            long uniqueId;
-
-            do {
-                uniqueId = Math.abs(random.nextLong());
-                boolean isUnique = true;
             
-                for(int i = 0; i < userData.size(); i++){
-                    if (uniqueId == userData.get(i).getUserId()){
-                        isUnique = false;
-                        break;
-                    }
+            if(exists){
+                JOptionPane.showMessageDialog(rootPane, "Username already taken");
+            }
+            else{
+                boolean flag = true;
+                Random random = new Random();
+                long uniqueId;
+
+                do {
+                    uniqueId = Math.abs(random.nextLong());
+                    boolean isUnique = true;
+            
+                    for(int i = 0; i < userData.size(); i++){
+                        if (uniqueId == userData.get(i).getUserId()){
+                            isUnique = false;
+                            break;
+                        }
                 }
 
-                if(isUnique)
-                    break;    
-            }while(true);
+                    if(isUnique)
+                        break;    
+                }while(true);
             
-            LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            //this.dispose();
+                LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                //this.dispose();
+            }
         }
     }//GEN-LAST:event_signupActionPerformed
 
