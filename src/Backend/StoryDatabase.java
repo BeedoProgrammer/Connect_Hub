@@ -84,5 +84,13 @@ public class StoryDatabase extends Database {
         }
         return stories;
     }
-
+    public Story getStoryFromId(long storyId) {    // returns story object if found and null if not found
+        ArrayList<Object> tempObjects = super.getRecords();
+        for (int i = 0; i < tempObjects.size(); i++) {
+            if (storyId == ((Story)tempObjects.get(i)).getContentId()) {
+                return (Story)tempObjects.get(i);
+            }
+        }
+        return null;
+    }
 }

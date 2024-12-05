@@ -83,5 +83,14 @@ public class PostDatabase extends Database {
         }
         return posts;
     }
+    public Post getPostFromId(long postId) {    // returns post object if found and null if not found
+        ArrayList<Object> tempObjects = super.getRecords();
+        for (int i = 0; i < tempObjects.size(); i++) {
+            if (postId == ((Post)tempObjects.get(i)).getContentId()) {
+                return (Post)tempObjects.get(i);
+            }
+        }
+        return null;
+    }
 
 }

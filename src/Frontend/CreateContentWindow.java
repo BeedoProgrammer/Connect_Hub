@@ -9,6 +9,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import Backend.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
@@ -194,10 +196,28 @@ public class CreateContentWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_uploadImageButtonActionPerformed
 
+    private long generatePostId(PostDatabase postDb) {
+        Random random = new Random();
+        long generatedId;
+        do {            
+            generatedId = Math.abs(random.nextLong());
+        } while (postDb.getPostFromId(generatedId) != null);
+        return generatedId;
+    }
+     private long generateStoryId(StoryDatabase storyDb) {
+        Random random = new Random();
+        long generatedId;
+        do {            
+            generatedId = Math.abs(random.nextLong());
+        } while (storyDb.getStoryFromId(generatedId) != null);
+        return generatedId;
+    }
+    
     private void createPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPostButtonActionPerformed
         // TODO add your handling code here:
-        Content post = new Post(contentId, currentUser.getUserId(), textContent.getText(), imagePath);
-        PostDatabase postDb = new PostDatabase("posts.json");
+        PostDatabase postDb = PostDatabase.getInstance();
+        long postId = generatePostId(postDb);
+        Content post = new Post(postId, currentUser.getUserId(), textContent.getText(), imagePath);
         try {
             postDb.addPost((Post) post);
             // return to main window
@@ -218,8 +238,9 @@ public class CreateContentWindow extends javax.swing.JFrame {
 
     private void createStorybuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createStorybuttonActionPerformed
             // TODO add your handling code here:
-            Content story = new Story(contentId, currentUser.getUserId(), textContent.getText(), imagePath);
-            StoryDatabase storyDb = new StoryDatabase("stories.json");
+        StoryDatabase storyDb = StoryDatabase.getInstance();
+        long generatedId = generateStoryId(storyDb);
+        Content story = new Story(generatedId, currentUser.getUserId(), textContent.getText(), imagePath);
         try {
             storyDb.addStory((Story)story);
         } catch (IOException ex) {

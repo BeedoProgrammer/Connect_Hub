@@ -3,6 +3,7 @@ package Backend;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class Content {
@@ -22,10 +23,6 @@ public abstract class Content {
         this.timestamp = LocalDateTime.now();
     }
     
-    public void displayContent() {
-        
-    }
-
     public long getContentId() {
         return contentId;
     }

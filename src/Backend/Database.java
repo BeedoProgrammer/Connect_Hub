@@ -42,7 +42,7 @@ public abstract class Database {
         records.add(record);
 //        saveToFile();
     }
-    public ArrayList<Object> getRecords() {
+    protected ArrayList<Object> getRecords() {
         return records;
     }
     protected abstract Map<String,Object> getMapFromRecord(Object record);
