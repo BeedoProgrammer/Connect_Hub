@@ -17,7 +17,6 @@ public class ImageFunctions {
             if(targetHeight == 0 && targetWidth == 0) return originalImage;
             else if(targetHeight == 0){
                 float scale = (float) originalImage.getWidth() / targetWidth;
-                System.out.println(scale);
                 targetHeight = (int) (originalImage.getHeight() / scale);
             }else if(targetWidth == 0){
                 float scale = targetHeight / originalImage.getHeight();

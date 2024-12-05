@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Utilities.*;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -47,17 +48,18 @@ public class previewerPanel extends javax.swing.JPanel {
         metrics = authorLabel.getFontMetrics(authorLabel.getFont());
         int labelHeight = metrics.getHeight();
         int padding = 30;
-        
+                
         return textHeight + imageHeight + labelHeight + padding;
     }
     
-    private JPanel showPost(Post myPost){
+    private JPanel createPostPanel(Content myPost){
         JPanel postPanel = new JPanel();
         postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+        postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         postPanel.setBackground(Color.lightGray);
         
         JLabel authorLabel = new JLabel(myPost.getAuthorId());
-        authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);        
+        authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         postPanel.add(authorLabel);
         
         BufferedImage myImage = myPost.getContentImage();
@@ -71,6 +73,7 @@ public class previewerPanel extends javax.swing.JPanel {
             imagePanel.add(imageLabel);
             imagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             postPanel.add(imagePanel);
+
         }
         
         JTextArea postText = new JTextArea(myPost.getContentString());
@@ -84,10 +87,34 @@ public class previewerPanel extends javax.swing.JPanel {
         
         int height = this.getTotalHeight(authorLabel, myImage, postText);
         postPanel.setPreferredSize(new Dimension(this.myDimensions.width, height));
-        postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         postPanel.revalidate();
         postPanel.repaint();
         return postPanel;
+    }
+    
+    public JScrollPane getContentScrollable(ArrayList<Content> myContent){
+        JPanel previewPanel = new JPanel();
+        previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
+//        previewPanel.setPreferredSize(this.myDimensions);
+        
+        for(Content i : myContent){
+            JPanel contentPanel = createPostPanel(i);
+            contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            previewPanel.add(contentPanel);
+            contentPanel.setVisible(true);
+        }
+        
+        previewPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        
+        previewPanel.revalidate();
+        previewPanel.repaint();
+
+        JScrollPane scrollPane = new JScrollPane(previewPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUI(new ModernScrollBarUI());
+        previewPanel.revalidate();
+        previewPanel.repaint();
+
+        return scrollPane;
     }
 
     /**
@@ -117,29 +144,38 @@ public class previewerPanel extends javax.swing.JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
 
-        // Create a sample BufferedImage (replace with your actual image loading logic)
-        BufferedImage sampleImage = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics g = sampleImage.getGraphics();
-        g.setColor(Color.BLUE);
-        g.fillRect(0, 0, 200, 100);
-        g.dispose();
 
-        sampleImage = ImageIO.read(new File("picture.jpg"));
-//        sampleImage = resizeImage(sampleImage, 400, 266);
+        BufferedImage sampleImage = ImageIO.read(new File("picture.jpg"));
+        BufferedImage sampleImage2 = ImageIO.read(new File("picture2.jpg"));
         
         // Create a sample post panel
         Post myPost = new Post("First Post","John Doe" ,"This is a sample post text.", sampleImage);
         Post myPost2 = new Post("First Post","Joe" ,"This is a sample post text.", null);
         
-        previewerPanel myPanel = new previewerPanel(400, 200);
-        JPanel post = myPanel.showPost(myPost);
-        JPanel post2 = myPanel.showPost(myPost2);
+//        System.out.println("LAST: " + myP.getPreferredSize());
+        ArrayList<Content> myContent = new ArrayList<>();
+        myContent.add(myPost);
+        myContent.add(myPost2);
+        myContent.add(new Story("3rd Post","Abdo" ,"This is a sample Story text.", sampleImage2));
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        myContent.add(myPost2);
+        
+        previewerPanel myPanel = new previewerPanel(400, 600);
+//        JPanel myP = myPanel.createPostPanel(myPost2);
+//        JPanel post = myPanel.showContent(myPost);
+//        JPanel post2 = myPanel.showContent(myPost2);
+        JScrollPane preview = myPanel.getContentScrollable(myContent);
         
         
-        // Add the post panel to the frame
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(post);
-        frame.getContentPane().add(post2);
+//        frame.getContentPane().add(post);
+        frame.add(preview, BorderLayout.CENTER);
         frame.setVisible(true);
     }
 
