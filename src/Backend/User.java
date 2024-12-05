@@ -83,16 +83,16 @@ import java.util.*;
         return relationships;
     }
 
-     public void addRelationship(long userId, FriendshipStatus status) {
+     public void addRelationship(long userId, FriendshipStatus status) { ////imporant used by friend managemtn
         this.relationships.put(userId, status);
     }
        public boolean hasRelationshipWith(long userId) {
         return this.relationships.containsKey(userId);
     }
-     public FriendshipStatus getRelationshipStatus(long userId) {
-        return this.relationships.get(userId);
-    }  
-       public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
+//     public FriendshipStatus getRelationshipStatus(long userId) {
+//        return this.relationships.get(userId);
+//    }  
+       public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps ///imporant
         this.relationships.remove(userId);
     }
 }
