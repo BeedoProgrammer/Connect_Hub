@@ -32,14 +32,14 @@ public class PostDatabase extends Database {
             posts.add(getPostFromMap((Map)jsonPosts.get(i)));
         }
     }
-    private Post getPostFromMap(Map<String,String> mapOfPost) {
-        String contentIdString = mapOfPost.get("contentId");
-        String authorIdString = mapOfPost.get("authorId");
-        String timestampString = mapOfPost.get("timestamp");
-        String contentStringString = mapOfPost.get("contentString");
-        String contentImagePathString = mapOfPost.get("contentImagePath");
-        Post tempPost = new Post(Long.parseLong(contentIdString), Long.parseLong(authorIdString), contentIdString, contentImagePathString);
-        tempPost.setTimestamp(LocalDateTime.parse(timestampString));
+    private Post getPostFromMap(Map<String,Object> mapOfPost) {
+        long contentId = (long)mapOfPost.get("contentId");
+        long authorId = (long)mapOfPost.get("authorId");
+        String timestamp = (String)mapOfPost.get("timestamp");
+        String contentString = (String)mapOfPost.get("contentString");
+        String contentImagePath = (String)mapOfPost.get("contentImagePath");
+        Post tempPost = new Post(contentId, authorId, contentString, contentImagePath);
+        tempPost.setTimestamp(LocalDateTime.parse(timestamp));
         return tempPost;
     }
     public void saveToFile() throws FileNotFoundException, IOException, ParseException {    // saves posts arraylist into json format file
@@ -52,14 +52,14 @@ public class PostDatabase extends Database {
         pw.flush(); 
         pw.close(); 
     }
-    private Map<String,String> getMapFromPost(Post post) {
-        Map<String,String> tempStoryMap = new HashMap<>();
-        tempStoryMap.put("contentId", String.valueOf(post.getContentId()));
-        tempStoryMap.put("authorId", String.valueOf(post.getAuthorId()));
-        tempStoryMap.put("timestamp", post.getTimestamp().toString());
-        tempStoryMap.put("contentString", post.getContentString());
-        tempStoryMap.put("contentImagePath", post.getContentImagePath());
-        return tempStoryMap;
+    private Map<String,Object> getMapFromPost(Post post) {
+        Map<String,Object> tempPostMap = new HashMap<>();
+        tempPostMap.put("contentId", post.getContentId());
+        tempPostMap.put("authorId", post.getAuthorId());
+        tempPostMap.put("timestamp", post.getTimestamp().toString());
+        tempPostMap.put("contentString", post.getContentString());
+        tempPostMap.put("contentImagePath", post.getContentImagePath());
+        return tempPostMap;
     }
     public void addPost(Post post) throws IOException, FileNotFoundException, ParseException {
         posts.add(post);

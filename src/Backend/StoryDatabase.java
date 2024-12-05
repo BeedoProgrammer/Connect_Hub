@@ -32,14 +32,14 @@ public class StoryDatabase extends Database {
             stories.add(getStoryFromMap((Map)jsonStories.get(i)));
         }
     }
-    private Story getStoryFromMap(Map<String,String> mapOfStory) {
-        String contentIdString = mapOfStory.get("contentId");
-        String authorIdString = mapOfStory.get("authorId");
-        String timestampString = mapOfStory.get("timestamp");
-        String contentStringString = mapOfStory.get("contentString");
-        String contentImagePathString = mapOfStory.get("contentImagePath");
-        Story tempStory = new Story(Long.parseLong(contentIdString), Long.parseLong(authorIdString), contentIdString, contentImagePathString);
-        tempStory.setTimestamp(LocalDateTime.parse(timestampString));
+    private Story getStoryFromMap(Map<String,Object> mapOfStory) {
+        long contentId = (long)mapOfStory.get("contentId");
+        long authorId = (long)mapOfStory.get("authorId");
+        String timestamp = (String)mapOfStory.get("timestamp");
+        String contentString = (String)mapOfStory.get("contentString");
+        String contentImagePath = (String)mapOfStory.get("contentImagePath");
+        Story tempStory = new Story(contentId, authorId, contentString, contentImagePath);
+        tempStory.setTimestamp(LocalDateTime.parse(timestamp));
         return tempStory;
     }
     public void saveToFile() throws FileNotFoundException, IOException, ParseException {    // saves stories arraylist into json format file
@@ -52,16 +52,16 @@ public class StoryDatabase extends Database {
         pw.flush(); 
         pw.close(); 
     }
-    private Map<String,String> getMapFromStory(Story story) {
-        Map<String,String> tempStoryMap = new HashMap<>();
-        tempStoryMap.put("contentId", String.valueOf(story.getContentId()));
-        tempStoryMap.put("authorId", String.valueOf(story.getAuthorId()));
+    private Map<String,Object> getMapFromStory(Story story) {
+        Map<String,Object> tempStoryMap = new HashMap<>();
+        tempStoryMap.put("contentId", story.getContentId());
+        tempStoryMap.put("authorId", story.getAuthorId());
         tempStoryMap.put("timestamp", story.getTimestamp().toString());
         tempStoryMap.put("contentString", story.getContentString());
         tempStoryMap.put("contentImagePath", story.getContentImagePath());
         return tempStoryMap;
     }
-    public void addStroy(Story story) throws IOException, FileNotFoundException, ParseException {
+    public void addStory(Story story) throws IOException, FileNotFoundException, ParseException {
         stories.add(story);
         saveToFile();
     }
