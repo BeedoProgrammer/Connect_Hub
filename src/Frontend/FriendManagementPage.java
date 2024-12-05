@@ -91,17 +91,21 @@ public class FriendManagementPage extends javax.swing.JFrame {
         requestsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
         HashMap<Long, FriendshipStatus> relationships = user.getRelationships();
-        for (Map.Entry<Long, FriendshipStatus> entry : relationships.entrySet()) {
-            if (entry.getValue() == FriendshipStatus.PENDINGRECIEVER) {
-                User SentRequestFriend = getFriendById(entry.getKey()); ////////////////METHOD TAKE ID RETURN ITS USER IT RETURNS THE PRESON SENT ME FRIEND REQUEST
-                JPanel requestPanel = createRequestPanel(user, SentRequestFriend); ///ME USER I HAVE PENDING RECIVER IN HIS HASHMAP SENTREQUESTFRIEND HE HAS PENDING SENDER 
-                requestsPanel.add(requestPanel);
-                System.out.println("zz");
-            }
-        }
-        requestsPanel.revalidate();
-        requestsPanel.repaint();
+ for (Map.Entry<Long, FriendshipStatus> entry : relationships.entrySet()) {
+    if (entry.getValue() == FriendshipStatus.PENDINGRECIEVER) {
+        User SentRequestFriend = getFriendById(entry.getKey());
+        JPanel requestPanel = createRequestPanel(user, SentRequestFriend);
+
+        // Create an empty JPanel to add top spacing
+        JPanel topSpacingPanel = new JPanel();
+        topSpacingPanel.setPreferredSize(new Dimension(0, 200)); // Adjust 10 as needed for spacing
+
+        requestsPanel.add(topSpacingPanel); // Add spacing before request panel
+        requestsPanel.add(requestPanel);
+        System.out.println("zz");
     }
+ }
+}
        private JPanel createRequestPanel(User currentUser, User friend) {
         JPanel requestPanel = new JPanel();
         requestPanel.setLayout(new BoxLayout(requestPanel, BoxLayout.Y_AXIS));
@@ -133,7 +137,11 @@ public class FriendManagementPage extends javax.swing.JFrame {
             if (entry.getValue() == FriendshipStatus.ACCEPTED) {
                 User friend = getFriendById(entry.getKey());
                     JPanel friendPanel = createFriendPanelForBlocking(user, friend); //you are accepted and in my friends so i need 2 buttons beside u blocked,removed
-                    FriendsPanel.add(friendPanel);
+                   
+                     JPanel topSpacingPanel = new JPanel();
+        topSpacingPanel.setPreferredSize(new Dimension(0, 300)); // Adjust 10 as needed for spacing
+        FriendsPanel.add(topSpacingPanel);
+         FriendsPanel.add(friendPanel);
             }
         }
         FriendsPanel.revalidate();
@@ -190,7 +198,7 @@ public class FriendManagementPage extends javax.swing.JFrame {
         }
         User suggestedUser = UserDatabase.getUsersDatabase().get(userId);
         JPanel suggestionPanel = createSuggestionPanel(currentUser, suggestedUser);
-        SuggestionsPanel.add(suggestionPanel, gbc); // Add with constraints
+        SuggestionsPanel.add(suggestionPanel, gbc); 
         suggestionCount++;
     }
     SuggestionsPanel.revalidate();
