@@ -366,7 +366,9 @@ public class ProfileManagement extends javax.swing.JFrame {
             public void run() {
                 UserDatabase userDatabase = new UserDatabase("");
                 char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-                User user = new User("sdad@gmail.com", "sdad", charArray, LocalDate.of(1990, 3, 15), userDatabase);
+                User user = new User.UserBuilder(1234, "john.doe@example.com", "johndoe", charArray, LocalDate.of(1990, 5, 20), true)
+                        .bio("Just a regular guy.")
+                        .build();
                 
                 //ProfileManagement profileManagement = new ProfileManagement("Profile Management", user);
                 //profileManagement.setLocationRelativeTo(null);
@@ -376,7 +378,7 @@ public class ProfileManagement extends javax.swing.JFrame {
                 //logIn.setLocationRelativeTo(null);
                 //logIn.setVisible(true);
                 
-                SignUp signUp = new SignUp("LogIn", user, userDatabase);
+                SignUp signUp = new SignUp("Sign Up", userDatabase);
                 signUp.setLocationRelativeTo(null);
                 signUp.setVisible(true);
             }

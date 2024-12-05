@@ -33,6 +33,7 @@
                   <Component id="Jpanel2" max="32767" attributes="0"/>
                   <Component id="Jpanel3" alignment="0" pref="120" max="32767" attributes="0"/>
                   <Component id="Jpanel4" alignment="0" max="32767" attributes="0"/>
+                  <Component id="Jpanel5" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -40,6 +41,7 @@
                   <Component id="password" max="32767" attributes="0"/>
                   <Component id="email" alignment="0" pref="153" max="32767" attributes="0"/>
                   <Component id="password1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="date" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
@@ -53,7 +55,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Jpanel1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="username" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -64,16 +66,21 @@
                   <Component id="email" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="Jpanel5" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="date" min="-2" pref="40" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Jpanel2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="password" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Jpanel4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="password1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
               <Component id="signup" min="-2" pref="41" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
@@ -163,6 +170,20 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="password1ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Jpanel5">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="         Birth Date"/>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="date">
     </Component>
   </SubComponents>
 </Form>

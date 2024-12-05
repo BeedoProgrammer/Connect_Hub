@@ -1,16 +1,15 @@
 package frontend;
 
 import Backend.*;
+import java.time.*;
 import java.util.*;
 import javax.swing.*;
 
 public class SignUp extends javax.swing.JFrame {
-    User user;
     private UserDatabase userDatabase;
     
-    public SignUp(String title, User user, UserDatabase userDatabase) {
+    public SignUp(String title, UserDatabase userDatabase) {
         super(title);
-        this.user = user;
         this.userDatabase = userDatabase;
         initComponents();
     }
@@ -28,6 +27,8 @@ public class SignUp extends javax.swing.JFrame {
         email = new javax.swing.JTextField();
         Jpanel4 = new javax.swing.JLabel();
         password1 = new javax.swing.JPasswordField();
+        Jpanel5 = new javax.swing.JLabel();
+        date = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -90,6 +91,11 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
+        Jpanel5.setBackground(new java.awt.Color(0, 0, 0));
+        Jpanel5.setForeground(new java.awt.Color(255, 255, 255));
+        Jpanel5.setText("         Birth Date");
+        Jpanel5.setOpaque(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,13 +106,15 @@ public class SignUp extends javax.swing.JFrame {
                     .addComponent(Jpanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addComponent(Jpanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Jpanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(Jpanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Jpanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jpanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                     .addComponent(password)
                     .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                    .addComponent(password1))
+                    .addComponent(password1)
+                    .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(34, 34, 34))
             .addGroup(layout.createSequentialGroup()
                 .addGap(140, 140, 140)
@@ -116,7 +124,7 @@ public class SignUp extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Jpanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -125,14 +133,18 @@ public class SignUp extends javax.swing.JFrame {
                     .addComponent(Jpanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Jpanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Jpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Jpanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(password1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -149,7 +161,7 @@ public class SignUp extends javax.swing.JFrame {
         char[] Pass = password.getPassword();
         char[] Pass1 = password1.getPassword();
         
-        if(Validation.isEmpty(username.getText()) || Validation.isEmpty(Pass.toString()) || Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass1.toString()))
+        if(Validation.isEmpty(username.getText()) || Validation.isEmpty(Pass.toString()) || Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass1.toString()) || date.getDate() == null)
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
         else if(!Validation.isEmail(email.getText()))
             JOptionPane.showMessageDialog(rootPane, "Enter correct Email!");
@@ -163,6 +175,27 @@ public class SignUp extends javax.swing.JFrame {
             }
         }
         else{
+            ArrayList<User> userData = userDatabase.getUsers();
+            boolean flag = true;
+            Random random = new Random();
+            long uniqueId;
+
+            do {
+                uniqueId = Math.abs(random.nextLong());
+                boolean isUnique = true;
+            
+                for(int i = 0; i < userData.size(); i++){
+                    if (uniqueId == userData.get(i).getUserId()){
+                        isUnique = false;
+                        break;
+                    }
+                }
+
+                if(isUnique)
+                    break;    
+            }while(true);
+            
+            LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             //this.dispose();
         }
     }//GEN-LAST:event_signupActionPerformed
@@ -188,6 +221,8 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel Jpanel2;
     private javax.swing.JLabel Jpanel3;
     private javax.swing.JLabel Jpanel4;
+    private javax.swing.JLabel Jpanel5;
+    private com.toedter.calendar.JDateChooser date;
     private javax.swing.JTextField email;
     private javax.swing.JPasswordField password;
     private javax.swing.JPasswordField password1;
