@@ -55,13 +55,11 @@ import java.util.*;
         return uniqueId;
     }
     
-    public void changeStatus() {
-        if (status) {
-
+    public void changeStatus(){
+        if(status)
             status = false;
-        } else {
+        else 
             status = true;
-        }
     }
 
     public String getBio() {
