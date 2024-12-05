@@ -4,20 +4,15 @@ package Backend;
 import java.util.*;
 
 public class ProfileManagement {
-    private String profilePhoto;
-    private String coverPhoto;
-    private String bio; 
     private User userDetails;
     private ArrayList<User> friends;
     private PostDatabase postDatabase; 
     private UserDatabase userDatabase;
     private StoryDatabase storyDatabase;
 
-    public ProfileManagement(String profilePhoto, String coverPhoto, String bio, User userDetails, PostDatabase postDatabase, UserDatabase userDatabase, StoryDatabase storyDatabase) {
-        this.profilePhoto = profilePhoto;
-        this.coverPhoto = coverPhoto;
-        this.bio = bio;
+    public ProfileManagement(User userDetails, ArrayList<User> friends, PostDatabase postDatabase, UserDatabase userDatabase, StoryDatabase storyDatabase) {
         this.userDetails = userDetails;
+        this.friends = friends;
         this.postDatabase = postDatabase;
         this.userDatabase = userDatabase;
         this.storyDatabase = storyDatabase;
@@ -51,7 +46,7 @@ public class ProfileManagement {
        ArrayList<User> userData = userDatabase.getUsers();
        ArrayList<User> friends = new ArrayList<>();
        
-       for(int i = 0; i < userData.size(); i++){
+        for(int i = 0; i < userData.size(); i++){
            if(userDetails.getRelationshipStatus(userData.get(i).getUserId()) == FriendshipStatus.ACCEPTED)
                friends.add(userData.get(i));
         }
