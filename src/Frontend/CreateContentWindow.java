@@ -8,6 +8,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import Backend.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 
 public class CreateContentWindow extends javax.swing.JFrame {
@@ -194,8 +198,16 @@ public class CreateContentWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         Content post = new Post(contentId, currentUser.getUserId(), textContent.getText(), imagePath);
         PostDatabase postDb = new PostDatabase("posts.json");
-        postDb.addPost(post);
-        // return to main window
+        try {
+            postDb.addPost((Post) post);
+            // return to main window
+        } catch (IOException ex) {
+            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // return to main window
+        }
     }//GEN-LAST:event_createPostButtonActionPerformed
 
     private void clearImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearImageButtonActionPerformed
@@ -205,11 +217,18 @@ public class CreateContentWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_clearImageButtonActionPerformed
 
     private void createStorybuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createStorybuttonActionPerformed
-        // TODO add your handling code here:
-        Content story = new Story(contentId, currentUser.getUserId(), textContent.getText(), imagePath);
-        StoryDatabase storyDb = new StoryDatabase("stories.json");
-        storyDb.addStroy(story);
-         // return to main window
+            // TODO add your handling code here:
+            Content story = new Story(contentId, currentUser.getUserId(), textContent.getText(), imagePath);
+            StoryDatabase storyDb = new StoryDatabase("stories.json");
+        try {
+            storyDb.addStory((Story)story);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // return to main window
+        }
     }//GEN-LAST:event_createStorybuttonActionPerformed
 
     private void panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseClicked
@@ -222,40 +241,40 @@ public class CreateContentWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_panelMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateContentWindow().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(CreateContentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new CreateContentWindow().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearImageButton;
