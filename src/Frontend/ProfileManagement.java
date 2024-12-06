@@ -10,9 +10,11 @@ import java.time.*;
 
 public class ProfileManagement extends javax.swing.JFrame {
     static User user;
+    JFrame parent;
 
-    public ProfileManagement(String title, User user) {
+    public ProfileManagement(String title, JFrame parent, User user) {
         super(title);
+        this.parent = parent;
         this.user = user;
         initComponents();
     }
@@ -62,7 +64,12 @@ public class ProfileManagement extends javax.swing.JFrame {
                     .addGap(0, 100, Short.MAX_VALUE)
                 );
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+                addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent evt) {
+                        formWindowClosing(evt);
+                    }
+                });
 
                 panel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -344,7 +351,13 @@ public class ProfileManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void seeMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeMoreActionPerformed
-        // TODO add your handling code here:
+        try{
+            FriendManagementPage myPage = new FriendManagementPage(this, user);
+            myPage.setVisible(true);
+            this.setVisible(false);
+        }catch(Exception e){
+            this.setVisible(true);
+        }
     }//GEN-LAST:event_seeMoreActionPerformed
 
     private void bioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bioActionPerformed
@@ -353,6 +366,11 @@ public class ProfileManagement extends javax.swing.JFrame {
         user.setBio(input);
         bioText.setText(input);
     }//GEN-LAST:event_bioActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.parent.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;

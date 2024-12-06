@@ -43,10 +43,8 @@ public class NewsFeed {
         for (User user : this.allUsers) { 
             if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
                 this.friendSuggestions.add(user); 
-                System.out.println("Suggestions: " + user.getUsername());
             }else if(currentUser.getRelationshipStatus(user.getUserId()) == FriendshipStatus.ACCEPTED){
                 this.friendList.add(user);
-                System.out.println("Friends: " + user.getUsername());
             }
         }
     }
@@ -64,18 +62,6 @@ public class NewsFeed {
     }
 
     public ArrayList<User> getFriendList() {
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
         return friendList;
     }
 

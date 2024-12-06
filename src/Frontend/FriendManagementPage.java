@@ -31,14 +31,16 @@ public class FriendManagementPage extends javax.swing.JFrame {
     private JPanel requestsPanel;
     private JPanel SuggestionsPanel;
     private JPanel FriendsPanel;
+    private JFrame parent;
     
     private ArrayList<Long> suggestionCandidates = new ArrayList<>(); 
 
-    public FriendManagementPage(User user) throws IOException, FileNotFoundException, ParseException {
-       Database.readFromFile();
+    public FriendManagementPage(JFrame parent, User user) throws IOException, FileNotFoundException, ParseException {
+        this.parent = parent;
+        this.setPreferredSize(parent.getSize());
+        Database.readFromFile();
         this.user = user;
         setTitle("Friend Management");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         requestsPanel = new JPanel();
         requestsPanel.setLayout(new BoxLayout(requestsPanel, BoxLayout.Y_AXIS));
@@ -60,6 +62,14 @@ public class FriendManagementPage extends javax.swing.JFrame {
         add(mainPanel, BorderLayout.CENTER);
         pack();
         setVisible(true);
+        
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
     }
 
     private JPanel createLabeledSection(String title, JScrollPane content) {
@@ -297,7 +307,12 @@ declineButton.addActionListener(e -> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -312,6 +327,18 @@ declineButton.addActionListener(e -> {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("Before FINALLY");
+        try {
+            this.Database.saveToFile();
+        } catch (Exception ex) {}
+        finally{
+            System.out.println("IN FINALLY");
+            this.parent.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
