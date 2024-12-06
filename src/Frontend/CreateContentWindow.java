@@ -221,10 +221,8 @@ public class CreateContentWindow extends javax.swing.JFrame {
         try {
             postDb.addPost((Post) post);
             // return to main window
-        } catch (IOException ex) {
-            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.out.println(ex);
         } finally {
             // return to main window
         }
@@ -243,10 +241,8 @@ public class CreateContentWindow extends javax.swing.JFrame {
         Content story = new Story(generatedId, currentUser.getUserId(), textContent.getText(), imagePath);
         try {
             storyDb.addStory((Story)story);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.out.println(ex);
         } finally {
             // return to main window
         }
