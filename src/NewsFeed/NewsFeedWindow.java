@@ -184,13 +184,13 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UserDatabase myD = UserDatabase.getInstance();
                 try {
+                    UserDatabase myD = UserDatabase.getInstance();
                     myD.readFromFile();
+                    new NewsFeedWindow(myD.getUsers().get(0)).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                new NewsFeedWindow(myD.getUsers().get(0)).setVisible(true);
             }
         });
     }

@@ -14,31 +14,21 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-public class UserDatabase extends Database {
-//    private ArrayList<User> users;
-    
+public class UserDatabase extends Database {    
     private static UserDatabase instance = null;
     
-    public static UserDatabase getInstance() {
+    public static UserDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
             instance = new UserDatabase("files/users.json");
         }
+        instance.readFromFile();
         return instance;
     }
     
     private UserDatabase(String fileName) {
         super(fileName);
-//        this.users = new ArrayList<>();
     }
-//    public void readFromFile() throws FileNotFoundException, IOException, ParseException {    // modifies users arraylist
-//        this.users.clear(); // remove all previous elements from list
-//        JSONArray jsonUsers = new JSONArray();
-//        jsonUsers = (JSONArray) new JSONParser().parse(new FileReader(getFileName()));
-//        // parse each element in the jsonArray into a user object
-//        for (int i = 0; i < jsonUsers.size(); i++) {
-//            users.add(getUserFromMap((Map)jsonUsers.get(i)));
-//        }
-//    }
+
     @Override
     protected User getRecordFromMap(Map<String,Object> mapOfUser) {
         long userId = (long)mapOfUser.get("userId");                // saved in json as long
@@ -61,7 +51,6 @@ public class UserDatabase extends Database {
             .coverPhoto(coverPic)
             .profilePic(profilePic)
             .build();
-//        User tempUser = new User(userId, email, userName, password.toCharArray(), LocalDate.parse(dateOfBirth), status);
         tempUser.setRelationships(relationships);
         
         return tempUser;
@@ -86,16 +75,7 @@ public class UserDatabase extends Database {
         tempUserMap.put("relationships", relation.toJSONString());              // saved in json as string (JSONString)
         return tempUserMap;
     }
-//    public void saveToFile() throws FileNotFoundException, IOException, ParseException {    // saves users arraylist into json format file
-//        JSONArray jsonUsers = new JSONArray();
-//        for (int i = 0; i < users.size(); i++) {
-//            jsonUsers.add(getMapFromUser(users.get(i)));
-//        }
-//        PrintWriter pw = new PrintWriter(getFileName()); 
-//        pw.write(jsonUsers.toJSONString()); 
-//        pw.flush(); 
-//        pw.close(); 
-//    }
+
     public void addUser(User user) throws IOException, FileNotFoundException, ParseException {
         super.addRecord(user);
     }

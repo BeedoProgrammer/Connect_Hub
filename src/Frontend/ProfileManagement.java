@@ -28,11 +28,8 @@ public class ProfileManagement extends javax.swing.JFrame {
                 ImageIcon img = new ImageIcon(user.getCoverPhoto());
                 Image coverPhoto = img.getImage();
 
-                if(coverPhoto != null){
-                    int x = (getWidth() - coverPhoto.getWidth(null)) / 2;
-                    int y = (getHeight()- coverPhoto.getHeight(null)) / 2;
-                    g.drawImage(coverPhoto, x, y, this);
-                }
+                if(coverPhoto != null)
+                g.drawImage(coverPhoto, 0, 0, getWidth(), getHeight(), this);
             }};
             panel2 = new javax.swing.JPanel(){
                 protected void paintComponent(Graphics g) {
@@ -40,11 +37,8 @@ public class ProfileManagement extends javax.swing.JFrame {
                     ImageIcon img = new ImageIcon(user.getProfilePic());
                     Image profilePic = img.getImage();
 
-                    if(profilePic != null){
-                        int x = (getWidth() - profilePic.getWidth(null)) / 2;
-                        int y = (getHeight()- profilePic.getHeight(null)) / 2;
-                        g.drawImage(profilePic, x, y, this);
-                    }
+                    if(profilePic != null)
+                    g.drawImage(profilePic, 0, 0, getWidth(), getHeight(), this);
                 }};
                 coverPhoto = new javax.swing.JButton();
                 profilePic = new javax.swing.JButton();
@@ -217,7 +211,6 @@ public class ProfileManagement extends javax.swing.JFrame {
                                         .addComponent(bio)
                                         .addGap(0, 43, Short.MAX_VALUE))
                                     .addComponent(bioText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +218,8 @@ public class ProfileManagement extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(panel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(updatePassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(updatePassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                 );
                 layout.setVerticalGroup(
@@ -359,31 +353,6 @@ public class ProfileManagement extends javax.swing.JFrame {
         user.setBio(input);
         bioText.setText(input);
     }//GEN-LAST:event_bioActionPerformed
-
-    public static void main(String args[]) {
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                UserDatabase userDatabase = UserDatabase.getInstance();
-                char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-                User user = new User.UserBuilder(1234, "john.doe@example.com", "johndoe", charArray, LocalDate.of(1990, 5, 20), true)
-                        .bio("Just a regular guy.")
-                        .build();
-                
-                //ProfileManagement profileManagement = new ProfileManagement("Profile Management", user);
-                //profileManagement.setLocationRelativeTo(null);
-                //profileManagement.setVisible(true);
-                
-                //LogIn logIn = new LogIn("LogIn", user);
-                //logIn.setLocationRelativeTo(null);
-                //logIn.setVisible(true);
-                
-                SignUp signUp = new SignUp("Sign Up", userDatabase);
-                signUp.setLocationRelativeTo(null);
-                signUp.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;

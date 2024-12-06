@@ -8,9 +8,6 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
-  <Events>
-    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
-  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -89,9 +86,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="username">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usernameActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Jpanel1">
       <Properties>
@@ -133,9 +127,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="password">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Jpanel3">
       <Properties>
@@ -150,9 +141,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="email">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Jpanel4">
       <Properties>
@@ -167,9 +155,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="password1">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="password1ActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Jpanel5">
       <Properties>

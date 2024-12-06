@@ -89,10 +89,10 @@ public class NewsFeed {
         private StoryDatabase storyDatabase;
         
         public Loader() {
-            userDatabase = UserDatabase.getInstance();
-            postDatabase = PostDatabase.getInstance();
-            storyDatabase = StoryDatabase.getInstance();
             try {
+                userDatabase = UserDatabase.getInstance();
+                postDatabase = PostDatabase.getInstance();
+                storyDatabase = StoryDatabase.getInstance();
                 userDatabase.readFromFile();
                 postDatabase.readFromFile();
                 storyDatabase.readFromFile();

@@ -1,15 +1,18 @@
 package frontend;
 
 import Backend.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
+import org.json.simple.parser.ParseException;
 
 public class LogIn extends javax.swing.JFrame {
-    User user;
+    private UserDatabase userDatabase;
     
-    public LogIn(String title, User user) {
+    public LogIn(String title) throws IOException, FileNotFoundException, ParseException {
         super(title);
-        this.user = user;
+        userDatabase = UserDatabase.getInstance();
         initComponents();
     }
 
@@ -24,11 +27,6 @@ public class LogIn extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,12 +51,6 @@ public class LogIn extends javax.swing.JFrame {
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginActionPerformed(evt);
-            }
-        });
-
-        password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordActionPerformed(evt);
             }
         });
 
@@ -110,20 +102,24 @@ public class LogIn extends javax.swing.JFrame {
         
         if(Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass.toString()))
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
-        else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
-            JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
         else{
-            //this.dispose();
+            ArrayList<User> userData = userDatabase.getUsers();
+            User user = null;
+            for(int i = 0; i < userData.size(); i++){
+                if(email.getText().equals(userData.get(i).getEmail())){
+                    user = userData.get(i);
+                    break;
+                }
+            }
+            if(user == null)
+                JOptionPane.showMessageDialog(rootPane, "There is no account with this email");
+            else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
+                JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
+            else{
+                //this.dispose();
+            }  
         }
     }//GEN-LAST:event_loginActionPerformed
-
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;

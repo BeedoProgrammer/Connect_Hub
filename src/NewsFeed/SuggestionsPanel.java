@@ -137,17 +137,15 @@ public class SuggestionsPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 600);
         
-        UserDatabase myD = UserDatabase.getInstance();
         try {
+            UserDatabase myD = UserDatabase.getInstance();
             myD.readFromFile();
+            User currentUser = myD.getUsers().get(0);
+            SuggestionsPanel mySP = new SuggestionsPanel(new Dimension(100, 100), myD.getUsers().get(0), myD.getUsers());
+            JPanel myPanel = mySP.getSuggestionsPanel();
+            frame.add(myPanel, BorderLayout.NORTH);
         } catch (Exception ex) {}
         
-        User currentUser = myD.getUsers().get(0);
-        
-        SuggestionsPanel mySP = new SuggestionsPanel(new Dimension(100, 100), myD.getUsers().get(0), myD.getUsers());
-        JPanel myPanel = mySP.getSuggestionsPanel();
-        
-        frame.add(myPanel, BorderLayout.NORTH);
         frame.setVisible(true);
     }
 }
