@@ -6,6 +6,8 @@
 !src/**
 !lib/
 !lib/**
+!uml/
+!uml/**
 
 nbproject/
 nbproject/private/
