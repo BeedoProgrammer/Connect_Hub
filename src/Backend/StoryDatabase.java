@@ -38,6 +38,9 @@ public class StoryDatabase extends Database {
     String contentImagePath = (String)mapOfStory.get("contentImagePath");
     Story tempStory = new Story(contentId, authorId, contentString, contentImagePath);
     tempStory.setTimestamp(LocalDateTime.parse(timestamp));
+    if (tempStory.isDue()) {
+        return null;
+    }
     return tempStory;
     }
     @Override
