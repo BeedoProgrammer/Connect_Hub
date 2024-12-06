@@ -1,14 +1,19 @@
 package frontend;
 
 import Backend.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import org.json.simple.parser.ParseException;
 
 public class SignUp extends javax.swing.JFrame {
     private UserDatabase userDatabase;
     
-    public SignUp(String title) {
+    public SignUp(String title) throws IOException, FileNotFoundException, ParseException {
         super(title);
         userDatabase = UserDatabase.getInstance();
         initComponents();
@@ -150,17 +155,24 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Username already taken");
             }
             else{
-                Random random = new Random();
-                long uniqueId;
-
-                do {
-                    uniqueId = Math.abs(random.nextLong());   
-                }while(userDatabase.getUserFromId(uniqueId) != null);
-            
-                LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                
-                User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), Pass1, dateOfBirth, true).build();
-                //this.dispose();
+                try {
+                    Random random = new Random();
+                    long uniqueId;
+                    
+                    do {
+                        uniqueId = Math.abs(random.nextLong());
+                    }while(userDatabase.getUserFromId(uniqueId) != null);
+                    
+                    LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    
+                    User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), Pass1, dateOfBirth, true).build();
+                    userDatabase.addUser(user);
+                    //this.dispose();
+                } catch (IOException ex) {
+                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_signupActionPerformed

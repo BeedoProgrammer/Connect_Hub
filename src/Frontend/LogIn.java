@@ -1,13 +1,16 @@
 package frontend;
 
 import Backend.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
+import org.json.simple.parser.ParseException;
 
 public class LogIn extends javax.swing.JFrame {
     private UserDatabase userDatabase;
     
-    public LogIn(String title) {
+    public LogIn(String title) throws IOException, FileNotFoundException, ParseException {
         super(title);
         userDatabase = UserDatabase.getInstance();
         initComponents();
