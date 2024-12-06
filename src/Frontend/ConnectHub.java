@@ -9,10 +9,12 @@ import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 public class ConnectHub extends javax.swing.JFrame {
-
+    User currentUser;
+    
     public ConnectHub(String title) {
         super(title);
         initComponents();
+        currentUser = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -70,10 +72,10 @@ public class ConnectHub extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         try {
-            // TODO add your handling code here:
-            LogIn logIn = new LogIn("LogIn");
-            logIn.setLocationRelativeTo(null);
+            LogIn logIn = new LogIn(this, "LogIn");
             logIn.setVisible(true);
+            currentUser = logIn.getCurrentUser();
+            this.dispose();
         } catch (IOException ex) {
             Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -94,6 +96,10 @@ public class ConnectHub extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_signupActionPerformed
 
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+    
      public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {

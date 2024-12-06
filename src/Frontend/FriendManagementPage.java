@@ -31,14 +31,16 @@ public class FriendManagementPage extends javax.swing.JFrame {
     private JPanel requestsPanel;
     private JPanel SuggestionsPanel;
     private JPanel FriendsPanel;
+    private JFrame parent;
     
     private ArrayList<Long> suggestionCandidates = new ArrayList<>(); 
 
-    public FriendManagementPage(User user) throws IOException, FileNotFoundException, ParseException {
-       Database.readFromFile();
+    public FriendManagementPage(JFrame parent, User user) throws IOException, FileNotFoundException, ParseException {
+        this.parent = parent;
+        this.setPreferredSize(parent.getSize());
+        Database.readFromFile();
         this.user = user;
         setTitle("Friend Management");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         requestsPanel = new JPanel();
         requestsPanel.setLayout(new BoxLayout(requestsPanel, BoxLayout.Y_AXIS));
@@ -60,6 +62,14 @@ public class FriendManagementPage extends javax.swing.JFrame {
         add(mainPanel, BorderLayout.CENTER);
         pack();
         setVisible(true);
+        
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
     }
 
     private JPanel createLabeledSection(String title, JScrollPane content) {
@@ -72,6 +82,7 @@ public class FriendManagementPage extends javax.swing.JFrame {
     }
 
     private void populateRequestsPanel(User user) {
+        saveData();
         requestsPanel.removeAll();
         requestsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         HashMap<Long, FriendshipStatus> relationships = user.getRelationships();
@@ -138,6 +149,7 @@ declineButton.addActionListener(e -> {
         return requestPanel;
     }
     private void populateFriendsPanel(User user) {
+        saveData();
         FriendsPanel.removeAll();
         FriendsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         for (Map.Entry<Long, FriendshipStatus> entry : user.getRelationships().entrySet()) {
@@ -291,13 +303,24 @@ declineButton.addActionListener(e -> {
     suggestionPanel.add(declineButton);
     return suggestionPanel;
 }
-
+  
+    private void saveData(){
+        try {
+            this.Database.saveToFile();
+        } catch (Exception e) {
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -313,55 +336,17 @@ declineButton.addActionListener(e -> {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("Before FINALLY");
         try {
-            char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-            User user1 = new User.UserBuilder(1234L, "john.doe@example.com", "johndoe", charArray, LocalDate.of(1990, 5, 20), true)
-                    .bio("Just a regular guy.").profilePic("otajpg.jpg")
-                    .build();
-          
-            User user2 = new User.UserBuilder(5678L, "jane.smith@example.com", "janesmith", new char[]{'p', 'a', 's', 's'}, LocalDate.of(1992, 7, 15), true)
-                    .bio("Adventurer and tech enthusiast.")
-                    .build();
-            
-            User user3 = new User.UserBuilder(9101L, "mark.wilson@example.com", "markw", new char[]{'s', 'e', 'c', 'r', 'e', 't'}, LocalDate.of(1985, 3, 10), false)
-                    .bio("Coffee lover and bookworm.").profilePic("otajpg.jpg")
-                    .build();
-            
-            User user4 = new User.UserBuilder(1121, "linda.brown@example.com", "lindab", new char[]{'1', '2', '3', '4'}, LocalDate.of(1995, 11, 25), true)
-                    .bio("Traveler and photographer.").profilePic("otajpg.jpg")
-                    .build();
-            
-           user1.addRelationship(5678L, FriendshipStatus.PENDINGSENDER);
-            user2.addRelationship(1234L, FriendshipStatus.PENDINGRECIEVER);
-             user3.addRelationship(5678L, FriendshipStatus.PENDINGSENDER);
-            user2.addRelationship(9101L, FriendshipStatus.PENDINGRECIEVER);
-            UserDatabase Database = UserDatabase.getInstance();
-            Database.addUser(user1);
-            Database.addUser(user2);
-             Database.addUser(user3);
-              Database.addUser(user4);
-            Database.saveToFile();
-java.awt.EventQueue.invokeLater(new Runnable() {
-    public void run() {
-        try {
-            new FriendManagementPage(user2).setVisible(true);
-        } catch (IOException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            this.Database.saveToFile();
+        } catch (Exception ex) {}
+        finally{
+            System.out.println("IN FINALLY");
+            this.parent.setVisible(true);
+            this.dispose();
         }
-    }
-});
-        } catch (IOException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
