@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Utilities.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -55,9 +57,22 @@ public class contentPanel{
         } catch (Exception ex) {}
         
         String name = myD.getUserFromId(myPost.getAuthorId()).getUsername();
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         JLabel authorLabel = new JLabel(name);
-        authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        postPanel.add(authorLabel);
+        authorLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        LocalDateTime contentTime = myPost.getTimestamp();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        JLabel dateTimeLabel = new JLabel(contentTime.format(formatter));     
+        dateTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        headerPanel.add(authorLabel, BorderLayout.WEST);
+        headerPanel.add(dateTimeLabel, BorderLayout.EAST);
+
+        postPanel.add(headerPanel);
         BufferedImage myImage = null;
         try{
             myImage = ImageIO.read(new File(myPost.getContentImagePath()));

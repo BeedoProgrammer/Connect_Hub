@@ -82,6 +82,7 @@ public class FriendManagementPage extends javax.swing.JFrame {
     }
 
     private void populateRequestsPanel(User user) {
+        saveData();
         requestsPanel.removeAll();
         requestsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         HashMap<Long, FriendshipStatus> relationships = user.getRelationships();
@@ -148,6 +149,7 @@ declineButton.addActionListener(e -> {
         return requestPanel;
     }
     private void populateFriendsPanel(User user) {
+        saveData();
         FriendsPanel.removeAll();
         FriendsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         for (Map.Entry<Long, FriendshipStatus> entry : user.getRelationships().entrySet()) {
@@ -301,7 +303,13 @@ declineButton.addActionListener(e -> {
     suggestionPanel.add(declineButton);
     return suggestionPanel;
 }
-
+  
+    private void saveData(){
+        try {
+            this.Database.saveToFile();
+        } catch (Exception e) {
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

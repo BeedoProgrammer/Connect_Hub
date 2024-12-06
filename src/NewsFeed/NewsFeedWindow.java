@@ -186,7 +186,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     }
     
     private void profileMouseClickEvent(){
-        Frontend.ProfileManagement profile = new Frontend.ProfileManagement("My Profile", this,this.myFeed.getCurrentUser());
+        Frontend.ProfileManagementWindow profile = new Frontend.ProfileManagementWindow("My Profile", this,this.myFeed.getCurrentUser());
         profile.setVisible(true);
         this.setVisible(false);
     }

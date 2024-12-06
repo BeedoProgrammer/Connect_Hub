@@ -40,9 +40,13 @@ public class NewsFeed {
     }
     
     public void assignUsers(){
-        for (User user : this.allUsers) { 
+        for (User user : this.allUsers) {
             if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
                 this.friendSuggestions.add(user); 
+                System.out.println(user.getUsername());
+                System.out.println(user.getUserId());
+                System.out.println(currentUser.getUserId());
+                System.out.println("__________");
             }else if(currentUser.getRelationshipStatus(user.getUserId()) == FriendshipStatus.ACCEPTED){
                 this.friendList.add(user);
             }
