@@ -61,7 +61,6 @@
                           <Component id="bioText" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="panel1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="logout" min="-2" pref="205" max="-2" attributes="0"/>
@@ -73,6 +72,7 @@
                           <Component id="updatePassword" alignment="1" min="-2" pref="205" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="panel1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -127,7 +127,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    protected void paintComponent(Graphics g) {&#xa;        super.paintComponent(g);&#xa;        ImageIcon img = new ImageIcon(user.getCoverPhoto());&#xa;        Image coverPhoto = img.getImage();&#xa;&#xa;        if(coverPhoto != null){&#xa;            int x = (getWidth() - coverPhoto.getWidth(null)) / 2;&#xa;            int y = (getHeight()- coverPhoto.getHeight(null)) / 2;&#xa;            g.drawImage(coverPhoto, x, y, this);&#xa;        }&#xa;    }}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    protected void paintComponent(Graphics g) {&#xa;        super.paintComponent(g);&#xa;        ImageIcon img = new ImageIcon(user.getCoverPhoto());&#xa;        Image coverPhoto = img.getImage();&#xa;&#xa;        if(coverPhoto != null)&#xa;            g.drawImage(coverPhoto, 0, 0, getWidth(), getHeight(), this);  &#xa;    }}"/>
       </AuxValues>
 
       <Layout>
@@ -150,7 +150,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    protected void paintComponent(Graphics g) {&#xa;        super.paintComponent(g);&#xa;        ImageIcon img = new ImageIcon(user.getProfilePic());&#xa;        Image profilePic = img.getImage();&#xa;&#xa;        if(profilePic != null){&#xa;            int x = (getWidth() - profilePic.getWidth(null)) / 2;&#xa;            int y = (getHeight()- profilePic.getHeight(null)) / 2;&#xa;            g.drawImage(profilePic, x, y, this);&#xa;        }&#xa;    }}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    protected void paintComponent(Graphics g) {&#xa;        super.paintComponent(g);&#xa;        ImageIcon img = new ImageIcon(user.getProfilePic());&#xa;        Image profilePic = img.getImage();&#xa;&#xa;        if(profilePic != null)&#xa;            g.drawImage(profilePic, 0, 0, getWidth(), getHeight(), this);  &#xa;    }}"/>
       </AuxValues>
 
       <Layout>
