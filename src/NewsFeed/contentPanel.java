@@ -54,7 +54,6 @@ public class contentPanel{
             myD.readFromFile();
         } catch (Exception ex) {}
         
-        System.out.println(myD.getUsers());
         String name = myD.getUserFromId(myPost.getAuthorId()).getUsername();
         JLabel authorLabel = new JLabel(name);
         authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);

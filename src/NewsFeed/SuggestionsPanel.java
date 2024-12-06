@@ -23,27 +23,13 @@ public class SuggestionsPanel{
     private JPanel SuggestionsPanel;
     private int currentSuggestionIndex = 0;
     
-    public SuggestionsPanel(Dimension myDimension, User currentUser) {
+    public SuggestionsPanel(Dimension myDimension, User currentUser, ArrayList<User> Suggested) {
         this.myDimensions = myDimension;
         this.currentUser = currentUser;
-        mySugesstions = new ArrayList<>();
+        mySugesstions = Suggested;
         SuggestionsPanel = new JPanel();
         SuggestionsPanel.setLayout(new BoxLayout(SuggestionsPanel, BoxLayout.Y_AXIS));
-        initializeSuggestions();
         populateSuggestionsPanel();
-    }
-    
-     private void initializeSuggestions() {
-        mySugesstions.clear();
-        UserDatabase usersDatabase = UserDatabase.getInstance();
-        try {
-            usersDatabase.readFromFile();
-        } catch (Exception ex) {}
-        for (User user : usersDatabase.getUsers()) {
-            if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
-                mySugesstions.add(user);
-            }
-        }
     }
     
     private JPanel createsuggestedPanel(User Suggested){
@@ -142,6 +128,10 @@ public class SuggestionsPanel{
         return SuggestionsPanel;
     }
     
+    public JScrollPane getScrollPane(){
+        return new JScrollPane(getSuggestionsPanel());
+    }
+    
     public static void main(String[] args){
         JFrame frame = new JFrame("Newsfeed");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,8 +144,8 @@ public class SuggestionsPanel{
         
         User currentUser = myD.getUsers().get(0);
         
-        SuggestionsPanel preview =  new SuggestionsPanel(new Dimension(150, 200), currentUser);
-        JPanel myPanel = preview.getSuggestionsPanel();
+        SuggestionsPanel mySP = new SuggestionsPanel(new Dimension(100, 100), myD.getUsers().get(0), myD.getUsers());
+        JPanel myPanel = mySP.getSuggestionsPanel();
         
         frame.add(myPanel, BorderLayout.NORTH);
         frame.setVisible(true);
