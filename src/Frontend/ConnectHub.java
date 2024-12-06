@@ -3,6 +3,10 @@ package Frontend;
 import Backend.*;
 import frontend.SignUp;
 import frontend.LogIn;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 public class ConnectHub extends javax.swing.JFrame {
 
@@ -65,17 +69,29 @@ public class ConnectHub extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        // TODO add your handling code here:
-        LogIn logIn = new LogIn("LogIn");
-        logIn.setLocationRelativeTo(null);
-        logIn.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            LogIn logIn = new LogIn("LogIn");
+            logIn.setLocationRelativeTo(null);
+            logIn.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_loginActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-        // TODO add your handling code here:
-        SignUp signUp = new SignUp("Sign Up");
-        signUp.setLocationRelativeTo(null);
-        signUp.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            SignUp signUp = new SignUp("Sign Up");
+            signUp.setLocationRelativeTo(null);
+            signUp.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_signupActionPerformed
 
      public static void main(String args[]) {
