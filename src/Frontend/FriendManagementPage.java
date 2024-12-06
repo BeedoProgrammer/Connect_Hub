@@ -340,56 +340,6 @@ declineButton.addActionListener(e -> {
         }
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-            User user1 = new User.UserBuilder(1234L, "john.doe@example.com", "johndoe", charArray, LocalDate.of(1990, 5, 20), true)
-                    .bio("Just a regular guy.").profilePic("otajpg.jpg")
-                    .build();
-          
-            User user2 = new User.UserBuilder(5678L, "jane.smith@example.com", "janesmith", new char[]{'p', 'a', 's', 's'}, LocalDate.of(1992, 7, 15), true)
-                    .bio("Adventurer and tech enthusiast.")
-                    .build();
-            
-            User user3 = new User.UserBuilder(9101L, "mark.wilson@example.com", "markw", new char[]{'s', 'e', 'c', 'r', 'e', 't'}, LocalDate.of(1985, 3, 10), false)
-                    .bio("Coffee lover and bookworm.").profilePic("otajpg.jpg")
-                    .build();
-            
-            User user4 = new User.UserBuilder(1121, "linda.brown@example.com", "lindab", new char[]{'1', '2', '3', '4'}, LocalDate.of(1995, 11, 25), true)
-                    .bio("Traveler and photographer.").profilePic("otajpg.jpg")
-                    .build();
-            
-           user1.addRelationship(5678L, FriendshipStatus.PENDINGSENDER);
-            user2.addRelationship(1234L, FriendshipStatus.PENDINGRECIEVER);
-             user3.addRelationship(5678L, FriendshipStatus.PENDINGSENDER);
-            user2.addRelationship(9101L, FriendshipStatus.PENDINGRECIEVER);
-            UserDatabase Database = UserDatabase.getInstance();
-            Database.addUser(user1);
-            Database.addUser(user2);
-             Database.addUser(user3);
-              Database.addUser(user4);
-            Database.saveToFile();
-java.awt.EventQueue.invokeLater(new Runnable() {
-    public void run() {
-        try {
-            new FriendManagementPage(user2).setVisible(true);
-        } catch (IOException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-});
-        } catch (IOException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FriendManagementPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

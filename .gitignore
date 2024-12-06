@@ -6,6 +6,8 @@
 !src/**
 !lib/
 !lib/**
+!files/
+!files/**
 
 nbproject/
 nbproject/private/

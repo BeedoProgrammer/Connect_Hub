@@ -7,6 +7,9 @@ import frontend.LogIn;
 import frontend.SignUp;
 import java.io.*;
 import java.time.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 public class ProfileManagement extends javax.swing.JFrame {
     static User user;
@@ -347,7 +350,10 @@ public class ProfileManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_updatePasswordActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        // TODO add your handling code here:
+        ConnectHub connectHub = new ConnectHub("Connect Hub");
+        connectHub.setLocationRelativeTo(null);
+        connectHub.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void seeMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeMoreActionPerformed
@@ -367,6 +373,14 @@ public class ProfileManagement extends javax.swing.JFrame {
         bioText.setText(input);
     }//GEN-LAST:event_bioActionPerformed
 
+    private void saveUser(){
+        try {
+            UserDatabase myD = UserDatabase.getInstance();
+            myD.readFromFile();
+            
+        } catch (Exception ex) {}
+    }
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.parent.setVisible(true);
         this.dispose();
