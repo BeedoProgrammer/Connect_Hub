@@ -1,16 +1,21 @@
 package frontend;
 
 import Backend.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import org.json.simple.parser.ParseException;
 
 public class SignUp extends javax.swing.JFrame {
     private UserDatabase userDatabase;
     
-    public SignUp(String title, UserDatabase userDatabase) {
+    public SignUp(String title) throws IOException, FileNotFoundException, ParseException {
         super(title);
-        this.userDatabase = userDatabase;
+        userDatabase = UserDatabase.getInstance();
         initComponents();
     }
 
@@ -31,12 +36,6 @@ public class SignUp extends javax.swing.JFrame {
         date = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        username.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
-            }
-        });
 
         Jpanel1.setBackground(new java.awt.Color(0, 0, 0));
         Jpanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,10 +128,6 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
-
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
         // TODO add your handling code here:
         char[] Pass = password.getPassword();
@@ -160,15 +155,24 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Username already taken");
             }
             else{
-                Random random = new Random();
-                long uniqueId;
-
-                do {
-                    uniqueId = Math.abs(random.nextLong());   
-                }while(userDatabase.getUserFromId(uniqueId) != null);
-            
-                LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                //this.dispose();
+                try {
+                    Random random = new Random();
+                    long uniqueId;
+                    
+                    do {
+                        uniqueId = Math.abs(random.nextLong());
+                    }while(userDatabase.getUserFromId(uniqueId) != null);
+                    
+                    LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    
+                    User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), Pass1, dateOfBirth, true).build();
+                    userDatabase.addUser(user);
+                    //this.dispose();
+                } catch (IOException ex) {
+                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_signupActionPerformed
