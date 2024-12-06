@@ -17,9 +17,9 @@ public class ProfileManagement {
         this.storyDatabase = storyDatabase;
     }
     
-    public ArrayList<Post> getPosts(){
-        ArrayList<Post> postData = postDatabase.getPosts();
-        ArrayList<Post> posts = new ArrayList<>();
+    public ArrayList<Content> getPosts(){
+        ArrayList<Content> postData = postDatabase.getPosts();
+        ArrayList<Content> posts = new ArrayList<>();
         
         for(int i = 0; i < postData.size(); i++){
             if(postData.get(i).getAuthorId() == userDetails.getUserId())
@@ -29,9 +29,9 @@ public class ProfileManagement {
         return posts;
     }
     
-    public ArrayList<Story> getStories(){
-        ArrayList<Story> storyData = storyDatabase.getStories();
-        ArrayList<Story> stories = new ArrayList<>();
+    public ArrayList<Content> getStories(){
+        ArrayList<Content> storyData = storyDatabase.getStories();
+        ArrayList<Content> stories = new ArrayList<>();
         
         for(int i = 0; i < storyData.size(); i++){
             if(storyData.get(i).getAuthorId() == userDetails.getUserId())
