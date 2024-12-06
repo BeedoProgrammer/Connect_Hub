@@ -354,31 +354,6 @@ public class ProfileManagement extends javax.swing.JFrame {
         bioText.setText(input);
     }//GEN-LAST:event_bioActionPerformed
 
-    public static void main(String args[]) {
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                UserDatabase userDatabase = UserDatabase.getInstance();
-                char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-                User user = new User.UserBuilder(1234, "john.doe@example.com", "johndoe", charArray, LocalDate.of(1990, 5, 20), true)
-                        .bio("Just a regular guy.")
-                        .build();
-                
-                //ProfileManagement profileManagement = new ProfileManagement("Profile Management", user);
-                //profileManagement.setLocationRelativeTo(null);
-                //profileManagement.setVisible(true);
-                
-                //LogIn logIn = new LogIn("LogIn", user);
-                //logIn.setLocationRelativeTo(null);
-                //logIn.setVisible(true);
-                
-                SignUp signUp = new SignUp("Sign Up", userDatabase);
-                signUp.setLocationRelativeTo(null);
-                signUp.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;
     private javax.swing.JButton bio;
