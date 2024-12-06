@@ -40,7 +40,7 @@ public abstract class Database {
     }
     public void addRecord(Object record) throws IOException, FileNotFoundException, ParseException {
         records.add(record);
-//        saveToFile();
+        saveToFile();
     }
     protected ArrayList<Object> getRecords() {
         return records;
@@ -51,9 +51,5 @@ public abstract class Database {
     public String getFileName() {
         return fileName;
     }
-
-//    public void setFileName(String fileName) {
-//        this.fileName = fileName;
-//    }
     
 }
