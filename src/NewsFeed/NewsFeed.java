@@ -12,26 +12,47 @@ import java.util.*;
  * @author Abdel
  */
 public class NewsFeed {
-    ArrayList<Content> postList;
-    ArrayList<Content> storyList;
-    ArrayList<User> friendList;
-    ArrayList<User> friendSuggestions;
-    Loader dataLoader;
+    private ArrayList<Content> postList;
+    private ArrayList<Content> storyList;
+    private ArrayList<User> allUsers;
+    private ArrayList<User> friendList;
+    private ArrayList<User> friendSuggestions;
+    private User currentUser;
+    private Loader dataLoader;
     
-    public NewsFeed() {
+    public NewsFeed(User current) {
+        this.friendSuggestions = new ArrayList<>();
+        this.friendList = new ArrayList<>();
+        this.currentUser = current;
+        refresh();
+    }
+    
+    public void refresh(){
         load();
+        assignUsers();
     }
     
     public void load(){
         dataLoader = new Loader();
         postList = dataLoader.getPosts();
         storyList = dataLoader.getSories();
-        friendList = dataLoader.getFriends();
-        friendSuggestions = dataLoader.getSuggestions();
+        allUsers = dataLoader.getUsers();
     }
     
-    public void refresh(){
-        load();
+    public void assignUsers(){
+        for (User user : this.allUsers) { 
+            if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
+                this.friendSuggestions.add(user); 
+                System.out.println("Suggestions: " + user.getUsername());
+            }else if(currentUser.getRelationshipStatus(user.getUserId()) == FriendshipStatus.ACCEPTED){
+                this.friendList.add(user);
+                System.out.println("Friends: " + user.getUsername());
+            }
+        }
+    }
+    
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     public ArrayList<Content> getPostList() {
@@ -43,6 +64,18 @@ public class NewsFeed {
     }
 
     public ArrayList<User> getFriendList() {
+        this.friendList.add(this.allUsers.get(0));
+        this.friendList.add(this.allUsers.get(1));
+        this.friendList.add(this.allUsers.get(0));
+        this.friendList.add(this.allUsers.get(1));
+        this.friendList.add(this.allUsers.get(0));
+        this.friendList.add(this.allUsers.get(1));
+        this.friendList.add(this.allUsers.get(0));
+        this.friendList.add(this.allUsers.get(1));
+        this.friendList.add(this.allUsers.get(0));
+        this.friendList.add(this.allUsers.get(1));
+        this.friendList.add(this.allUsers.get(0));
+        this.friendList.add(this.allUsers.get(1));
         return friendList;
     }
 
@@ -51,18 +84,30 @@ public class NewsFeed {
     }
     
     class Loader{
+        private UserDatabase userDatabase;
+        private PostDatabase postDatabase;
+        private StoryDatabase storyDatabase;
         
+        public Loader() {
+            try {
+                userDatabase = UserDatabase.getInstance();
+                postDatabase = PostDatabase.getInstance();
+                storyDatabase = StoryDatabase.getInstance();
+                userDatabase.readFromFile();
+                postDatabase.readFromFile();
+                storyDatabase.readFromFile();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         public ArrayList<Content> getPosts(){
-            return null;
+            return this.postDatabase.getPosts();
         }
         public ArrayList<Content> getSories(){
-            return null;
+            return this.storyDatabase.getStories();
         }
-        public ArrayList<User> getFriends(){
-            return null;
-        }
-        public ArrayList<User> getSuggestions(){
-            return null;
+        public ArrayList<User> getUsers(){
+            return this.userDatabase.getUsers();
         }
     }
 }

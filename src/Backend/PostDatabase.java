@@ -22,7 +22,7 @@ public class PostDatabase extends Database {
     
     public static PostDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
-            instance = new PostDatabase("posts.json");
+            instance = new PostDatabase("files/posts.json");
             instance.readFromFile();
         }
         return instance;
@@ -55,9 +55,9 @@ public class PostDatabase extends Database {
     public void addPost(Post post) throws IOException, FileNotFoundException, ParseException {
         super.addRecord(post);
     }
-    public ArrayList<Post> getPosts() {
+    public ArrayList<Content> getPosts() {
         ArrayList<Object> tempObjects = super.getRecords();
-        ArrayList<Post> posts = new ArrayList<>();
+        ArrayList<Content> posts = new ArrayList<>();
         for (Object tempObject : tempObjects) {
             posts.add((Post)tempObject);
         }

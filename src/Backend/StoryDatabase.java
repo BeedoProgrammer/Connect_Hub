@@ -20,7 +20,7 @@ public class StoryDatabase extends Database {
     
     public static StoryDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
-            instance = new StoryDatabase("stories.json");
+            instance = new StoryDatabase("files/stories.json");
         }
         instance.readFromFile();
         return instance;
@@ -54,9 +54,9 @@ public class StoryDatabase extends Database {
     public void addStory(Story story) throws IOException, FileNotFoundException, ParseException {
         super.addRecord(story);
     }
-    public ArrayList<Story> getStories() {
+    public ArrayList<Content> getStories() {
         ArrayList<Object> tempObjects = super.getRecords();
-        ArrayList<Story> stories = new ArrayList<>();
+        ArrayList<Content> stories = new ArrayList<>();
         for (Object tempObject : tempObjects) {
             stories.add((Story)tempObject);
         }

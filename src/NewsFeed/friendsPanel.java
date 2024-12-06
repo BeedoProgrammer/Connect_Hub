@@ -90,39 +90,5 @@ public class friendsPanel{
         scrollPane.repaint();
 
         return scrollPane;
-    }
-    
-    public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame("Newsfeed");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 500);
-        frame.setLayout(new BorderLayout());
-
-        UserDatabase myD = UserDatabase.getInstance();
-        try {
-            myD.readFromFile();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        ArrayList<User> myFriends = myD.getUsers();
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(1));
-        myFriends.add(myFriends.get(0));
-        myFriends.add(myFriends.get(0));
-
-        friendsPanel FriendsPanel = new friendsPanel(new Dimension(120, 200), myFriends);
-        JScrollPane scrollPane = FriendsPanel.getFriendsScrollable();
-        scrollPane.setPreferredSize(new Dimension(120, 200));
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        frame.add(scrollPane, BorderLayout.NORTH);
-        frame.setVisible(true);
-    }        
+    }    
 }

@@ -45,7 +45,7 @@ public class contentPanel{
         return textHeight + imageHeight + labelHeight + padding;
     }
     
-    private JPanel createPostPanel(Content myPost){
+    private JPanel createPostPanel(Content myPost) throws Exception{
         JPanel postPanel = new JPanel();
         postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
         postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));        
@@ -54,7 +54,6 @@ public class contentPanel{
             myD.readFromFile();
         } catch (Exception ex) {}
         
-        System.out.println(myD.getUsers());
         String name = myD.getUserFromId(myPost.getAuthorId()).getUsername();
         JLabel authorLabel = new JLabel(name);
         authorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -93,10 +92,12 @@ public class contentPanel{
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));        
         for(Content i : myContent){
-            JPanel contentPanel = createPostPanel(i);
-            contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            previewPanel.add(contentPanel);
-            contentPanel.setVisible(true);
+            try{
+                JPanel contentPanel = createPostPanel(i);
+                contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                previewPanel.add(contentPanel);
+                contentPanel.setVisible(true);
+            }catch(Exception e){}
         }
         
         previewPanel.setBorder(new EmptyBorder(10, 10, 10, 10));

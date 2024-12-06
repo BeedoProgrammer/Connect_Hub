@@ -8,14 +8,44 @@ import Backend.*;
 import javax.swing.*;
 import java.awt.Dimension;
 
-public class NewsFeedWindow extends javax.swing.JFrame {
+public class NewsFeedWindowOLD extends javax.swing.JFrame {
     NewsFeed myFeed;
     
-    public NewsFeedWindow(User currentUser) {
+    public NewsFeedWindowOLD(User currentUser) {
         myFeed = new NewsFeed(currentUser);
         initComponents();
+        System.out.println(":LLOLO");
+        JFrame my = new JFrame("LOL");
+        my.setSize(new Dimension(200, 200));
+        this.suggestionsPanel = new SuggestionsPanel(new Dimension(100, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
+        my.add(suggestionsPanel);
+        my.setVisible(true);
+        this.revalidate();
+        this.repaint();
+//        initCustom();
+    }
+
+    private void initCustom(){
+//        JScrollPane storiesPanel = new contentPanel(this.storiesPanel.getSize(), this.myFeed.getStoryList()).getContentScrollable();
+        JScrollPane postsPanel = new contentPanel(this.postsPanel.getSize(), this.myFeed.getPostList()).getContentScrollable();
+        JScrollPane friendsPanel = new friendsPanel(this.friendsPanel.getSize(), this.myFeed.getFriendList()).getFriendsScrollable();
+//        JPanel suggestedPanel = new SuggestionsPanel(this.suggestionsPanel.getSize(), myFeed.getCurrentUser()).getSuggestionsPanel();
+    
+//        this.storiesPanel = storiesPanel;
+        this.postsPanel = postsPanel;
+        this.friendsPanel = friendsPanel;
+//        this.suggestionsPanel = suggestedPanel;
+        
+//        this.storiesPanel.repaint();
+        this.postsPanel.repaint();
+        this.friendsPanel.repaint();
+        this.suggestionsPanel.repaint();
+        
+        this.repaint();
     }
     
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -29,13 +59,13 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         storiesPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getStoryList()).getContentScrollable();
         postsPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getPostList()).getContentScrollable();
         friendsPanel = new friendsPanel(new Dimension(170, 200), this.myFeed.getFriendList()).getFriendsScrollable();
-        suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
+        suggestionsPanel = new javax.swing.JPanel();
         newStoryButton1 = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 700));
+        setPreferredSize(new java.awt.Dimension(600, 650));
 
         profilePanel.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -66,7 +96,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         jLabel4.setText("Friends");
 
         javax.swing.GroupLayout suggestionsPanelLayout = new javax.swing.GroupLayout(suggestionsPanel);
-//        suggestionsPanel.setLayout(suggestionsPanelLayout);
+        suggestionsPanel.setLayout(suggestionsPanelLayout);
         suggestionsPanelLayout.setHorizontalGroup(
             suggestionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 206, Short.MAX_VALUE)
@@ -149,7 +179,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
     
     /**
      * @param args the command line arguments
@@ -187,7 +217,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
                 try {
                     UserDatabase myD = UserDatabase.getInstance();
                     myD.readFromFile();
-                    new NewsFeedWindow(myD.getUsers().get(0)).setVisible(true);
+                    new NewsFeedWindowOLD(myD.getUsers().get(0)).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -195,7 +225,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane friendsPanel;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
@@ -209,5 +239,5 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     private javax.swing.JButton refreshButton;
     private javax.swing.JScrollPane storiesPanel;
     private javax.swing.JPanel suggestionsPanel;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }
