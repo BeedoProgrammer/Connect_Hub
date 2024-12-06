@@ -19,7 +19,7 @@ public class UserDatabase extends Database {
     
     public static UserDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
-            instance = new UserDatabase("users.json");   
+            instance = new UserDatabase("files/users.json");
         }
         instance.readFromFile();
         return instance;
