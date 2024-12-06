@@ -18,10 +18,11 @@ import org.json.simple.parser.ParseException;
 public class StoryDatabase extends Database {  
     private static StoryDatabase instance = null;
     
-    public static StoryDatabase getInstance() {
+    public static StoryDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
             instance = new StoryDatabase("stories.json");
         }
+        instance.readFromFile();
         return instance;
     }
 

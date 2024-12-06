@@ -20,9 +20,10 @@ public class PostDatabase extends Database {
     
     private static PostDatabase instance = null;
     
-    public static PostDatabase getInstance() {
+    public static PostDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
             instance = new PostDatabase("posts.json");
+            instance.readFromFile();
         }
         return instance;
     }

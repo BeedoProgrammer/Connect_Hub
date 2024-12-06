@@ -17,10 +17,11 @@ import org.json.simple.parser.ParseException;
 public class UserDatabase extends Database {    
     private static UserDatabase instance = null;
     
-    public static UserDatabase getInstance() {
+    public static UserDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
-            instance = new UserDatabase("users.json");
+            instance = new UserDatabase("users.json");   
         }
+        instance.readFromFile();
         return instance;
     }
     
