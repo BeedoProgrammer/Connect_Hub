@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Utilities.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.border.EmptyBorder;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -109,8 +106,8 @@ public class contentPanel{
 
         JScrollPane scrollPane = new JScrollPane(previewPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getVerticalScrollBar().setUI(new ModernScrollBarUI());
-        previewPanel.revalidate();
-        previewPanel.repaint();
+        scrollPane.revalidate();
+        scrollPane.repaint();
 
         return scrollPane;
     }

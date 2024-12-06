@@ -14,8 +14,8 @@ import java.util.*;
 public class NewsFeed {
     ArrayList<Content> postList;
     ArrayList<Content> storyList;
-    ArrayList<Friend> friendList;
-    ArrayList<Friend> friendSuggestions;
+    ArrayList<User> friendList;
+    ArrayList<User> friendSuggestions;
     Loader dataLoader;
     
     public NewsFeed() {
@@ -42,32 +42,27 @@ public class NewsFeed {
         return storyList;
     }
 
-    public ArrayList<Friend> getFriendList() {
+    public ArrayList<User> getFriendList() {
         return friendList;
     }
 
-    public ArrayList<Friend> getFriendSuggestions() {
+    public ArrayList<User> getFriendSuggestions() {
         return friendSuggestions;
     }
-}
-
-
-// TEMP
-class Friend{
     
-}
-
-class Loader{
-    public ArrayList<Content> getPosts(){
-        return null;
-    }
-    public ArrayList<Content> getSories(){
-        return null;
-    }
-    public ArrayList<Friend> getFriends(){
-        return null;
-    }
-    public ArrayList<Friend> getSuggestions(){
-        return null;
+    class Loader{
+        
+        public ArrayList<Content> getPosts(){
+            return null;
+        }
+        public ArrayList<Content> getSories(){
+            return null;
+        }
+        public ArrayList<User> getFriends(){
+            return null;
+        }
+        public ArrayList<User> getSuggestions(){
+            return null;
+        }
     }
 }
