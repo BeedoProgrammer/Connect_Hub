@@ -25,7 +25,10 @@ public abstract class Database {
         jsonRecords = (JSONArray) new JSONParser().parse(new FileReader(fileName));
         // parse each element in the jsonArray into a user object
         for (int i = 0; i < jsonRecords.size(); i++) {
-            records.add(getRecordFromMap((Map)jsonRecords.get(i)));
+            Object tempRecord = getRecordFromMap((Map)jsonRecords.get(i));
+            if (tempRecord != null) {
+                records.add(tempRecord);
+            }
         }
     }
     public void saveToFile() throws FileNotFoundException, IOException, ParseException {    // saves users arraylist into json format file
