@@ -103,7 +103,8 @@ public class FriendManagementPage extends javax.swing.JFrame {
             if (suggestionCount == 1) {
                 break; 
             }
-            User suggestedUser = UserDatabase.getUsersDatabase().get(userId); // get User of suggestion with id 
+            UserDatabase userDatabase = UserDatabase.getInstance();
+            User suggestedUser = userDatabase.getUserFromId(userId); // get User of suggestion with id 
             if (suggestedUser != null) {
                 JPanel suggestionPanel = createSuggestionPanel(currentUser, suggestedUser);
                 SuggestionsPanel.add(suggestionPanel);
@@ -247,7 +248,8 @@ public class FriendManagementPage extends javax.swing.JFrame {
    
 
     private User getFriendById(long userId) {
-        return UserDatabase.getUserById(userId);
+        UserDatabase userDatabase = UserDatabase.getInstance();
+        return userDatabase.getUserFromId(userId);
     }
 
     @SuppressWarnings("unchecked")
@@ -269,36 +271,6 @@ public class FriendManagementPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        System.out.println("hi");
-        User user1 = new User(1L, "user1@example.com", "SENSO", "password123", "1990-01-01", true);
-        User user2 = new User(2L, "user2@example.com", "BEEDO", "password456", "1992-05-15", true);
-        User user3 = new User(3L, "user3@example.com", "JOE", "password789", "1995-07-25", false);
-        User user4 = new User(4L, "user3@example.com", "abdo", "password789", "1995-07-25", false);
-        User user5 = new User(5L, "user3@example.com", "essam", "password789", "1995-07-25", false);
-        UserDatabase.addUser(user1);
-        UserDatabase.addUser(user2);
-        UserDatabase.addUser(user3);
-        UserDatabase.addUser(user4);
-        UserDatabase.addUser(user5);
-        user1.getRelationships().put(user2.getUserId(), FriendshipStatus.PENDINGRECIEVER);
-        user1.getRelationships().put(user3.getUserId(), FriendshipStatus.ACCEPTED);
-//       user1.getRelationships().put(user4.getUserId(), FriendshipStatus.ACCEPTED);
-//       user1.getRelationships().put(user5.getUserId(), FriendshipStatus.ACCEPTED);
-        user2.getRelationships().put(user1.getUserId(), FriendshipStatus.PENDINGSENDER);
-        user3.getRelationships().put(user1.getUserId(), FriendshipStatus.ACCEPTED);
-//       user4.getRelationships().put(user1.getUserId(), FriendshipStatus.ACCEPTED);
-//       user5.getRelationships().put(user1.getUserId(), FriendshipStatus.ACCEPTED);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FriendManagementPage(user1).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -5,11 +5,11 @@ import javax.swing.*;
 import java.util.*;
 
 public class LogIn extends javax.swing.JFrame {
-    User user;
+    private UserDatabase userDatabase;
     
-    public LogIn(String title, User user) {
+    public LogIn(String title) {
         super(title);
-        this.user = user;
+        userDatabase = UserDatabase.getInstance();
         initComponents();
     }
 
@@ -99,10 +99,22 @@ public class LogIn extends javax.swing.JFrame {
         
         if(Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass.toString()))
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
-        else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
-            JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
         else{
-            //this.dispose();
+            ArrayList<User> userData = userDatabase.getUsers();
+            User user = null;
+            for(int i = 0; i < userData.size(); i++){
+                if(email.getText().equals(userData.get(i).getEmail())){
+                    user = userData.get(i);
+                    break;
+                }
+            }
+            if(user == null)
+                JOptionPane.showMessageDialog(rootPane, "There is no account with this email");
+            else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
+                JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
+            else{
+                //this.dispose();
+            }  
         }
     }//GEN-LAST:event_loginActionPerformed
 
