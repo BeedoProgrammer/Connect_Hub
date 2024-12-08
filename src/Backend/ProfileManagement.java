@@ -3,7 +3,7 @@ package Backend;
 import java.util.*;
 
 public class ProfileManagement {
-    private PostDatabase postDatabase; 
+    private PostDatabase postDatabase;
     private UserDatabase userDatabase;
     private StoryDatabase storyDatabase;
     private User currentUser;

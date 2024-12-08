@@ -73,6 +73,7 @@ public class ConnectHub extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         try {
             LogIn logIn = new LogIn(this, "LogIn");
+            logIn.setLocationRelativeTo(null);
             logIn.setVisible(true);
             currentUser = logIn.getCurrentUser();
             this.dispose();
