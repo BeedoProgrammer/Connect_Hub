@@ -76,7 +76,9 @@ public class ConnectHub extends javax.swing.JFrame {
             logIn.setLocationRelativeTo(null);
             logIn.setVisible(true);
             currentUser = logIn.getCurrentUser();
-            this.dispose();
+            if(currentUser != null){
+                this.dispose();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -87,9 +89,13 @@ public class ConnectHub extends javax.swing.JFrame {
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
         try {
             // TODO add your handling code here:
-            SignUp signUp = new SignUp("Sign Up");
+            SignUp signUp = new SignUp(this, "Sign Up");
             signUp.setLocationRelativeTo(null);
             signUp.setVisible(true);
+            currentUser = signUp.getCurrentUser();
+            if(currentUser != null){
+                this.dispose();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {

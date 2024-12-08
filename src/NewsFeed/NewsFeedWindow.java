@@ -187,6 +187,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     
     private void profileMouseClickEvent(){
         Frontend.ProfileManagementWindow profile = new Frontend.ProfileManagementWindow("My Profile", this,this.myFeed.getCurrentUser());
+        profile.setLocationRelativeTo(null);
         profile.setVisible(true);
         this.setVisible(false);
     }
@@ -194,6 +195,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     private void friendsMouseClickEvent(){
         try{
             FriendManagementPage myPage = new FriendManagementPage(this, this.myFeed.getCurrentUser());
+            myPage.setLocationRelativeTo(null);
             myPage.setVisible(true);
             this.setVisible(false);
         }catch(Exception e){
@@ -203,6 +205,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     
     private void newButtonPressed(){
         JDialog newWindow = new CreateContentWindow(this, this.myFeed.getCurrentUser());
+        newWindow.setLocationRelativeTo(null);
         newWindow.setVisible(true);
         newWindow.dispose();
         refreshButtonPressed();

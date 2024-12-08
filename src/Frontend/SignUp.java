@@ -11,12 +11,16 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import org.json.simple.parser.ParseException;
 
-public class SignUp extends javax.swing.JFrame {
+public class SignUp extends javax.swing.JDialog {
     private UserDatabase userDatabase;
+    private User currentUser;
+    private JFrame parent;
     
-    public SignUp(String title) throws IOException, FileNotFoundException, ParseException {
-        super(title);
+    public SignUp(JFrame parent, String title) throws IOException, FileNotFoundException, ParseException {
+        super(parent, title);
+        this.setModal(true);
         userDatabase = UserDatabase.getInstance();
+        this.parent = parent;
         initComponents();
     }
 
@@ -169,6 +173,7 @@ public class SignUp extends javax.swing.JFrame {
                     User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), Pass1, dateOfBirth, true).build();
                     userDatabase.addUser(user);
                     this.dispose();
+                    parent.dispose();
                     NewsFeedWindow mainWindow = new NewsFeedWindow(user);
                     mainWindow.setVisible(true);
                     mainWindow.setLocationRelativeTo(null);
@@ -181,6 +186,10 @@ public class SignUp extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_signupActionPerformed
 
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;
     private javax.swing.JLabel Jpanel2;
