@@ -11,12 +11,14 @@ import org.json.simple.parser.ParseException;
 public class LogIn extends javax.swing.JDialog{
     private UserDatabase userDatabase;
     private User currentUser;
+    private JFrame parent;
     
     public LogIn(JFrame parent, String title) throws IOException, FileNotFoundException, ParseException {
         super(parent, title);
         this.setModal(true);
         userDatabase = UserDatabase.getInstance();
         currentUser = null;
+        this.parent = parent;
         initComponents();
     }
 
@@ -121,8 +123,10 @@ public class LogIn extends javax.swing.JDialog{
                 JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
             else{
                 this.dispose();
+                parent.dispose();
                 NewsFeedWindow mainWindow = new NewsFeedWindow(user);
                 mainWindow.setVisible(true);
+                mainWindow.setLocationRelativeTo(null);
             }  
         }
     }//GEN-LAST:event_loginActionPerformed

@@ -5,13 +5,9 @@ import java.awt.*;
 import Backend.*;
 import NewsFeed.contentPanel;
 import NewsFeed.friendsPanel;
-import frontend.LogIn;
-import frontend.SignUp;
 import java.io.*;
-import java.time.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.simple.parser.ParseException;
 
 public class ProfileManagementWindow extends javax.swing.JFrame {
     static User user;
