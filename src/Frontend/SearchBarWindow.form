@@ -24,10 +24,12 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="207" max="32767" attributes="0"/>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="Search" min="-2" max="-2" attributes="0"/>
+                      <Component id="GroupSearch" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="UserSearch" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -44,22 +46,33 @@
               <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
               <Component id="SearchInput" min="-2" pref="33" max="-2" attributes="0"/>
               <EmptySpace pref="79" max="32767" attributes="0"/>
-              <Component id="Search" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="UserSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="GroupSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="Search">
+    <Component class="javax.swing.JButton" name="UserSearch">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search"/>
+        <Property name="text" type="java.lang.String" value="User Search"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UserSearchActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="SearchInput">
+    </Component>
+    <Component class="javax.swing.JButton" name="GroupSearch">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="GroupSearch"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GroupSearchActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
