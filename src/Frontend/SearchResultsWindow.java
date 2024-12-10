@@ -41,7 +41,10 @@ public class SearchResultsWindow extends javax.swing.JFrame {
         suggestedUsers = new ArrayList<>();
         acceptedUsers = new ArrayList<>();
         pendingUsers = new ArrayList<>();
-        categorizeUsers(UserSearching.getSearchResults());
+        suggestedUsers=UserSearching.getUsersWithNoRelationship();
+         acceptedUsers=UserSearching.getAcceptedFriends();
+          pendingUsers=UserSearching.getPendingFriends();
+//        categorizeUsers(UserSearching.getSearchResults()); ///maybe be used
         setTitle("Search Results");
         setLayout(new BorderLayout());
         SuggestionPanel = new JPanel();
@@ -112,7 +115,6 @@ public class SearchResultsWindow extends javax.swing.JFrame {
         JButton viewProfileButton = new JButton("View Profile");
         JButton blockButton = new JButton("Block");
         JButton removeButton = new JButton("Remove");
-
         viewProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -137,7 +139,6 @@ public class SearchResultsWindow extends javax.swing.JFrame {
                 removeButton.setEnabled(false); // Disable after click
             }
         });
-
         userPanel.add(viewProfileButton);
         userPanel.add(blockButton);
         userPanel.add(removeButton);
@@ -149,12 +150,10 @@ public class SearchResultsWindow extends javax.swing.JFrame {
 
 private void displaySuggestedFriends() {
     SuggestionPanel.removeAll(); // Clear the panel
-
     for (User user : suggestedUsers) {
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.X_AXIS));
         userPanel.add(new JLabel(user.getUsername())); 
-
         JButton viewProfileButton = new JButton("View Profile");
         JButton blockButton = new JButton("Block");
         JButton addButton = new JButton("Add");
