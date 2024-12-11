@@ -23,25 +23,26 @@ public class NewsFeed {
     private User currentUser;
     private Loader dataLoader;
     
-    public NewsFeed(User current) {
+    public NewsFeed(long userID) {
         this.friendSuggestions = new ArrayList<>();
         this.friendList = new ArrayList<>();
         this.postList = new ArrayList<>();
         this.storyList = new ArrayList<>();
-        this.currentUser = current;
-        refresh();
+        refresh(userID);
     }
     
-    public void refresh(){
-        load();
+    public void refresh(long userID){
+        load(userID);
         assignUsers();
+        
     }
     
-    public void load(){
+    public void load(long userID){
         dataLoader = new Loader();
+        currentUser = dataLoader.getCurrentUser(userID);
+        allUsers = dataLoader.getUsers();
         updatePostList(dataLoader);
         updateStoryList(dataLoader);
-        allUsers = dataLoader.getUsers();
     }
     
     public void assignUsers(){
@@ -122,6 +123,10 @@ public class NewsFeed {
         }
         public ArrayList<User> getUsers(){
             return this.userDatabase.getUsers();
+        }
+        
+        public User getCurrentUser(long userID){
+            return this.userDatabase.getUserFromId(userID);
         }
     }
 }
