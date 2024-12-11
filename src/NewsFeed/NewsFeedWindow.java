@@ -8,15 +8,24 @@ import Database.UserDatabase;
 import Backend.*;
 import Frontend.CreateContentWindow;
 import Frontend.FriendManagementPage;
+import Utilities.ImageFunctions;
+import java.awt.Component;
 import javax.swing.*;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class NewsFeedWindow extends javax.swing.JFrame {
     NewsFeed myFeed;
     
     public NewsFeedWindow(User currentUser) {
-        myFeed = new NewsFeed(currentUser);
+        myFeed = new NewsFeed(currentUser.getUserId());
         initComponents();
     }
     
@@ -25,6 +34,23 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         postsPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getPostList()).getContentScrollable();
         friendsPanel = new friendsPanel(new Dimension(170, 200), this.myFeed.getFriendList()).getFriendsScrollable();
         suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
+    }
+    
+    private JPanel getProfilePicture(int width, int height) throws IOException{
+        BufferedImage myImage = ImageIO.read(new File(myFeed.getCurrentUser().getProfilePic()));
+        if(myImage.getWidth() > width || myImage.getHeight() > height){
+             myImage = ImageFunctions.resizeImage(myImage, width, height);                    
+        }else if(myImage.getWidth() > width){
+            myImage = ImageFunctions.resizeImage(myImage, width, 0);
+        }else if(myImage.getHeight()> height){
+            myImage = ImageFunctions.resizeImage(myImage, 0, height);
+        }
+        JLabel imageLabel = new JLabel(new ImageIcon(myImage));
+        JPanel imagePanel = new JPanel();
+        imagePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        imagePanel.add(imageLabel);
+        imagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return imagePanel;
     }
     
     private void initComponents() {
@@ -45,10 +71,14 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 700));
 
-        profilePanel.setBackground(new java.awt.Color(0, 0, 0));
-
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
-        profilePanel.setLayout(profilePanelLayout);
+        try {
+            profilePanel = getProfilePicture(250, 150);
+        } catch (IOException ex) {
+            profilePanel.setBackground(new java.awt.Color(0, 0, 0));
+            profilePanel.setLayout(profilePanelLayout);
+        }
+
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 235, Short.MAX_VALUE)
@@ -214,6 +244,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     
     private void refreshButtonPressed(){
         NewsFeedWindow myWindow = new NewsFeedWindow(this.myFeed.getCurrentUser());
+        myWindow.setLocationRelativeTo(null);
         myWindow.setVisible(true);
         this.dispose();
     }
@@ -233,13 +264,13 @@ public class NewsFeedWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewsFeedWindowOLD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewsFeedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewsFeedWindowOLD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewsFeedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewsFeedWindowOLD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewsFeedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewsFeedWindowOLD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewsFeedWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

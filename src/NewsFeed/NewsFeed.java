@@ -23,23 +23,26 @@ public class NewsFeed {
     private User currentUser;
     private Loader dataLoader;
     
-    public NewsFeed(User current) {
+    public NewsFeed(long userID) {
         this.friendSuggestions = new ArrayList<>();
         this.friendList = new ArrayList<>();
-        this.currentUser = current;
-        refresh();
+        this.postList = new ArrayList<>();
+        this.storyList = new ArrayList<>();
+        refresh(userID);
     }
     
-    public void refresh(){
-        load();
+    public void refresh(long userID){
+        load(userID);
         assignUsers();
+        
     }
     
-    public void load(){
+    public void load(long userID){
         dataLoader = new Loader();
-        postList = dataLoader.getPosts();
-        storyList = dataLoader.getSories();
+        currentUser = dataLoader.getCurrentUser(userID);
         allUsers = dataLoader.getUsers();
+        updatePostList(dataLoader);
+        updateStoryList(dataLoader);
     }
     
     public void assignUsers(){
@@ -56,6 +59,32 @@ public class NewsFeed {
         return currentUser;
     }
 
+    private boolean doShowContent(Content myContent){
+        if(currentUser.getRelationshipStatus(myContent.getAuthorId()) == FriendshipStatus.ACCEPTED){
+            return true;
+        }
+        return false;
+    }
+    
+    private void updatePostList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getPosts();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.postList.add(i);
+            }
+        }
+    }
+    
+    private void updateStoryList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getSories();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.storyList.add(i);
+            }
+        }
+    }
+    
+    
     public ArrayList<Content> getPostList() {
         return postList;
     }
@@ -94,6 +123,10 @@ public class NewsFeed {
         }
         public ArrayList<User> getUsers(){
             return this.userDatabase.getUsers();
+        }
+        
+        public User getCurrentUser(long userID){
+            return this.userDatabase.getUserFromId(userID);
         }
     }
 }
