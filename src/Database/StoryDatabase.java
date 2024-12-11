@@ -1,6 +1,8 @@
 
-package Backend;
+package Database;
 
+import Backend.Content;
+import Backend.Story;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,8 +23,9 @@ public class StoryDatabase extends Database {
     public static StoryDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
             instance = new StoryDatabase("files/stories.json");
+            instance.readFromFile();
+
         }
-        instance.readFromFile();
         return instance;
     }
 
@@ -38,6 +41,9 @@ public class StoryDatabase extends Database {
     String contentImagePath = (String)mapOfStory.get("contentImagePath");
     Story tempStory = new Story(contentId, authorId, contentString, contentImagePath);
     tempStory.setTimestamp(LocalDateTime.parse(timestamp));
+    if (tempStory.isDue()) {
+        return null;
+    }
     return tempStory;
     }
     @Override

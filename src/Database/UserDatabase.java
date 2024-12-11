@@ -1,6 +1,8 @@
-package Backend;
+package Database;
 
 
+import Backend.FriendshipStatus;
+import Backend.User;
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,8 +22,9 @@ public class UserDatabase extends Database {
     public static UserDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
             instance = new UserDatabase("files/users.json");
+            instance.readFromFile();
         }
-        instance.readFromFile();
+        
         return instance;
     }
     

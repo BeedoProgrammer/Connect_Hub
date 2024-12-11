@@ -4,9 +4,13 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
 import Backend.*;
+import Frontend.CreateContentWindow;
+import Frontend.FriendManagementPage;
 import javax.swing.*;
 import java.awt.Dimension;
+import java.awt.event.*;
 
 public class NewsFeedWindow extends javax.swing.JFrame {
     NewsFeed myFeed;
@@ -14,6 +18,13 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     public NewsFeedWindow(User currentUser) {
         myFeed = new NewsFeed(currentUser);
         initComponents();
+    }
+    
+    private void loadDataPanels(){
+        storiesPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getStoryList()).getContentScrollable();
+        postsPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getPostList()).getContentScrollable();
+        friendsPanel = new friendsPanel(new Dimension(170, 200), this.myFeed.getFriendList()).getFriendsScrollable();
+        suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
     }
     
     private void initComponents() {
@@ -26,12 +37,9 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        storiesPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getStoryList()).getContentScrollable();
-        postsPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getPostList()).getContentScrollable();
-        friendsPanel = new friendsPanel(new Dimension(170, 200), this.myFeed.getFriendList()).getFriendsScrollable();
-        suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
-        newStoryButton1 = new javax.swing.JButton();
-
+        newContentButton = new javax.swing.JButton();
+        loadDataPanels();
+        
         jScrollPane1.setViewportView(jEditorPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,9 +57,23 @@ public class NewsFeedWindow extends javax.swing.JFrame {
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 92, Short.MAX_VALUE)
         );
+        
+        profilePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                profileMouseClickEvent();
+            }
+        });
 
         refreshButton.setText("Refresh");
         refreshButton.setPreferredSize(new java.awt.Dimension(90, 23));
+        
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                refreshButtonPressed();
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Stories");
@@ -64,6 +86,13 @@ public class NewsFeedWindow extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Friends");
+        
+        jLabel4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                friendsMouseClickEvent();
+            }
+        });
 
         javax.swing.GroupLayout suggestionsPanelLayout = new javax.swing.GroupLayout(suggestionsPanel);
 //        suggestionsPanel.setLayout(suggestionsPanelLayout);
@@ -76,8 +105,14 @@ public class NewsFeedWindow extends javax.swing.JFrame {
             .addGap(0, 122, Short.MAX_VALUE)
         );
 
-        newStoryButton1.setText("New Story");
-        newStoryButton1.setPreferredSize(new java.awt.Dimension(90, 23));
+        newContentButton.setText("Craete New Content");
+        newContentButton.setPreferredSize(new java.awt.Dimension(90, 23));
+        newContentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newButtonPressed();
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,7 +144,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(newStoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(newContentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel4))
                                 .addGap(0, 0, Short.MAX_VALUE))))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -136,7 +171,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
                         .addGap(0, 29, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(newStoryButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(newContentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -149,11 +184,41 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
     
-    /**
-     * @param args the command line arguments
-     */
+    private void profileMouseClickEvent(){
+        Frontend.ProfileManagementWindow profile = new Frontend.ProfileManagementWindow("My Profile", this,this.myFeed.getCurrentUser());
+        profile.setLocationRelativeTo(null);
+        profile.setVisible(true);
+        this.setVisible(false);
+    }
+    
+    private void friendsMouseClickEvent(){
+        try{
+            FriendManagementPage myPage = new FriendManagementPage(this, this.myFeed.getCurrentUser());
+            myPage.setLocationRelativeTo(null);
+            myPage.setVisible(true);
+            this.setVisible(false);
+        }catch(Exception e){
+            this.setVisible(true);
+        }
+    }
+    
+    private void newButtonPressed(){
+        JDialog newWindow = new CreateContentWindow(this, this.myFeed.getCurrentUser());
+        newWindow.setLocationRelativeTo(null);
+        newWindow.setVisible(true);
+        newWindow.dispose();
+        refreshButtonPressed();
+    }
+    
+    private void refreshButtonPressed(){
+        NewsFeedWindow myWindow = new NewsFeedWindow(this.myFeed.getCurrentUser());
+        myWindow.setVisible(true);
+        this.dispose();
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -186,7 +251,6 @@ public class NewsFeedWindow extends javax.swing.JFrame {
             public void run() {
                 try {
                     UserDatabase myD = UserDatabase.getInstance();
-                    myD.readFromFile();
                     new NewsFeedWindow(myD.getUsers().get(0)).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -203,7 +267,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton newStoryButton1;
+    private javax.swing.JButton newContentButton;
     private javax.swing.JScrollPane postsPanel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JButton refreshButton;

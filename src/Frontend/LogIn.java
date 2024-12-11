@@ -1,18 +1,25 @@
 package frontend;
 
+import Database.UserDatabase;
 import Backend.*;
+import NewsFeed.NewsFeedWindow;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
 import org.json.simple.parser.ParseException;
 
-public class LogIn extends javax.swing.JFrame {
+public class LogIn extends javax.swing.JDialog{
     private UserDatabase userDatabase;
+    private User currentUser;
+    private JFrame parent;
     
-    public LogIn(String title) throws IOException, FileNotFoundException, ParseException {
-        super(title);
+    public LogIn(JFrame parent, String title) throws IOException, FileNotFoundException, ParseException {
+        super(parent, title);
+        this.setModal(true);
         userDatabase = UserDatabase.getInstance();
+        currentUser = null;
+        this.parent = parent;
         initComponents();
     }
 
@@ -116,11 +123,19 @@ public class LogIn extends javax.swing.JFrame {
             else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
                 JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
             else{
-                //this.dispose();
+                this.dispose();
+                parent.dispose();
+                NewsFeedWindow mainWindow = new NewsFeedWindow(user);
+                mainWindow.setVisible(true);
+                mainWindow.setLocationRelativeTo(null);
             }  
         }
     }//GEN-LAST:event_loginActionPerformed
 
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;
     private javax.swing.JLabel Jpanel2;

@@ -4,6 +4,9 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import Backend.*;
 import java.util.*;
 
@@ -40,13 +43,11 @@ public class NewsFeed {
     }
     
     public void assignUsers(){
-        for (User user : this.allUsers) { 
+        for (User user : this.allUsers) {
             if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
                 this.friendSuggestions.add(user); 
-                System.out.println("Suggestions: " + user.getUsername());
             }else if(currentUser.getRelationshipStatus(user.getUserId()) == FriendshipStatus.ACCEPTED){
                 this.friendList.add(user);
-                System.out.println("Friends: " + user.getUsername());
             }
         }
     }
@@ -64,18 +65,6 @@ public class NewsFeed {
     }
 
     public ArrayList<User> getFriendList() {
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
         return friendList;
     }
 
@@ -93,9 +82,6 @@ public class NewsFeed {
                 userDatabase = UserDatabase.getInstance();
                 postDatabase = PostDatabase.getInstance();
                 storyDatabase = StoryDatabase.getInstance();
-                userDatabase.readFromFile();
-                postDatabase.readFromFile();
-                storyDatabase.readFromFile();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

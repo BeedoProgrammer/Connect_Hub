@@ -1,19 +1,39 @@
 package Frontend;
 
+import Database.UserDatabase;
 import javax.swing.*;
 import java.awt.*;
 import Backend.*;
-import frontend.LogIn;
-import frontend.SignUp;
+import NewsFeed.contentPanel;
+import NewsFeed.friendsPanel;
 import java.io.*;
-import java.time.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ProfileManagement extends javax.swing.JFrame {
+public class ProfileManagementWindow extends javax.swing.JFrame {
     static User user;
+    JFrame parent;
+    UserDatabase myD;
+    ProfileManagement manager;
+    JScrollPane contentPane;
+    JScrollPane friendsPane;
 
-    public ProfileManagement(String title, User user) {
+    public ProfileManagementWindow(String title, JFrame parent, User user) {
         super(title);
-        this.user = user;
+        try{
+            myD = UserDatabase.getInstance();
+            this.user = myD.getUserFromId(user.getUserId());
+            System.out.println(this.user);
+        }catch(Exception e){}
+        System.out.println(this.user.getUsername());
+        System.out.println(myD.getUserFromId(this.user.getUserId()));
+        manager = new ProfileManagement(this.user);
+        System.out.println(myD.getUserFromId(this.user.getUserId()));
+        this.parent = parent;
+        contentPane = new contentPanel(new Dimension(100, 100), manager.getPosts()).getContentScrollable();
+        System.out.println(myD.getUserFromId(this.user.getUserId()));
+        friendsPane = new friendsPanel(new Dimension(170, 200), manager.getListOfFriends()).getFriendsScrollable();
+        System.out.println(myD.getUserFromId(this.user.getUserId()));
         initComponents();
     }
 
@@ -43,13 +63,12 @@ public class ProfileManagement extends javax.swing.JFrame {
                 coverPhoto = new javax.swing.JButton();
                 profilePic = new javax.swing.JButton();
                 updatePassword = new javax.swing.JButton();
-                panel3 = new javax.swing.JPanel();
-                seeMore = new javax.swing.JButton();
-                panel4 = new javax.swing.JPanel();
                 logout = new javax.swing.JButton();
                 bio = new javax.swing.JButton();
                 bioText = new java.awt.TextArea();
                 Jpanel1 = new javax.swing.JLabel();
+                jScrollPane1 = contentPane;
+                jScrollPane2 = friendsPane;
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -62,7 +81,12 @@ public class ProfileManagement extends javax.swing.JFrame {
                     .addGap(0, 100, Short.MAX_VALUE)
                 );
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+                addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent evt) {
+                        formWindowClosing(evt);
+                    }
+                });
 
                 panel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -120,48 +144,6 @@ public class ProfileManagement extends javax.swing.JFrame {
                     }
                 });
 
-                panel3.setBackground(new java.awt.Color(255, 255, 255));
-
-                seeMore.setBackground(new java.awt.Color(0, 0, 0));
-                seeMore.setForeground(new java.awt.Color(255, 255, 255));
-                seeMore.setText("See More");
-                seeMore.setFocusPainted(false);
-                seeMore.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        seeMoreActionPerformed(evt);
-                    }
-                });
-
-                javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
-                panel3.setLayout(panel3Layout);
-                panel3Layout.setHorizontalGroup(
-                    panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(seeMore, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                        .addContainerGap())
-                );
-                panel3Layout.setVerticalGroup(
-                    panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
-                        .addContainerGap(349, Short.MAX_VALUE)
-                        .addComponent(seeMore)
-                        .addContainerGap())
-                );
-
-                panel4.setBackground(new java.awt.Color(255, 255, 255));
-
-                javax.swing.GroupLayout panel4Layout = new javax.swing.GroupLayout(panel4);
-                panel4.setLayout(panel4Layout);
-                panel4Layout.setHorizontalGroup(
-                    panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 322, Short.MAX_VALUE)
-                );
-                panel4Layout.setVerticalGroup(
-                    panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 387, Short.MAX_VALUE)
-                );
-
                 logout.setBackground(new java.awt.Color(0, 0, 0));
                 logout.setForeground(new java.awt.Color(255, 255, 255));
                 logout.setText("Logout");
@@ -213,12 +195,14 @@ public class ProfileManagement extends javax.swing.JFrame {
                                     .addComponent(bioText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(panel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(updatePassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 140, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(updatePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane2)))
                             .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                 );
@@ -241,16 +225,14 @@ public class ProfileManagement extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bioText, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(updatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 5, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(panel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                 );
 
@@ -340,19 +322,34 @@ public class ProfileManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_updatePasswordActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        // TODO add your handling code here:
+        ConnectHub connectHub = new ConnectHub("Connect Hub");
+        connectHub.setLocationRelativeTo(null);
+        connectHub.setVisible(true);
+        saveUser();
+        this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
-
-    private void seeMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeMoreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_seeMoreActionPerformed
 
     private void bioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bioActionPerformed
         // TODO add your handling code here:
+        System.out.println(myD.getUserFromId(user.getUserId()));
         String input = JOptionPane.showInputDialog(null, "Enter new bio: ", "Bio", JOptionPane.PLAIN_MESSAGE);
         user.setBio(input);
         bioText.setText(input);
     }//GEN-LAST:event_bioActionPerformed
+
+    private void saveUser(){
+        try {
+            this.myD.saveToFile();
+        } catch (Exception e) {
+            Logger.getLogger(ProfileManagementWindow.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        saveUser();
+        this.parent.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;
@@ -360,13 +357,12 @@ public class ProfileManagement extends javax.swing.JFrame {
     private java.awt.TextArea bioText;
     private javax.swing.JButton coverPhoto;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logout;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
-    private javax.swing.JPanel panel3;
-    private javax.swing.JPanel panel4;
     private javax.swing.JButton profilePic;
-    private javax.swing.JButton seeMore;
     private javax.swing.JButton updatePassword;
     // End of variables declaration//GEN-END:variables
 }

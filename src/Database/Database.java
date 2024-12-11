@@ -1,4 +1,4 @@
-package Backend;
+package Database;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,13 +19,16 @@ public abstract class Database {
         records = new ArrayList<>();
     }
     
-    public void readFromFile() throws FileNotFoundException, IOException, ParseException {    // modifies users arraylist
+    protected void readFromFile() throws FileNotFoundException, IOException, ParseException {    // modifies users arraylist
         records.clear(); // remove all previous elements from list
         JSONArray jsonRecords = new JSONArray();
         jsonRecords = (JSONArray) new JSONParser().parse(new FileReader(fileName));
         // parse each element in the jsonArray into a user object
         for (int i = 0; i < jsonRecords.size(); i++) {
-            records.add(getRecordFromMap((Map)jsonRecords.get(i)));
+            Object tempRecord = getRecordFromMap((Map)jsonRecords.get(i));
+            if (tempRecord != null) {
+                records.add(tempRecord);
+            }
         }
     }
     public void saveToFile() throws FileNotFoundException, IOException, ParseException {    // saves users arraylist into json format file
@@ -36,7 +39,8 @@ public abstract class Database {
         PrintWriter pw = new PrintWriter(fileName); 
         pw.write(jsonRecords.toJSONString()); 
         pw.flush(); 
-        pw.close(); 
+        pw.close();
+        readFromFile();
     }
     public void addRecord(Object record) throws IOException, FileNotFoundException, ParseException {
         records.add(record);

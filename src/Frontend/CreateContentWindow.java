@@ -1,10 +1,12 @@
 package Frontend;
 
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import Backend.*;
@@ -16,11 +18,14 @@ import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 
-public class CreateContentWindow extends javax.swing.JFrame {
+public class CreateContentWindow extends javax.swing.JDialog {
 
     private String imagePath;
     private User currentUser;
-    public CreateContentWindow(User currentUser) {
+    
+    public CreateContentWindow(JFrame parent, User currentUser) {
+        super(parent, "Create New Content");
+        this.setModal(true);
         initComponents();
         this.imagePath = "";
         this.currentUser = currentUser;
@@ -227,7 +232,7 @@ public class CreateContentWindow extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-                // return to main window
+                this.dispose();
             }
         } catch (IOException ex) {
             Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,7 +260,7 @@ public class CreateContentWindow extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-                // return to main window
+                this.dispose();
             }
         } catch (IOException ex) {
             Logger.getLogger(CreateContentWindow.class.getName()).log(Level.SEVERE, null, ex);
