@@ -16,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mindrot.jbcrypt.BCrypt;
 public class UserDatabase extends Database {    
     private static UserDatabase instance = null;
     
@@ -37,7 +38,9 @@ public class UserDatabase extends Database {
         long userId = (long)mapOfUser.get("userId");                // saved in json as long
         String email = (String)mapOfUser.get("email");              // saved in json as string
         String userName = (String)mapOfUser.get("userName");        // saved in json as string
-        String password = (String)mapOfUser.get("password");        // saved in json as string
+        
+        String password = (String)mapOfUser.get("password");        // saved in json as encrypted string
+        
         String dateOfBirth = (String)mapOfUser.get("dateOfBirth");  // saved in json as string
         String bio = (String)mapOfUser.get("bio");
         String coverPic = (String)mapOfUser.get("coverPic");
@@ -49,7 +52,7 @@ public class UserDatabase extends Database {
             JSONObject jsonObject = gson.fromJson(jsonString, JSONObject.class);
             HashMap<Long,FriendshipStatus> relationships = (HashMap<Long,FriendshipStatus>) jsonObject; // casting from JSONObject to hashmap
         //
-        User tempUser = new User.UserBuilder(userId, email, userName, password.toCharArray(), LocalDate.parse(dateOfBirth), status)
+        User tempUser = new User.UserBuilder(userId, email, userName, password, LocalDate.parse(dateOfBirth), status)
             .bio(bio)
             .coverPhoto(coverPic)
             .profilePic(profilePic)
@@ -66,7 +69,7 @@ public class UserDatabase extends Database {
         tempUserMap.put("email", tempUser.getEmail());                          // saved in json as string
         tempUserMap.put("userName", tempUser.getUsername());                    // saved in json as string  
         
-        tempUserMap.put("password", new String(tempUser.getPassword()));        // saved in json as string
+        tempUserMap.put("password", tempUser.getPassword());        // saved in json as encrypted string
         
         tempUserMap.put("dateOfBirth", tempUser.getDateOfBirth().toString());   // saved in json as string
         tempUserMap.put("bio", tempUser.getBio());                              // saved in json as string

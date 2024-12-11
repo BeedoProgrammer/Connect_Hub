@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import org.json.simple.parser.ParseException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class SignUp extends javax.swing.JDialog {
     private UserDatabase userDatabase;
@@ -171,7 +172,10 @@ public class SignUp extends javax.swing.JDialog {
                     
                     LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     
-                    User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), Pass1, dateOfBirth, true).build();
+                    String passString = new String(Pass1);
+                    String encryptedPass = BCrypt.hashpw(passString, BCrypt.gensalt());     // encrypt string
+                    
+                    User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), encryptedPass, dateOfBirth, true).build();
                     userDatabase.addUser(user);
                     this.dispose();
                     parent.dispose();

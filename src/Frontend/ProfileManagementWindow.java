@@ -9,6 +9,7 @@ import NewsFeed.friendsPanel;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class ProfileManagementWindow extends javax.swing.JFrame {
     static User user;
@@ -316,7 +317,7 @@ public class ProfileManagementWindow extends javax.swing.JFrame {
                     break;
             }while(true);
             
-            user.setPassword(password2.toCharArray());
+            user.setPassword(BCrypt.hashpw(password2, BCrypt.gensalt()));
             JOptionPane.showMessageDialog(rootPane, "Password updated");
         }      
     }//GEN-LAST:event_updatePasswordActionPerformed
