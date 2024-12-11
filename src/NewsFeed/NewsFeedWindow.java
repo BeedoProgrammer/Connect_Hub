@@ -4,6 +4,7 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
 import Backend.*;
 import Frontend.CreateContentWindow;
 import Frontend.FriendManagementPage;
@@ -250,7 +251,6 @@ public class NewsFeedWindow extends javax.swing.JFrame {
             public void run() {
                 try {
                     UserDatabase myD = UserDatabase.getInstance();
-                    myD.readFromFile();
                     new NewsFeedWindow(myD.getUsers().get(0)).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();

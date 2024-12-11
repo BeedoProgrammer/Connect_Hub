@@ -4,6 +4,7 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
 import Backend.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -52,9 +53,6 @@ public class contentPanel{
         postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
         postPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));        
         UserDatabase myD = UserDatabase.getInstance();
-        try {
-            myD.readFromFile();
-        } catch (Exception ex) {}
         
         String name = myD.getUserFromId(myPost.getAuthorId()).getUsername();
         JPanel headerPanel = new JPanel();

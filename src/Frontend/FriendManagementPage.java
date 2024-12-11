@@ -7,7 +7,7 @@ package Frontend;
 import Backend.FriendManagement;
 import Backend.FriendshipStatus;
 import Backend.User;
-import Backend.UserDatabase;
+import Database.UserDatabase;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +38,6 @@ public class FriendManagementPage extends javax.swing.JFrame {
     public FriendManagementPage(JFrame parent, User user) throws IOException, FileNotFoundException, ParseException {
         this.parent = parent;
         this.setPreferredSize(parent.getSize());
-        Database.readFromFile();
         this.user = user;
         setTitle("Friend Management");
         setLayout(new BorderLayout());

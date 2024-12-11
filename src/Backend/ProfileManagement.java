@@ -1,5 +1,8 @@
 package Backend;
 
+import Database.UserDatabase;
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import java.util.*;
 
 public class ProfileManagement {
@@ -14,9 +17,6 @@ public class ProfileManagement {
             postDatabase = PostDatabase.getInstance();
             userDatabase = UserDatabase.getInstance();
             storyDatabase = StoryDatabase.getInstance();
-            userDatabase.readFromFile();
-            postDatabase.readFromFile();
-            storyDatabase.readFromFile();
         }catch(Exception e){}
     }
     
