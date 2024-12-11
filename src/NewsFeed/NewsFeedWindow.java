@@ -36,10 +36,14 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
     }
     
-    private JPanel getProfilePicture(int width) throws IOException{
+    private JPanel getProfilePicture(int width, int height) throws IOException{
         BufferedImage myImage = ImageIO.read(new File(myFeed.getCurrentUser().getProfilePic()));
-        if(myImage.getWidth() > width){
-             myImage = ImageFunctions.resizeImage(myImage, width, 0);                    
+        if(myImage.getWidth() > width || myImage.getHeight() > height){
+             myImage = ImageFunctions.resizeImage(myImage, width, height);                    
+        }else if(myImage.getWidth() > width){
+            myImage = ImageFunctions.resizeImage(myImage, width, 0);
+        }else if(myImage.getHeight()> height){
+            myImage = ImageFunctions.resizeImage(myImage, 0, height);
         }
         JLabel imageLabel = new JLabel(new ImageIcon(myImage));
         JPanel imagePanel = new JPanel();
@@ -67,14 +71,14 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 700));
 
+        javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         try {
-            profilePanel = getProfilePicture(250);
+            profilePanel = getProfilePicture(250, 150);
         } catch (IOException ex) {
             profilePanel.setBackground(new java.awt.Color(0, 0, 0));
+            profilePanel.setLayout(profilePanelLayout);
         }
 
-        javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
-//        profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 235, Short.MAX_VALUE)

@@ -8,7 +8,7 @@ public class User {
     private long userId;
     private String email;
     private String username;
-    private char[] password;
+    private String password;
     private LocalDate dateOfBirth;
     private boolean status;
     private String profilePic;
@@ -49,7 +49,7 @@ public class User {
         return username;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -85,7 +85,7 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(char [] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -133,7 +133,7 @@ public class User {
         private long userId;
         private String email;
         private String username;
-        private char[] password;
+        private String password;
         private LocalDate dateOfBirth;
         private boolean status;
         private HashMap<Long, FriendshipStatus> relationships = new HashMap<>();
@@ -141,7 +141,7 @@ public class User {
         private String coverPhoto = "";
         private String bio = "";
 
-        public UserBuilder(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
+        public UserBuilder(long userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
             this.email = email;
             this.username = username;
