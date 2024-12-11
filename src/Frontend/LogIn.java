@@ -1,5 +1,6 @@
 package frontend;
 
+import Database.UserDatabase;
 import Backend.*;
 import NewsFeed.NewsFeedWindow;
 import java.io.FileNotFoundException;

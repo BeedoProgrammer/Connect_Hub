@@ -4,6 +4,9 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import Backend.*;
 import java.util.*;
 
@@ -43,10 +46,6 @@ public class NewsFeed {
         for (User user : this.allUsers) {
             if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
                 this.friendSuggestions.add(user); 
-                System.out.println(user.getUsername());
-                System.out.println(user.getUserId());
-                System.out.println(currentUser.getUserId());
-                System.out.println("__________");
             }else if(currentUser.getRelationshipStatus(user.getUserId()) == FriendshipStatus.ACCEPTED){
                 this.friendList.add(user);
             }
@@ -83,9 +82,6 @@ public class NewsFeed {
                 userDatabase = UserDatabase.getInstance();
                 postDatabase = PostDatabase.getInstance();
                 storyDatabase = StoryDatabase.getInstance();
-                userDatabase.readFromFile();
-                postDatabase.readFromFile();
-                storyDatabase.readFromFile();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
