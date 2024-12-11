@@ -4,10 +4,12 @@ package Database;
 import Backend.FriendshipStatus;
 import Backend.User;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,9 +48,8 @@ public class UserDatabase extends Database {
         // parsing string into hashmap
             Gson gson = new Gson();
             String jsonString = (String)mapOfUser.get("relationships"); // saved in json as string (JSONString)
-            JSONObject jsonObject = gson.fromJson(jsonString, JSONObject.class);
-            HashMap<Long,FriendshipStatus> relationships = (HashMap<Long,FriendshipStatus>) jsonObject; // casting from JSONObject to hashmap
-        //
+            Type type = new TypeToken<HashMap<Long, FriendshipStatus>>() {}.getType();
+            HashMap<Long, FriendshipStatus> relationships = gson.fromJson(jsonString, type);
         User tempUser = new User.UserBuilder(userId, email, userName, password.toCharArray(), LocalDate.parse(dateOfBirth), status)
             .bio(bio)
             .coverPhoto(coverPic)

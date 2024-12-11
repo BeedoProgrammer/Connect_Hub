@@ -26,6 +26,8 @@ public class NewsFeed {
     public NewsFeed(User current) {
         this.friendSuggestions = new ArrayList<>();
         this.friendList = new ArrayList<>();
+        this.postList = new ArrayList<>();
+        this.storyList = new ArrayList<>();
         this.currentUser = current;
         refresh();
     }
@@ -37,8 +39,8 @@ public class NewsFeed {
     
     public void load(){
         dataLoader = new Loader();
-        postList = dataLoader.getPosts();
-        storyList = dataLoader.getSories();
+        updatePostList(dataLoader);
+        updateStoryList(dataLoader);
         allUsers = dataLoader.getUsers();
     }
     
@@ -56,6 +58,32 @@ public class NewsFeed {
         return currentUser;
     }
 
+    private boolean doShowContent(Content myContent){
+        if(currentUser.getRelationshipStatus(myContent.getAuthorId()) == FriendshipStatus.ACCEPTED){
+            return true;
+        }
+        return false;
+    }
+    
+    private void updatePostList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getPosts();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.postList.add(i);
+            }
+        }
+    }
+    
+    private void updateStoryList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getSories();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.storyList.add(i);
+            }
+        }
+    }
+    
+    
     public ArrayList<Content> getPostList() {
         return postList;
     }
