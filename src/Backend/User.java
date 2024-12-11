@@ -123,7 +123,7 @@ public class User {
        
     public FriendshipStatus getRelationshipStatus(long userId) {
         return this.relationships.get(userId);
-    } 
+    }
      
     public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
         this.relationships.remove(userId);
