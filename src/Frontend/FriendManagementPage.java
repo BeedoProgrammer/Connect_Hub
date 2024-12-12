@@ -347,6 +347,7 @@ declineButton.addActionListener(e -> {
         }
     }//GEN-LAST:event_formWindowClosing
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
