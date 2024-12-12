@@ -15,7 +15,7 @@ public class User {
     private String coverPhoto;
     private String bio;
     private HashMap<Long, FriendshipStatus> relationships;
-    private HashMap<Long, GroupDetails> groups;
+    private HashMap<Long, GroupDetails> groupRelation;
 
     private User(UserBuilder builder) {
         this.userId = builder.userId;
@@ -28,7 +28,7 @@ public class User {
         this.coverPhoto = builder.coverPhoto;
         this.bio = builder.bio;
         this.relationships = builder.relationships;
-        this.groups = builder.groups;
+        this.groupRelation = builder.groupRelation;
     }
     
     public void changeStatus(){
@@ -75,8 +75,8 @@ public class User {
         return relationships;
     }
 
-    public HashMap<Long, GroupDetails> getGroups() {
-        return groups;
+    public HashMap<Long, GroupDetails> getGroupRelation() {
+        return groupRelation;
     }
 
     public void setUserId(long userId) {
@@ -115,8 +115,8 @@ public class User {
         this.relationships = relationships;
     }
 
-    public void setGroups(HashMap<Long, GroupDetails> groups) {
-        this.groups = groups;
+    public void setGroupRelation(HashMap<Long, GroupDetails> groupRelation) {
+        this.groupRelation = groupRelation;
     }
 
     public void setBio(String bio) {
@@ -139,16 +139,20 @@ public class User {
         this.relationships.remove(userId);
     }
     
-    public void addGroup(long groupID, GroupDetails groupDetails){
-        groups.put(groupID, groupDetails);
+    public void addGroupRelation(long groupID, GroupDetails groupDetails){
+        groupRelation.put(groupID, groupDetails);
     }
     
-    public GroupDetails getGroupStatus(long groupID){
-        return groups.get(groupID);
+    public GroupDetails getGroupRelationStatus(long groupID){
+        return groupRelation.get(groupID);
     }
     
-    public void deleteGroup(long groupID){
-        groups.remove(groupID);
+    public boolean hasGroupRelation(long groupID){
+        return groupRelation.containsKey(groupID);
+    }
+    
+    public void deleteGroupRelation(long groupID){
+        groupRelation.remove(groupID);
     }
 
     public static class UserBuilder {
@@ -159,7 +163,7 @@ public class User {
         private LocalDate dateOfBirth;
         private boolean status;
         private HashMap<Long, FriendshipStatus> relationships = new HashMap<>();
-        private HashMap<Long, GroupDetails> groups = new HashMap<>();
+        private HashMap<Long, GroupDetails> groupRelation = new HashMap<>();
         private String profilePic = "";
         private String coverPhoto = "";
         private String bio = "";
