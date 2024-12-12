@@ -25,17 +25,12 @@ public class ProfileManagementWindow extends javax.swing.JFrame {
         try{
             myD = UserDatabase.getInstance();
             this.user = myD.getUserFromId(user.getUserId());
-            System.out.println(this.user);
         }catch(Exception e){}
-        System.out.println(this.user.getUsername());
-        System.out.println(myD.getUserFromId(this.user.getUserId()));
         manager = new ProfileManagement(this.user);
         System.out.println(myD.getUserFromId(this.user.getUserId()));
         this.parent = parent;
         contentPane = new contentPanel(new Dimension(100, 100), manager.getPosts()).getContentScrollable();
-        System.out.println(myD.getUserFromId(this.user.getUserId()));
         friendsPane = new friendsPanel(new Dimension(170, 200), manager.getListOfFriends()).getFriendsScrollable();
-        System.out.println(myD.getUserFromId(this.user.getUserId()));
         initComponents();
     }
 
@@ -350,7 +345,6 @@ public class ProfileManagementWindow extends javax.swing.JFrame {
 
     private void bioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bioActionPerformed
         // TODO add your handling code here:
-        System.out.println(myD.getUserFromId(user.getUserId()));
         String input = JOptionPane.showInputDialog(null, "Enter new bio: ", "Bio", JOptionPane.PLAIN_MESSAGE);
         user.setBio(input);
         bioText.setText(input);
@@ -366,7 +360,8 @@ public class ProfileManagementWindow extends javax.swing.JFrame {
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         saveUser();
-        this.parent.setVisible(true);
+        parent.setLocationRelativeTo(null);
+        parent.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
