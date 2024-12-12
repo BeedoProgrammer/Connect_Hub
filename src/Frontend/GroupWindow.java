@@ -16,7 +16,7 @@ public class GroupWindow extends javax.swing.JFrame {
     }
     
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -244,35 +244,35 @@ public class GroupWindow extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
-    }//GEN-LAST:event_refreshActionPerformed
+    }                                       
 
-    private void seeMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeMoreActionPerformed
+    private void seeMoreActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
-    }//GEN-LAST:event_seeMoreActionPerformed
+    }                                       
 
-    private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
-        // TODO add your handling code here:
-        CreateContentWindow contentWindow = new CreateContentWindow(this, currentUser);
-        contentWindow.setLocationRelativeTo(null);
-        contentWindow.setVisible(true);
-    }//GEN-LAST:event_postActionPerformed
-
-    private void leaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_leaveActionPerformed
-
-    private void storyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storyActionPerformed
+    private void postActionPerformed(java.awt.event.ActionEvent evt) {                                     
         // TODO add your handling code here:
         CreateContentWindow contentWindow = new CreateContentWindow(this, currentUser);
         contentWindow.setLocationRelativeTo(null);
         contentWindow.setVisible(true);
-    }//GEN-LAST:event_storyActionPerformed
+    }                                    
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private void leaveActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        // TODO add your handling code here:
+    }                                     
+
+    private void storyActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        // TODO add your handling code here:
+        CreateContentWindow contentWindow = new CreateContentWindow(this, currentUser);
+        contentWindow.setLocationRelativeTo(null);
+        contentWindow.setVisible(true);
+    }                                     
+
+    // Variables declaration - do not modify                     
     private java.awt.TextArea description;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -287,5 +287,5 @@ public class GroupWindow extends javax.swing.JFrame {
     private javax.swing.JButton refresh;
     private javax.swing.JButton seeMore;
     private javax.swing.JButton story;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
