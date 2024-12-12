@@ -7,13 +7,13 @@ public class Group {
     private String name;
     private String groupPhoto;
     private String description;
-    private ArrayList<Long> users = new ArrayList<>();
+    private ArrayList<Long> users;
 
-    public Group(long groupID, String name, String groupPhoto, String description) {
-        this.groupID = groupID;
-        this.name = name;
-        this.groupPhoto = groupPhoto;
-        this.description = description;
+    private Group(GroupBuilder builder) {
+        this.groupID = builder.groupID;
+        this.name = builder.name;
+        this.groupPhoto = builder.groupPhoto;
+        this.description = builder.description;
     }
 
     public long getGroupID() {
@@ -87,6 +87,33 @@ public class Group {
             user.deleteGroupRelation(groupID);
             user.addGroupRelation(groupID, GroupDetails.REMOVED);
             users.remove(user.getUserId());
+        }
+    }
+    
+    public static class GroupBuilder {
+        private long groupID;
+        private String name;
+        private String groupPhoto = "";
+        private String description = "";
+        private ArrayList<Long> users = new ArrayList<>();
+
+        public GroupBuilder(long groupID, String name) {
+            this.groupID = groupID;
+            this.name = name;
+        }
+        
+        public GroupBuilder groupPhoto(String groupPhoto) {
+            this.groupPhoto = groupPhoto;
+            return this;
+        }
+
+        public GroupBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+        
+        public Group build() {
+            return new Group(this);
         }
     }
 }
