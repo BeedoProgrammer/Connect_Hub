@@ -53,11 +53,11 @@ public class UserDatabase extends Database {
             String jsonString = (String)mapOfUser.get("relationships"); // saved in json as string (JSONString)
             Type type = new TypeToken<HashMap<Long, FriendshipStatus>>() {}.getType();
             HashMap<Long, FriendshipStatus> relationships = gson.fromJson(jsonString, type);
-            User tempUser = new User.UserBuilder(userId, email, userName, password, LocalDate.parse(dateOfBirth), status)
-            .bio(bio)
-            .coverPhoto(coverPic)
-            .profilePic(profilePic)
-            .build();
+        User tempUser = new User.UserBuilder(userId, email, userName, password, LocalDate.parse(dateOfBirth), status)
+        .bio(bio)
+        .coverPhoto(coverPic)
+        .profilePic(profilePic)
+        .build();
         tempUser.setRelationships(relationships);
         
         return tempUser;
