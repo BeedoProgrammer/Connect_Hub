@@ -32,6 +32,10 @@ public class Group {
         return description;
     }
 
+    public ArrayList<Long> getUsers() {
+        return users;
+    }
+
     public void setName(String name, User moderator) {
         GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
         if(groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)
