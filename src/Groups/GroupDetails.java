@@ -1,4 +1,4 @@
-package Backend;
+package Groups;
 
 public enum GroupDetails {
     CREATOR,
