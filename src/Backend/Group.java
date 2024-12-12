@@ -52,7 +52,37 @@ public class Group {
     
     public void addUser(User user, User moderator){
         GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
-        if(user.getGroupRelationStatus(groupID) == GroupDetails.USER && (groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR))
+        if(user.getGroupRelationStatus(groupID) == GroupDetails.PENDING && (groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)){
+            user.deleteGroupRelation(groupID);
+            user.addGroupRelation(groupID, GroupDetails.USER);
             users.add(user.getUserId());
+        }
+    }
+    
+    public void RemoveUser(User user, User moderator){
+        GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
+        if(users.contains(user.getUserId()) && (groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)){
+            user.deleteGroupRelation(groupID);
+            user.addGroupRelation(groupID, GroupDetails.REMOVED);
+            users.remove(user.getUserId());
+        }   
+    }
+    
+    public void BanUser(User user, User moderator){
+        GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
+        if(user.getGroupRelationStatus(groupID) == GroupDetails.USER && (groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)){
+            user.deleteGroupRelation(groupID);
+            user.addGroupRelation(groupID, GroupDetails.BANNED);
+            users.remove(user.getUserId());
+        }
+    }
+    
+    public void leaveGroup(User user){
+        GroupDetails groupRelationStatus = user.getGroupRelationStatus(groupID);
+        if(groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR || groupRelationStatus == GroupDetails.USER){
+            user.deleteGroupRelation(groupID);
+            user.addGroupRelation(groupID, GroupDetails.REMOVED);
+            users.remove(user.getUserId());
+        }
     }
 }
