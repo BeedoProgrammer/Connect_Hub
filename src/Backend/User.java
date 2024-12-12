@@ -8,7 +8,7 @@ public class User {
     private long userId;
     private String email;
     private String username;
-    private char[] password;
+    private String password;
     private LocalDate dateOfBirth;
     private boolean status;
     private String profilePic;
@@ -51,7 +51,7 @@ public class User {
         return username;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -87,7 +87,7 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(char [] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -128,11 +128,12 @@ public class User {
        
     public FriendshipStatus getRelationshipStatus(long userId) {
         return this.relationships.get(userId);
-    } 
+    }
      
     public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
         this.relationships.remove(userId);
     }
+
     public void addGroup(Group group) {
         this.Mygroups.add(group);
     }
@@ -142,11 +143,12 @@ public class User {
      public ArrayList<Group> getMygroups() {
         return Mygroups;
     }   
+
   public static class UserBuilder {
     private long userId;
     private String email;
     private String username;
-    private char[] password;
+    private String password;
     private LocalDate dateOfBirth;
     private boolean status;
     private HashMap<Long, FriendshipStatus> relationships = new HashMap<>();
@@ -155,15 +157,15 @@ public class User {
     private String bio = "";
     private ArrayList<Group> Mygroups = new ArrayList<>();
 
-    public UserBuilder(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
-        this.userId = userId;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.status = status;
-    }
 
+        public UserBuilder(long userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
+            this.userId = userId;
+            this.email = email;
+            this.username = username;
+            this.password = password;
+            this.dateOfBirth = dateOfBirth;
+            this.status = status;
+        }
     public UserBuilder bio(String bio) {
         this.bio = bio;
         return this;

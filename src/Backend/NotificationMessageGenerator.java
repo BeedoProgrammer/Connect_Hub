@@ -15,7 +15,7 @@ public class NotificationMessageGenerator {
         String message = "";
 
         switch (type) {
-            case FRIEND_REQUEST_RECIEVED:
+            case FRIEND_REQUEST_RECEIVED:
                 message =   senderUser.getUsername() + " has sent you a friend request.";
                 break;
             case FRIEND_REQUEST_ACCEPTED:
