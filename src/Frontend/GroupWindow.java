@@ -1,20 +1,17 @@
 package Frontend;
 
 import Backend.*;
-import java.util.*;
+import javax.swing.*;
 
 public class GroupWindow extends javax.swing.JFrame {
     private Group group;
-    private GroupDatabase groupDatabase;
+    private User currentUser;
+    private JFrame parent;
 
-    public GroupWindow() {
-        groupDatabase = GroupDatabase.getInstance();
-        Random random = new Random();
-        long uniqueId;
-                    
-        do {
-            uniqueId = Math.abs(random.nextLong());
-        }while(groupDatabase.getGroupFromId(uniqueId) != null);
+    public GroupWindow(String title, User currentUser, JFrame parent) {
+        super(title);
+        this.currentUser = currentUser;
+        this.parent = parent;
         initComponents();
     }
     
