@@ -7,7 +7,7 @@ package Frontend;
 import Backend.FriendManagement;
 import Backend.FriendshipStatus;
 import Backend.User;
-import Backend.UserDatabase;
+import Database.UserDatabase;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +38,6 @@ public class FriendManagementPage extends javax.swing.JFrame {
     public FriendManagementPage(JFrame parent, User user) throws IOException, FileNotFoundException, ParseException {
         this.parent = parent;
         this.setPreferredSize(parent.getSize());
-        Database.readFromFile();
         this.user = user;
         setTitle("Friend Management");
         setLayout(new BorderLayout());
@@ -82,6 +81,7 @@ public class FriendManagementPage extends javax.swing.JFrame {
     }
 
     private void populateRequestsPanel(User user) {
+        saveData();
         requestsPanel.removeAll();
         requestsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         HashMap<Long, FriendshipStatus> relationships = user.getRelationships();
@@ -148,6 +148,7 @@ declineButton.addActionListener(e -> {
         return requestPanel;
     }
     private void populateFriendsPanel(User user) {
+        saveData();
         FriendsPanel.removeAll();
         FriendsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         for (Map.Entry<Long, FriendshipStatus> entry : user.getRelationships().entrySet()) {
@@ -301,7 +302,13 @@ declineButton.addActionListener(e -> {
     suggestionPanel.add(declineButton);
     return suggestionPanel;
 }
-
+  
+    private void saveData(){
+        try {
+            this.Database.saveToFile();
+        } catch (Exception e) {
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -340,6 +347,7 @@ declineButton.addActionListener(e -> {
         }
     }//GEN-LAST:event_formWindowClosing
 
+
     /**
      * @param args the command line arguments
      */
@@ -352,6 +360,8 @@ java.awt.EventQueue.invokeLater(new Runnable() {
 });
       
     }
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -1,20 +1,25 @@
 package Backend;
 
+import Database.UserDatabase;
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import java.util.*;
 
 public class ProfileManagement {
-    private User userDetails;
-    private ArrayList<User> friends;
-    private PostDatabase postDatabase; 
+    private PostDatabase postDatabase;
     private UserDatabase userDatabase;
     private StoryDatabase storyDatabase;
-
-    public ProfileManagement(User userDetails, ArrayList<User> friends, PostDatabase postDatabase, UserDatabase userDatabase, StoryDatabase storyDatabase) {
-        this.userDetails = userDetails;
-        this.friends = friends;
-        this.postDatabase = postDatabase;
-        this.userDatabase = userDatabase;
-        this.storyDatabase = storyDatabase;
+    private GroupDatabase groupDatabase;
+    private User currentUser;
+    
+    public ProfileManagement(User currentUser) {
+        this.currentUser = currentUser;
+        try{
+            postDatabase = PostDatabase.getInstance();
+            userDatabase = UserDatabase.getInstance();
+            storyDatabase = StoryDatabase.getInstance();
+            groupDatabase = GroupDatabase.getInstance();
+        }catch(Exception e){}
     }
     
     public ArrayList<Content> getPosts(){
@@ -22,7 +27,7 @@ public class ProfileManagement {
         ArrayList<Content> posts = new ArrayList<>();
         
         for(int i = 0; i < postData.size(); i++){
-            if(postData.get(i).getAuthorId() == userDetails.getUserId())
+            if(postData.get(i).getAuthorId() == currentUser.getUserId())
                 posts.add(postData.get(i));
         }
         
@@ -34,7 +39,7 @@ public class ProfileManagement {
         ArrayList<Content> stories = new ArrayList<>();
         
         for(int i = 0; i < storyData.size(); i++){
-            if(storyData.get(i).getAuthorId() == userDetails.getUserId())
+            if(storyData.get(i).getAuthorId() == currentUser.getUserId())
                 stories.add(storyData.get(i));
         }
         
@@ -46,11 +51,24 @@ public class ProfileManagement {
        ArrayList<User> friends = new ArrayList<>();
        
         for(int i = 0; i < userData.size(); i++){
-           if(userDetails.getRelationshipStatus(userData.get(i).getUserId()) == FriendshipStatus.ACCEPTED)
+           if(currentUser.getRelationshipStatus(userData.get(i).getUserId()) == FriendshipStatus.ACCEPTED)
                friends.add(userData.get(i));
         }
        
        return friends;
+    }
+   
+   public ArrayList<Group> getGroups(){
+        ArrayList<Group> groupData = groupDatabase.getGroups();
+        ArrayList<Group> groups = new ArrayList<>();
+        GroupDetails groupRelationStatus = currentUser.getGroupRelationStatus(currentUser.getUserId());
+        
+        for(int i = 0; i < groupData.size(); i++){
+            if(groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR || groupRelationStatus == GroupDetails.USER)
+                groups.add(groupData.get(i));
+        }
+        
+        return groups;
     }
 }
 

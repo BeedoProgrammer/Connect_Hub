@@ -8,13 +8,14 @@ public class User {
     private long userId;
     private String email;
     private String username;
-    private char[] password;
+    private String password;
     private LocalDate dateOfBirth;
     private boolean status;
     private String profilePic;
     private String coverPhoto;
     private String bio;
     private HashMap<Long, FriendshipStatus> relationships;
+    private HashMap<Long, GroupDetails> groupRelation;
 
     private User(UserBuilder builder) {
         this.userId = builder.userId;
@@ -27,6 +28,7 @@ public class User {
         this.coverPhoto = builder.coverPhoto;
         this.bio = builder.bio;
         this.relationships = builder.relationships;
+        this.groupRelation = builder.groupRelation;
     }
     
     public void changeStatus(){
@@ -49,7 +51,7 @@ public class User {
         return username;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -73,6 +75,10 @@ public class User {
         return relationships;
     }
 
+    public HashMap<Long, GroupDetails> getGroupRelation() {
+        return groupRelation;
+    }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -85,7 +91,7 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(char [] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -109,6 +115,10 @@ public class User {
         this.relationships = relationships;
     }
 
+    public void setGroupRelation(HashMap<Long, GroupDetails> groupRelation) {
+        this.groupRelation = groupRelation;
+    }
+
     public void setBio(String bio) {
         this.bio = bio;
     }
@@ -123,25 +133,42 @@ public class User {
        
     public FriendshipStatus getRelationshipStatus(long userId) {
         return this.relationships.get(userId);
-    } 
+    }
      
     public void removeRelationship(long userId) {  // no longer both exist in each other hashmaps
         this.relationships.remove(userId);
     }
     
-    public static class UserBuilder{
+    public void addGroupRelation(long groupID, GroupDetails groupDetails){
+        groupRelation.put(groupID, groupDetails);
+    }
+    
+    public GroupDetails getGroupRelationStatus(long groupID){
+        return groupRelation.get(groupID);
+    }
+    
+    public boolean hasGroupRelation(long groupID){
+        return groupRelation.containsKey(groupID);
+    }
+    
+    public void deleteGroupRelation(long groupID){
+        groupRelation.remove(groupID);
+    }
+
+    public static class UserBuilder {
         private long userId;
         private String email;
         private String username;
-        private char[] password;
+        private String password;
         private LocalDate dateOfBirth;
         private boolean status;
         private HashMap<Long, FriendshipStatus> relationships = new HashMap<>();
+        private HashMap<Long, GroupDetails> groupRelation = new HashMap<>();
         private String profilePic = "";
         private String coverPhoto = "";
         private String bio = "";
 
-        public UserBuilder(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
+        public UserBuilder(long userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
             this.email = email;
             this.username = username;
@@ -149,23 +176,23 @@ public class User {
             this.dateOfBirth = dateOfBirth;
             this.status = status;
         }
-        
-        public UserBuilder bio(String bio){
+    
+        public UserBuilder bio(String bio) {
             this.bio = bio;
             return this;
         }
-        
-        public UserBuilder profilePic(String profilePic){
+
+        public UserBuilder profilePic(String profilePic) {
             this.profilePic = profilePic;
             return this;
         }
-        
-        public UserBuilder coverPhoto(String coverPhoto){
+
+        public UserBuilder coverPhoto(String coverPhoto) {
             this.coverPhoto = coverPhoto;
             return this;
         }
-        
-        public User build(){
+
+        public User build() {
             return new User(this);
         }
     }

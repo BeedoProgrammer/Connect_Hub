@@ -1,5 +1,7 @@
 package Frontend;
 
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;

@@ -1,6 +1,8 @@
 package frontend;
 
+import Database.UserDatabase;
 import Backend.*;
+import NewsFeed.NewsFeedWindow;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.*;
@@ -9,13 +11,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import org.json.simple.parser.ParseException;
+import org.mindrot.jbcrypt.BCrypt;
 
-public class SignUp extends javax.swing.JFrame {
+public class SignUp extends javax.swing.JDialog {
     private UserDatabase userDatabase;
+    private User currentUser;
+    private JFrame parent;
     
-    public SignUp(String title) throws IOException, FileNotFoundException, ParseException {
-        super(title);
+    public SignUp(JFrame parent, String title) throws IOException, FileNotFoundException, ParseException {
+        super(parent, title);
+        this.setModal(true);
         userDatabase = UserDatabase.getInstance();
+        this.parent = parent;
         initComponents();
     }
 
@@ -165,9 +172,16 @@ public class SignUp extends javax.swing.JFrame {
                     
                     LocalDate dateOfBirth = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     
-                    User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), Pass1, dateOfBirth, true).build();
+                    String passString = new String(Pass1);
+                    String encryptedPass = BCrypt.hashpw(passString, BCrypt.gensalt());     // encrypt string
+                    
+                    User user = new User.UserBuilder(uniqueId, email.getText(), username.getText(), encryptedPass, dateOfBirth, true).build();
                     userDatabase.addUser(user);
-                    //this.dispose();
+                    this.dispose();
+                    parent.dispose();
+                    NewsFeedWindow mainWindow = new NewsFeedWindow(user);
+                    mainWindow.setVisible(true);
+                    mainWindow.setLocationRelativeTo(null);
                 } catch (IOException ex) {
                     Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
@@ -177,6 +191,10 @@ public class SignUp extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_signupActionPerformed
 
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jpanel1;
     private javax.swing.JLabel Jpanel2;

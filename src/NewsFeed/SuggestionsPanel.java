@@ -4,6 +4,7 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
 import Backend.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -139,7 +140,6 @@ public class SuggestionsPanel{
         
         try {
             UserDatabase myD = UserDatabase.getInstance();
-            myD.readFromFile();
             User currentUser = myD.getUsers().get(0);
             SuggestionsPanel mySP = new SuggestionsPanel(new Dimension(100, 100), myD.getUsers().get(0), myD.getUsers());
             JPanel myPanel = mySP.getSuggestionsPanel();

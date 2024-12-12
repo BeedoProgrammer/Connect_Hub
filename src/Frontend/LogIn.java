@@ -1,5 +1,6 @@
 package frontend;
 
+import Database.UserDatabase;
 import Backend.*;
 import NewsFeed.NewsFeedWindow;
 import java.io.FileNotFoundException;
@@ -7,16 +8,19 @@ import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
 import org.json.simple.parser.ParseException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class LogIn extends javax.swing.JDialog{
     private UserDatabase userDatabase;
     private User currentUser;
+    private JFrame parent;
     
     public LogIn(JFrame parent, String title) throws IOException, FileNotFoundException, ParseException {
         super(parent, title);
         this.setModal(true);
         userDatabase = UserDatabase.getInstance();
         currentUser = null;
+        this.parent = parent;
         initComponents();
     }
 
@@ -103,7 +107,7 @@ public class LogIn extends javax.swing.JDialog{
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         char[] Pass =  password.getPassword();
-        
+        String passwordString = new String(Pass);
         if(Validation.isEmpty(email.getText()) || Validation.isEmpty(Pass.toString()))
             JOptionPane.showMessageDialog(rootPane, "Enter all fileds!");
         else{
@@ -115,14 +119,17 @@ public class LogIn extends javax.swing.JDialog{
                     break;
                 }
             }
+            
             if(user == null)
                 JOptionPane.showMessageDialog(rootPane, "There is no account with this email");
-            else if(!email.getText().equals(user.getEmail()) || !Arrays.equals(Pass, user.getPassword()))
+            else if(!email.getText().equals(user.getEmail()) || !BCrypt.checkpw(passwordString, user.getPassword()))
                 JOptionPane.showMessageDialog(rootPane, "Wrong email or password!");
             else{
                 this.dispose();
+                parent.dispose();
                 NewsFeedWindow mainWindow = new NewsFeedWindow(user);
                 mainWindow.setVisible(true);
+                mainWindow.setLocationRelativeTo(null);
             }  
         }
     }//GEN-LAST:event_loginActionPerformed

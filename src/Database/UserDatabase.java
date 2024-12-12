@@ -1,11 +1,15 @@
-package Backend;
+package Database;
 
 
+import Backend.FriendshipStatus;
+import Backend.User;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,14 +18,16 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mindrot.jbcrypt.BCrypt;
 public class UserDatabase extends Database {    
     private static UserDatabase instance = null;
     
     public static UserDatabase getInstance() throws IOException, FileNotFoundException, ParseException {
         if (instance == null) {
             instance = new UserDatabase("files/users.json");
+            instance.readFromFile();
         }
-        instance.readFromFile();
+        
         return instance;
     }
     
@@ -34,7 +40,9 @@ public class UserDatabase extends Database {
         long userId = (long)mapOfUser.get("userId");                // saved in json as long
         String email = (String)mapOfUser.get("email");              // saved in json as string
         String userName = (String)mapOfUser.get("userName");        // saved in json as string
-        String password = (String)mapOfUser.get("password");        // saved in json as string
+        
+        String password = (String)mapOfUser.get("password");        // saved in json as encrypted string
+        
         String dateOfBirth = (String)mapOfUser.get("dateOfBirth");  // saved in json as string
         String bio = (String)mapOfUser.get("bio");
         String coverPic = (String)mapOfUser.get("coverPic");
@@ -43,14 +51,13 @@ public class UserDatabase extends Database {
         // parsing string into hashmap
             Gson gson = new Gson();
             String jsonString = (String)mapOfUser.get("relationships"); // saved in json as string (JSONString)
-            JSONObject jsonObject = gson.fromJson(jsonString, JSONObject.class);
-            HashMap<Long,FriendshipStatus> relationships = (HashMap<Long,FriendshipStatus>) jsonObject; // casting from JSONObject to hashmap
-        //
-        User tempUser = new User.UserBuilder(userId, email, userName, password.toCharArray(), LocalDate.parse(dateOfBirth), status)
-            .bio(bio)
-            .coverPhoto(coverPic)
-            .profilePic(profilePic)
-            .build();
+            Type type = new TypeToken<HashMap<Long, FriendshipStatus>>() {}.getType();
+            HashMap<Long, FriendshipStatus> relationships = gson.fromJson(jsonString, type);
+        User tempUser = new User.UserBuilder(userId, email, userName, password, LocalDate.parse(dateOfBirth), status)
+        .bio(bio)
+        .coverPhoto(coverPic)
+        .profilePic(profilePic)
+        .build();
         tempUser.setRelationships(relationships);
         
         return tempUser;
@@ -63,7 +70,7 @@ public class UserDatabase extends Database {
         tempUserMap.put("email", tempUser.getEmail());                          // saved in json as string
         tempUserMap.put("userName", tempUser.getUsername());                    // saved in json as string  
         
-        tempUserMap.put("password", new String(tempUser.getPassword()));        // saved in json as string
+        tempUserMap.put("password", tempUser.getPassword());        // saved in json as encrypted string
         
         tempUserMap.put("dateOfBirth", tempUser.getDateOfBirth().toString());   // saved in json as string
         tempUserMap.put("bio", tempUser.getBio());                              // saved in json as string
