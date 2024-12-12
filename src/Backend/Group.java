@@ -6,14 +6,14 @@ public class Group {
     private long groupID;
     private String name;
     private String groupPhoto;
-    private String describtion;
+    private String description;
     private ArrayList<Long> users = new ArrayList<>();
 
-    public Group(long groupID, String name, String groupPhoto, String describtion) {
+    public Group(long groupID, String name, String groupPhoto, String description) {
         this.groupID = groupID;
         this.name = name;
         this.groupPhoto = groupPhoto;
-        this.describtion = describtion;
+        this.description = description;
     }
 
     public long getGroupID() {
@@ -28,8 +28,8 @@ public class Group {
         return groupPhoto;
     }
 
-    public String getDescribtion() {
-        return describtion;
+    public String getDescription() {
+        return description;
     }
 
     public void setName(String name, User moderator) {
@@ -44,10 +44,10 @@ public class Group {
             this.groupPhoto = groupPhoto;
     }
 
-    public void setDescribtion(String describtion, User moderator) {
+    public void setDescription(String description, User moderator) {
         GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
         if(groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)
-            this.describtion = describtion;
+            this.description = description;
     }
     
     public void addUser(User user, User moderator){
