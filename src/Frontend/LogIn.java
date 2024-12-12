@@ -130,6 +130,7 @@ public class LogIn extends javax.swing.JDialog{
                 NewsFeedWindow mainWindow = new NewsFeedWindow(user);
                 mainWindow.setVisible(true);
                 mainWindow.setLocationRelativeTo(null);
+                user.changeStatus();
             }  
         }
     }//GEN-LAST:event_loginActionPerformed
