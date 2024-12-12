@@ -158,6 +158,7 @@ public class User {
     private ArrayList<Group> Mygroups = new ArrayList<>();
 
 
+
         public UserBuilder(long userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
             this.email = email;
