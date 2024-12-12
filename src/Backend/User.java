@@ -147,7 +147,7 @@ public class User {
     private long userId;
     private String email;
     private String username;
-    private char[] password;
+    private String password;
     private LocalDate dateOfBirth;
     private boolean status;
     private HashMap<Long, FriendshipStatus> relationships = new HashMap<>();
@@ -156,25 +156,6 @@ public class User {
     private String bio = "";
     private ArrayList<Group> Mygroups = new ArrayList<>();
 
-    public UserBuilder(long userId, String email, String username, char[] password, LocalDate dateOfBirth, boolean status) {
-        this.userId = userId;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.status = status;
-    
-    public static class UserBuilder{
-        private long userId;
-        private String email;
-        private String username;
-        private String password;
-        private LocalDate dateOfBirth;
-        private boolean status;
-        private HashMap<Long, FriendshipStatus> relationships = new HashMap<>();
-        private String profilePic = "";
-        private String coverPhoto = "";
-        private String bio = "";
 
         public UserBuilder(long userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {
             this.userId = userId;
