@@ -1,5 +1,7 @@
-package Backend;
+package Groups;
 
+import Backend.User;
+import Groups.GroupDetails;
 import java.util.*;
 
 public class Group {

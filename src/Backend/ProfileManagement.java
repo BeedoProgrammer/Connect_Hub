@@ -1,5 +1,7 @@
 package Backend;
 
+import Groups.Group;
+import Groups.GroupDetails;
 import Database.UserDatabase;
 import Database.StoryDatabase;
 import Database.PostDatabase;

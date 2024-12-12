@@ -5,7 +5,7 @@
 package Frontend;
 
 import Backend.FriendshipStatus;
-import Backend.Group;
+import Groups.Group;
 import Backend.GroupSearch;
 import Backend.User;
 import Backend.UserSearch;

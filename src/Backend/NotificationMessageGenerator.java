@@ -4,6 +4,8 @@
  */
 package Backend;
 
+import Groups.Group;
+
 /**
  *
  * @author user
