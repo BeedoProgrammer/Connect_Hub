@@ -1,5 +1,6 @@
-package Backend;
+package Groups;
 
+import Backend.*;
 import java.util.*;
 
 public class Group {
@@ -34,6 +35,10 @@ public class Group {
 
     public ArrayList<Long> getUsers() {
         return users;
+    }
+
+    public void setUsers(ArrayList<Long> users) {
+        this.users = users;
     }
 
     public void setName(String name, User moderator) {
