@@ -1,5 +1,7 @@
-package Backend;
+package Database;
 
+import Backend.Content;
+import Backend.Post;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;

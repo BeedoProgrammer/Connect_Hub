@@ -4,6 +4,7 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
 import Backend.*;
 import javax.swing.*;
 import java.awt.Dimension;
@@ -12,7 +13,7 @@ public class NewsFeedWindowOLD extends javax.swing.JFrame {
     NewsFeed myFeed;
     
     public NewsFeedWindowOLD(User currentUser) {
-        myFeed = new NewsFeed(currentUser);
+        myFeed = new NewsFeed(currentUser.getUserId());
         initComponents();
         System.out.println(":LLOLO");
         JFrame my = new JFrame("LOL");
@@ -216,7 +217,6 @@ public class NewsFeedWindowOLD extends javax.swing.JFrame {
             public void run() {
                 try {
                     UserDatabase myD = UserDatabase.getInstance();
-                    myD.readFromFile();
                     new NewsFeedWindowOLD(myD.getUsers().get(0)).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();

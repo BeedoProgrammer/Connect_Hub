@@ -20,7 +20,6 @@ public class AppManager {
         ConnectHub connectHub = new ConnectHub("Connect Hub");
         connectHub.setLocationRelativeTo(null);
         connectHub.setVisible(true);
-        
     }
     
     
