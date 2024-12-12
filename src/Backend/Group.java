@@ -59,7 +59,7 @@ public class Group {
         }
     }
     
-    public void RemoveUser(User user, User moderator){
+    public void removeUser(User user, User moderator){
         GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
         if(users.contains(user.getUserId()) && (groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)){
             user.deleteGroupRelation(groupID);
@@ -68,7 +68,7 @@ public class Group {
         }   
     }
     
-    public void BanUser(User user, User moderator){
+    public void banUser(User user, User moderator){
         GroupDetails groupRelationStatus = moderator.getGroupRelationStatus(groupID);
         if(user.getGroupRelationStatus(groupID) == GroupDetails.USER && (groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR)){
             user.deleteGroupRelation(groupID);
