@@ -143,6 +143,7 @@ public class User {
      public ArrayList<Group> getMygroups() {
         return Mygroups;
     }   
+
   public static class UserBuilder {
     private long userId;
     private String email;
@@ -155,6 +156,7 @@ public class User {
     private String coverPhoto = "";
     private String bio = "";
     private ArrayList<Group> Mygroups = new ArrayList<>();
+
 
 
         public UserBuilder(long userId, String email, String username, String password, LocalDate dateOfBirth, boolean status) {

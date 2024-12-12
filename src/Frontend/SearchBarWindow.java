@@ -11,7 +11,10 @@ import Backend.User;
 import Backend.UserSearch;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+
 import org.mindrot.jbcrypt.BCrypt;
+
 
 /**
  *
@@ -103,19 +106,24 @@ private GroupSearch GroupOption;
         Group g1=new Group("sens","hello");
          Group g2=new Group("senso","hello");
           Group g3=new Group("sen","hello");
+
          User user1 = new User.UserBuilder(1, "john.doe@example.com", "john_doe", BCrypt.hashpw("password123", BCrypt.gensalt()), LocalDate.of(1995, 5, 15), true)
                 .bio("Just a regular guy who loves coding!")
                 .profilePic("john_profile_pic.jpg").addGroup(g1)
                 .coverPhoto("john_cover.jpg")
                 .build();
 
+
         User user2 = new User.UserBuilder(2, "jane.smith@example.com", "mike_ali", BCrypt.hashpw("password456", BCrypt.gensalt()), LocalDate.of(1997, 8, 20), true)
+
                 .bio("Adventurer, photographer, and foodie.")
                 .profilePic("jane_profile_pic.jpg")
                 .coverPhoto("jane_cover.jpg")
                 .build();
 
+
         User user3 = new User.UserBuilder(3, "mike.jones@example.com", "mike_jones", BCrypt.hashpw("password789", BCrypt.gensalt()), LocalDate.of(1993, 11, 25), false)
+
                 .bio("Fitness enthusiast. Let's connect!")
                 .profilePic("mike_profile_pic.jpg")
                 .coverPhoto("mike_cover.jpg")
