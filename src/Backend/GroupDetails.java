@@ -4,8 +4,7 @@ public enum GroupDetails {
     CREATOR,
     ADMIN,
     USER,
-    PENDINGSENDER,
+    PENDING,
     BANNED,
-    PENDINGRECIEVER,
     REMOVED
 }
