@@ -42,6 +42,8 @@ public class StoryDatabase extends Database {
     String contentImagePath = (String)mapOfStory.get("contentImagePath");
     Story tempStory = new Story(contentId, authorId, contentString, contentImagePath);
     tempStory.setTimestamp(LocalDateTime.parse(timestamp));
+    // optional for group posts
+    Long groupId = (Long)mapOfStory.get("groupId");
     if (tempStory.isDue()) {
         return null;
     }
@@ -56,6 +58,7 @@ public class StoryDatabase extends Database {
         tempStoryMap.put("timestamp", tempStory.getTimestamp().toString());
         tempStoryMap.put("contentString", tempStory.getContentString());
         tempStoryMap.put("contentImagePath", tempStory.getContentImagePath());
+        tempStoryMap.put("groupId", tempStory.getGroupId());
         return tempStoryMap;
     }
     public void addStory(Story story) throws IOException, FileNotFoundException, ParseException {
