@@ -1,5 +1,8 @@
-package Backend;
+package Database;
 
+import Backend.Content;
+import Backend.Post;
+import Backend.Story;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,6 +43,8 @@ public class PostDatabase extends Database {
         String contentImagePath = (String)mapOfPost.get("contentImagePath");
         Post tempPost = new Post(contentId, authorId, contentString, contentImagePath);
         tempPost.setTimestamp(LocalDateTime.parse(timestamp));
+        // optional for group posts
+        Long groupId = (Long)mapOfPost.get("groupId");
         return tempPost;
     }
     protected Map<String,Object> getMapFromRecord(Object post) {
@@ -50,6 +55,7 @@ public class PostDatabase extends Database {
         tempPostMap.put("timestamp", tempPost.getTimestamp().toString());
         tempPostMap.put("contentString", tempPost.getContentString());
         tempPostMap.put("contentImagePath", tempPost.getContentImagePath());
+        tempPostMap.put("groupId", tempPost.getGroupId());
         return tempPostMap;
     }
     public void addPost(Post post) throws IOException, FileNotFoundException, ParseException {
@@ -72,5 +78,14 @@ public class PostDatabase extends Database {
         }
         return null;
     }
-
+    void modifyPost(Post post) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (post.getContentId()== ((Content)records.get(i)).getContentId()) {
+                records.set(i, post);
+                saveToFile();
+                return;
+            }
+        }
+    }
 }

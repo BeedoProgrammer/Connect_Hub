@@ -3,49 +3,54 @@ package Backend;
 import java.util.*;
 
 public class FriendManagement {
-    public static void sendFriendRequest(User sender, User recipient) { // if this occured means than we dont have relation
-        sender.addRelationship(recipient.getUserId(), FriendshipStatus.PENDINGSENDER);
-        recipient.addRelationship(sender.getUserId(), FriendshipStatus.PENDINGRECIEVER);
-
+     public static boolean sendFriendRequest(User sender, User recipient) {
+    if (sender.hasRelationshipWith(recipient.getUserId())) {
+        return false; // Relationship already exists
     }
-
-    public static void declineFriendRequest(User sender, User recipient) { ///---------------
-     
-      //recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDINGRECIEVER) 
-             recipient.removeRelationship(sender.getUserId());
-             sender.removeRelationship(recipient.getUserId());
-        
-        
-    
+    sender.addRelationship(recipient.getUserId(), FriendshipStatus.PENDINGSENDER);
+    recipient.addRelationship(sender.getUserId(), FriendshipStatus.PENDINGRECIEVER);
+    return true;
+}
+    public static boolean declineFriendRequest(User sender, User recipient) {
+        if (recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDINGRECIEVER) {
+            recipient.removeRelationship(sender.getUserId());
+            sender.removeRelationship(recipient.getUserId());
+            return true; 
+        }
+        return false;
     }
-
-    public static void acceptFriendRequest(User sender, User recipient) {  ///-----------------
-        // reciever is pending with sender
-//        if ( recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDINGRECIEVER) {
+    public static boolean acceptFriendRequest(User sender, User recipient) {
+        if (recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.PENDINGRECIEVER) {
             sender.addRelationship(recipient.getUserId(), FriendshipStatus.ACCEPTED);
             recipient.addRelationship(sender.getUserId(), FriendshipStatus.ACCEPTED);
-//            return true; //  accepted
-//        }
-//        return false; //we didnt have a pending relation
+            return true;
+        }
+        return false;
     }
 
-    public static void blockFriend(User sender, User recipient) {
-//        // If no existing relationship or already blocked or pending , he needs to be in my friend list
-//        if (!recipient.hasRelationshipWith(sender.getUserId())|| recipient.getRelationshipStatus(sender.getUserId())!=FriendshipStatus.ACCEPTED) {
-//            return false;
-//        }
-        sender.addRelationship(recipient.getUserId(), FriendshipStatus.BLOCKED);
-        recipient.addRelationship(sender.getUserId(), FriendshipStatus.BLOCKED);
-      //  return true; //  blocked
+    public static boolean blockFriend(User sender, User recipient) {
+        if (recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.ACCEPTED) {
+            sender.addRelationship(recipient.getUserId(), FriendshipStatus.BLOCKED);
+            recipient.addRelationship(sender.getUserId(), FriendshipStatus.BLOCKED);
+            return true;
+        }
+        return false;
     }
-
-public static void removeFriend(User sender, User recipient) {
-    // If no existing relationship, or existing but not accepted
-//    if (recipient.getRelationshipStatus(sender.getUserId())==FriendshipStatus.ACCEPTED) {
-        recipient.removeRelationship(sender.getUserId());
-    sender.removeRelationship(recipient.getUserId());
-//    return true; //  removed 
-//    }
-//  return false;
-}
+    public static boolean removeFriend(User sender, User recipient) {
+        if (recipient.getRelationshipStatus(sender.getUserId()) == FriendshipStatus.ACCEPTED) {
+            recipient.removeRelationship(sender.getUserId());
+            sender.removeRelationship(recipient.getUserId());
+            return true; 
+        }
+        return false;
+    }
+      public static boolean block(User sender, User recipient) {
+        FriendshipStatus currentStatus = recipient.getRelationshipStatus(sender.getUserId());
+        if (currentStatus != FriendshipStatus.BLOCKED) {
+            sender.addRelationship(recipient.getUserId(), FriendshipStatus.BLOCKED);
+            recipient.addRelationship(sender.getUserId(), FriendshipStatus.BLOCKED);
+            return true; // Successfully blocked
+        }
+        return false; // Already blocked
+    }
 }

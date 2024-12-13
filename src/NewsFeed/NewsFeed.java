@@ -4,6 +4,9 @@
  */
 package NewsFeed;
 
+import Database.UserDatabase;
+import Database.StoryDatabase;
+import Database.PostDatabase;
 import Backend.*;
 import java.util.*;
 
@@ -20,33 +23,34 @@ public class NewsFeed {
     private User currentUser;
     private Loader dataLoader;
     
-    public NewsFeed(User current) {
+    public NewsFeed(long userID) {
         this.friendSuggestions = new ArrayList<>();
         this.friendList = new ArrayList<>();
-        this.currentUser = current;
-        refresh();
+        this.postList = new ArrayList<>();
+        this.storyList = new ArrayList<>();
+        refresh(userID);
     }
     
-    public void refresh(){
-        load();
+    public void refresh(long userID){
+        load(userID);
         assignUsers();
+        
     }
     
-    public void load(){
+    public void load(long userID){
         dataLoader = new Loader();
-        postList = dataLoader.getPosts();
-        storyList = dataLoader.getSories();
+        currentUser = dataLoader.getCurrentUser(userID);
         allUsers = dataLoader.getUsers();
+        updatePostList(dataLoader);
+        updateStoryList(dataLoader);
     }
     
     public void assignUsers(){
-        for (User user : this.allUsers) { 
+        for (User user : this.allUsers) {
             if (!currentUser.hasRelationshipWith(user.getUserId()) && currentUser.getUserId() != user.getUserId()) {
                 this.friendSuggestions.add(user); 
-                System.out.println("Suggestions: " + user.getUsername());
             }else if(currentUser.getRelationshipStatus(user.getUserId()) == FriendshipStatus.ACCEPTED){
                 this.friendList.add(user);
-                System.out.println("Friends: " + user.getUsername());
             }
         }
     }
@@ -55,6 +59,32 @@ public class NewsFeed {
         return currentUser;
     }
 
+    private boolean doShowContent(Content myContent){
+        if(currentUser.getRelationshipStatus(myContent.getAuthorId()) == FriendshipStatus.ACCEPTED){
+            return true;
+        }
+        return false;
+    }
+    
+    private void updatePostList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getPosts();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.postList.add(i);
+            }
+        }
+    }
+    
+    private void updateStoryList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getSories();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.storyList.add(i);
+            }
+        }
+    }
+    
+    
     public ArrayList<Content> getPostList() {
         return postList;
     }
@@ -64,18 +94,6 @@ public class NewsFeed {
     }
 
     public ArrayList<User> getFriendList() {
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
-        this.friendList.add(this.allUsers.get(0));
-        this.friendList.add(this.allUsers.get(1));
         return friendList;
     }
 
@@ -93,9 +111,6 @@ public class NewsFeed {
                 userDatabase = UserDatabase.getInstance();
                 postDatabase = PostDatabase.getInstance();
                 storyDatabase = StoryDatabase.getInstance();
-                userDatabase.readFromFile();
-                postDatabase.readFromFile();
-                storyDatabase.readFromFile();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -108,6 +123,10 @@ public class NewsFeed {
         }
         public ArrayList<User> getUsers(){
             return this.userDatabase.getUsers();
+        }
+        
+        public User getCurrentUser(long userID){
+            return this.userDatabase.getUserFromId(userID);
         }
     }
 }

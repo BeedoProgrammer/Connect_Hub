@@ -9,10 +9,12 @@ import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 public class ConnectHub extends javax.swing.JFrame {
-
+    User currentUser;
+    
     public ConnectHub(String title) {
         super(title);
         initComponents();
+        currentUser = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -70,10 +72,13 @@ public class ConnectHub extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         try {
-            // TODO add your handling code here:
-            LogIn logIn = new LogIn("LogIn");
+            LogIn logIn = new LogIn(this, "LogIn");
             logIn.setLocationRelativeTo(null);
             logIn.setVisible(true);
+            currentUser = logIn.getCurrentUser();
+            if(currentUser != null){
+                this.dispose();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -84,9 +89,13 @@ public class ConnectHub extends javax.swing.JFrame {
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
         try {
             // TODO add your handling code here:
-            SignUp signUp = new SignUp("Sign Up");
+            SignUp signUp = new SignUp(this, "Sign Up");
             signUp.setLocationRelativeTo(null);
             signUp.setVisible(true);
+            currentUser = signUp.getCurrentUser();
+            if(currentUser != null){
+                this.dispose();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -94,6 +103,10 @@ public class ConnectHub extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_signupActionPerformed
 
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+    
      public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
