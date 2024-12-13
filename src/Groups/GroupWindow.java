@@ -31,7 +31,7 @@ public class GroupWindow extends javax.swing.JFrame {
         myManager = new GroupWindowManager(group);
         postsPane = new contentPanel(new Dimension(200, 400), this.myManager.getPosts()).getContentScrollable();
         StoriesPane = new contentPanel(new Dimension(200, 400), this.myManager.getStories()).getContentScrollable();
-        membersPane = new membersPanel(new Dimension(200, 400), myManager.getMembers()).getFriendsScrollable();
+        membersPane = new membersPanel(new Dimension(200, 400), myManager.getMembers(), currentUser, group).getFriendsScrollable();
     }
     
     @SuppressWarnings("unchecked")
@@ -209,7 +209,7 @@ public class GroupWindow extends javax.swing.JFrame {
 
     private void newContentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newContentButtonActionPerformed
         // TODO add your handling code here:
-        CreateContentWindow contentWindow = new CreateContentWindow(this, currentUser);
+        CreateContentWindow contentWindow = new CreateContentWindow(this, currentUser, group.getGroupID());
         contentWindow.setLocationRelativeTo(null);
         contentWindow.setVisible(true);
     }//GEN-LAST:event_newContentButtonActionPerformed
@@ -250,8 +250,11 @@ public class GroupWindow extends javax.swing.JFrame {
             public void run() {
                 try {
                     UserDatabase myD = UserDatabase.getInstance();
+                    User current = myD.getUsers().get(0);
                     GroupDatabase myGroupData = GroupDatabase.getInstance();
-                    new GroupWindow(myD.getUsers().get(0), myGroupData.getGroups().get(0), null);
+                    Group myGroup = current.createGroup("My amazing group");
+                    myGroupData.addGroup(myGroup);
+                    new GroupWindow(current, myGroup, null).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

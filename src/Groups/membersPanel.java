@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Utilities.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -20,51 +22,75 @@ import javax.swing.border.EmptyBorder;
  * @author Abdel
  */
 public class membersPanel{
-    ArrayList<User> myFriends;
+    ArrayList<User> myMembers;
     Dimension myDimensions;
+    User currentUser;
+    Group myGroup;
     final Color backgroundColor = Color.lightGray;
     
-    public membersPanel(Dimension myDimension, ArrayList<User> myFriends) {
+    public membersPanel(Dimension myDimension, ArrayList<User> myMembers, User currentUser, Group myGroup) {
         this.myDimensions = myDimension;
-        this.myFriends = myFriends;
+        this.myMembers = myMembers;
+        this.currentUser = currentUser;
+        this.myGroup = myGroup;
     }
     
-    private JPanel createFriendPanel(User myFriend){
-      JPanel friendPanel = new JPanel();
-      friendPanel.setLayout(new BoxLayout(friendPanel, BoxLayout.X_AXIS));
-      friendPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-      friendPanel.setBackground(backgroundColor);
+    private JPanel createMemberPanel(User member){
+        JPanel memberPanel = new JPanel();
+        memberPanel.setLayout(new BoxLayout(memberPanel, BoxLayout.X_AXIS));
+        memberPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        memberPanel.setBackground(backgroundColor);
 
-      JLabel nameLabel = new JLabel(myFriend.getUsername());
-      FontMetrics metrics = nameLabel.getFontMetrics(nameLabel.getFont());
-      nameLabel.setPreferredSize(new Dimension((int) this.myDimensions.getWidth() - 40, metrics.getHeight() + 2));
-      nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-      friendPanel.add(nameLabel);
+        JLabel nameLabel = new JLabel(member.getUsername());
+        FontMetrics metrics = nameLabel.getFontMetrics(nameLabel.getFont());
+        nameLabel.setPreferredSize(new Dimension((int) this.myDimensions.getWidth() - 40, metrics.getHeight() + 2));
+        nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        memberPanel.add(nameLabel);
 
-      friendPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        memberPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-      Color myColor = myFriend.isStatus() ? Color.GREEN : Color.RED;
-      JPanel circlePanel = new JPanel(){
-          @Override
-          protected void paintComponent(Graphics g){
-              super.paintComponent(g);
-              g.setColor(myColor);
-              g.fillOval(0, 0, 20, 20);
-          }
-      };
-      circlePanel.setPreferredSize(new Dimension(20, 20));
-      circlePanel.setMinimumSize(new Dimension(20, 20));
-      circlePanel.setMaximumSize(new Dimension(20, 20));
-      circlePanel.setOpaque(false);
-      friendPanel.add(circlePanel);
+        Color myColor = member.isStatus() ? Color.GREEN : Color.RED;
+        JPanel circlePanel = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g){
+                super.paintComponent(g);
+                g.setColor(myColor);
+                g.fillOval(0, 0, 20, 20);
+            }
+        };
+        circlePanel.setPreferredSize(new Dimension(20, 20));
+        circlePanel.setMinimumSize(new Dimension(20, 20));
+        circlePanel.setMaximumSize(new Dimension(20, 20));
+        circlePanel.setOpaque(false);
+        memberPanel.add(circlePanel);
 
-      friendPanel.setPreferredSize(new Dimension((int) this.myDimensions.getWidth() - 10, 40));
-      friendPanel.setMinimumSize(new Dimension((int) this.myDimensions.getWidth() - 10, 40));
-      friendPanel.setMaximumSize(new Dimension((int) this.myDimensions.getWidth() - 10, 40));
+        memberPanel.setPreferredSize(new Dimension((int) this.myDimensions.getWidth() - 10, 40));
+        memberPanel.setMinimumSize(new Dimension((int) this.myDimensions.getWidth() - 10, 40));
+        memberPanel.setMaximumSize(new Dimension((int) this.myDimensions.getWidth() - 10, 40));
       
-      friendPanel.revalidate();
-      friendPanel.repaint();
-      return friendPanel;
+  
+        Button editButton = new Button();
+        editButton.setLabel("Edit");
+        editButton.setPreferredSize(new Dimension(20, 40));
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Call the editUser function
+                editUser();
+            }
+        });
+      
+        memberPanel.add(editButton);
+        
+        memberPanel.revalidate();
+        memberPanel.repaint();
+        return memberPanel;
+    }
+    
+    private void editUser(){
+//        if(currentUser.getGroupRelationStatus() == GroupDetails.CREATOR){
+            
+//        }
     }
     
     public JScrollPane getFriendsScrollable(){
@@ -72,8 +98,8 @@ public class membersPanel{
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        for (User friend : myFriends) {
-            JPanel myFriendPanel = createFriendPanel(friend);
+        for (User friend : myMembers) {
+            JPanel myFriendPanel = createMemberPanel(friend);
             myFriendPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             container.add(Box.createRigidArea(new Dimension(0, 10)));
             container.add(myFriendPanel);
