@@ -10,11 +10,12 @@ public class Group {
     private String description;
     private ArrayList<Long> users;
 
-    private Group(GroupBuilder builder) {
+    private Group(GroupBuilder builder, ArrayList<Long> users) {
         this.groupID = builder.groupID;
         this.name = builder.name;
         this.groupPhoto = builder.groupPhoto;
         this.description = builder.description;
+        this.users = users;
     }
 
     public long getGroupID() {
@@ -106,6 +107,15 @@ public class Group {
             this.groupID = groupID;
             this.name = name;
         }
+        public GroupBuilder(long groupID, String name, User creator) {
+            this.groupID = groupID;
+            this.name = name;
+            users.add(creator.getUserId());
+        }
+
+        public ArrayList<Long> getUsers() {
+            return users;
+        }
         
         public GroupBuilder groupPhoto(String groupPhoto) {
             this.groupPhoto = groupPhoto;
@@ -118,7 +128,7 @@ public class Group {
         }
         
         public Group build() {
-            return new Group(this);
+            return new Group(this,this.users);
         }
     }
 }

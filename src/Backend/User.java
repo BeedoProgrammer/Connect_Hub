@@ -145,8 +145,8 @@ public class User {
         this.relationships.remove(userId);
     }
     
-    public void addGroupRelation(long userID, GroupDetails groupDetails){
-        groupRelation.put(userID, groupDetails);
+    public void addGroupRelation(long groupId, GroupDetails groupDetails){
+        groupRelation.put(groupId, groupDetails);
     }
     
     public GroupDetails getGroupRelationStatus(long groupID){
@@ -170,9 +170,8 @@ public class User {
             uniqueId = Math.abs(random.nextLong());
         }while(groupDatabase.getGroupFromId(uniqueId) != null);
         
-        Group group = new GroupBuilder(uniqueId, name).build();
-        this.addGroupRelation(this.getUserId(), GroupDetails.CREATOR);
-        
+        Group group = new GroupBuilder(uniqueId, name, this).build();
+        this.addGroupRelation(uniqueId, GroupDetails.CREATOR);
         return group;
     }
 
