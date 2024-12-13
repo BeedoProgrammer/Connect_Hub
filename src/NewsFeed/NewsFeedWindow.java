@@ -28,7 +28,15 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     
     public NewsFeedWindow(User currentUser) {
         myFeed = new NewsFeed(currentUser.getUserId());
+        
         initComponents();
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                // todo your log out code here
+                currentUser.changeStatus();
+            }
+        });
     }
     
     private void loadDataPanels(){
