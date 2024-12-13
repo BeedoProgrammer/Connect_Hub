@@ -10,7 +10,7 @@ public class GroupSearch {
     
     private User CurrentUser;
     private GroupDatabase groupDatabase;
-    private ArrayList<Group> MyDesiredGroups;  // groups with this search
+    public ArrayList<Group> MyDesiredGroups;  // groups with this search
     
     public GroupSearch (User CurrentUser) throws IOException, FileNotFoundException, ParseException {
         this.CurrentUser = CurrentUser;

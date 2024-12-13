@@ -5,6 +5,7 @@ import java.util.*;
 import java.io.*;
 import org.json.simple.parser.ParseException;
 import Database.*;
+import Groups.Group;
 
 public class SearchBarWindow extends javax.swing.JFrame {
     
@@ -79,6 +80,7 @@ public class SearchBarWindow extends javax.swing.JFrame {
     private void UserSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserSearchActionPerformed
         String searchTerm = SearchInput.getText();
         SearchOption.DesiredPeople(searchTerm);
+ 
 
         SearchResultsWindow resultsWindow = new SearchResultsWindow(CurrentUser, SearchOption);
         resultsWindow.setVisible(true);
@@ -87,6 +89,8 @@ public class SearchBarWindow extends javax.swing.JFrame {
     private void GroupSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GroupSearchActionPerformed
         String searchTerm = SearchInput.getText();
         GroupOption.DesiredGroups(searchTerm);
+     ArrayList<Group>est=GroupOption.MyDesiredGroups;
+        System.out.println(est.get(0));
         
         GroupSearchresultsWindow resultsWindow = new GroupSearchresultsWindow(CurrentUser, GroupOption);
     }//GEN-LAST:event_GroupSearchActionPerformed
