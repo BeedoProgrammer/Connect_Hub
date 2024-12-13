@@ -340,6 +340,7 @@ public class ProfileManagementWindow extends javax.swing.JFrame {
         connectHub.setLocationRelativeTo(null);
         connectHub.setVisible(true);
         saveUser();
+        user.changeStatus();
         this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 

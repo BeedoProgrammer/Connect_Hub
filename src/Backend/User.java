@@ -1,6 +1,6 @@
 package Backend;
 
-import Groups.GroupDetails;
+import Groups.*;
 import java.time.*;
 import java.util.*;
 

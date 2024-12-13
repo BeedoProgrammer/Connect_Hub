@@ -1,51 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Backend;
 
-import Groups.Group;
-import java.util.ArrayList;
+import Groups.*;
+import java.util.*;
+import Database.*;
+import java.io.*;
+import org.json.simple.parser.ParseException;
 
-/**
- *
- * @author user
- */
 public class GroupSearch {
-      private User CurrentUser;
-  private  ArrayList <Group> SystemGroups; ///// all groups in system
-   private   ArrayList<Group> MyDesiredGroups;  ///// groups with this search
-    public GroupSearch (User CurrentUser ,ArrayList<Group> SystemGroups)
-    {
-        this.CurrentUser=CurrentUser;
-        this.SystemGroups=SystemGroups;
-        MyDesiredGroups=new ArrayList<>();
-    }
-    public void DesiredGroups(String searchName) {
     
-        for (Group group : SystemGroups) {
-            if (group.getName().toLowerCase().contains(searchName.toLowerCase())) {
+    private User CurrentUser;
+    private GroupDatabase groupDatabase;
+    private ArrayList<Group> MyDesiredGroups;  // groups with this search
+    
+    public GroupSearch (User CurrentUser) throws IOException, FileNotFoundException, ParseException {
+        this.CurrentUser = CurrentUser;
+        this.groupDatabase = GroupDatabase.getInstance();
+        MyDesiredGroups = new ArrayList<>();
+    }
+    
+    public void DesiredGroups(String searchName) {
+        ArrayList<Group> groups = groupDatabase.getGroups();
+    
+        for(int i = 0; i < groups.size(); i++) {
+            Group group = groups.get(i);
+            if (group.getName().toLowerCase().contains(searchName.toLowerCase()))
                 MyDesiredGroups.add(group);
-            }
-        }
-  }  
-     public ArrayList<Group> joinedGroups() {
-    ArrayList<Group> joinedGroups = new ArrayList<>();
-    for (Group group : MyDesiredGroups) {
-        if (CurrentUser.getMygroups().contains(group)) {
-            joinedGroups.add(group);
         }
     }
-    return joinedGroups;
-}
-public ArrayList<Group> unjoinedGroups() {
-    ArrayList<Group> unjoinedGroups = new ArrayList<>();
-    for (Group group : MyDesiredGroups) {
-        if (!CurrentUser.getMygroups().contains(group)) {
-            unjoinedGroups.add(group);
+    
+    public ArrayList<Group> joinedGroups() {
+        ArrayList<Group> joinedGroups = new ArrayList<>();
+        for (int i = 0; i < MyDesiredGroups.size(); i++) {
+            long groupID = MyDesiredGroups.get(i).getGroupID();
+            GroupDetails status = CurrentUser.getGroupRelationStatus(groupID);
+            if(status == GroupDetails.ADMIN || status == GroupDetails.USER || status == GroupDetails.CREATOR)
+                joinedGroups.add(MyDesiredGroups.get(i));
         }
+        return joinedGroups;
     }
-    return unjoinedGroups;
-}
-
+    
+    public ArrayList<Group> unjoinedGroups() {
+        ArrayList<Group> unjoinedGroups = new ArrayList<>();
+        for(int i = 0; i < MyDesiredGroups.size(); i++) {
+            long groupID = MyDesiredGroups.get(i).getGroupID();
+            GroupDetails status = CurrentUser.getGroupRelationStatus(groupID);
+            if (status == GroupDetails.PENDING || status == GroupDetails.BANNED || status == GroupDetails.REMOVED)
+                unjoinedGroups.add(MyDesiredGroups.get(i));
+        }
+        return unjoinedGroups;
+    }
 }
