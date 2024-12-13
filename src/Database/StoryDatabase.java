@@ -3,6 +3,7 @@ package Database;
 
 import Backend.Content;
 import Backend.Story;
+import Backend.User;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -76,5 +77,15 @@ public class StoryDatabase extends Database {
             }
         }
         return null;
+    }
+    void modifyStory(Story story) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (story.getContentId()== ((Content)records.get(i)).getContentId()) {
+                records.set(i, story);
+                saveToFile();
+                return;
+            }
+        }
     }
 }

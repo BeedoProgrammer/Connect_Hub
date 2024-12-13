@@ -103,6 +103,15 @@ public class UserDatabase extends Database {
         }
         return null;
     }
-    
+    void modifyUser(User user) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (user.getUserId() == ((User)records.get(i)).getUserId()) {
+                records.set(i, user);
+                saveToFile();
+                return;
+            }
+        }
+    }
 }
 

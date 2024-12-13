@@ -76,4 +76,24 @@ public class GroupDatabase extends Database {
         }
         return null;
     }
+    void modifyGroup(Group group) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (group.getGroupID() == ((Group)records.get(i)).getGroupID()) {
+                records.set(i, group);
+                saveToFile();
+                return;
+            }
+        }
+    }
+    void removeGroup(Group group) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (group.getGroupID()== ((Group)records.get(i)).getGroupID()) {
+                records.remove(i);
+                saveToFile();
+                return;
+            }
+        }
+    }
 }

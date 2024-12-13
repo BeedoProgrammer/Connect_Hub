@@ -3,6 +3,7 @@ package Database;
 import Backend.Notification;
 import Backend.NotificationType;
 import Backend.User;
+import Groups.Group;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -81,5 +82,25 @@ public class NotificationDatabase extends Database {
             }
         }
         return null;
+    }
+    void modifyNotification(Notification notification) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (notification.getId() == ((Notification)records.get(i)).getId()) {
+                records.set(i, notification);
+                saveToFile();
+                return;
+            }
+        }
+    }
+    void removeNotification(Notification notification) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (notification.getId()== ((Notification)records.get(i)).getId()) {
+                records.remove(i);
+                saveToFile();
+                return;
+            }
+        }
     }
 }
