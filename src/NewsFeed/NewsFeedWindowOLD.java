@@ -13,7 +13,7 @@ public class NewsFeedWindowOLD extends javax.swing.JFrame {
     NewsFeed myFeed;
     
     public NewsFeedWindowOLD(User currentUser) {
-        myFeed = new NewsFeed(currentUser);
+        myFeed = new NewsFeed(currentUser.getUserId());
         initComponents();
         System.out.println(":LLOLO");
         JFrame my = new JFrame("LOL");

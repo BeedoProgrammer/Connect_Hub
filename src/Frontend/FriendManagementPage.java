@@ -26,31 +26,29 @@ import org.json.simple.parser.ParseException;
  */
 public class FriendManagementPage extends javax.swing.JFrame {
 
-    private User user;
+    private User currentUser;
     private UserDatabase Database = UserDatabase.getInstance(); 
     private JPanel requestsPanel;
     private JPanel SuggestionsPanel;
     private JPanel FriendsPanel;
     private JFrame parent;
-    
     private ArrayList<Long> suggestionCandidates = new ArrayList<>(); 
 
     public FriendManagementPage(JFrame parent, User user) throws IOException, FileNotFoundException, ParseException {
         this.parent = parent;
         this.setPreferredSize(parent.getSize());
-        this.user = user;
+        this.currentUser = user;
         setTitle("Friend Management");
         setLayout(new BorderLayout());
         requestsPanel = new JPanel();
         requestsPanel.setLayout(new BoxLayout(requestsPanel, BoxLayout.Y_AXIS));
-        populateRequestsPanel(user);
+        populateRequestsPanel();
         FriendsPanel = new JPanel();
         FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
-        populateFriendsPanel(user);
+        populateFriendsPanel();
         SuggestionsPanel = new JPanel();
         SuggestionsPanel.setLayout(new BoxLayout(SuggestionsPanel, BoxLayout.Y_AXIS));
-        initializeSuggestionCandidates(user);
-        populateSuggestionsPanel(user);
+        populateSuggestionsPanel();
         JPanel requestsSection = createLabeledSection("Friend Requests", new JScrollPane(requestsPanel));
         JPanel friendsSection = createLabeledSection("Friends", new JScrollPane(FriendsPanel));
         JPanel suggestionsSection = createLabeledSection("Suggestions", new JScrollPane(SuggestionsPanel));
@@ -80,15 +78,15 @@ public class FriendManagementPage extends javax.swing.JFrame {
         return sectionPanel;
     }
 
-    private void populateRequestsPanel(User user) {
+    private void populateRequestsPanel() {
         saveData();
         requestsPanel.removeAll();
         requestsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        HashMap<Long, FriendshipStatus> relationships = user.getRelationships();
+        HashMap<Long, FriendshipStatus> relationships = currentUser.getRelationships();
         for (Map.Entry<Long, FriendshipStatus> entry : relationships.entrySet()) {
             if (entry.getValue() == FriendshipStatus.PENDINGRECIEVER) {
                 User SentRequestFriend = Database.getUserFromId(entry.getKey());
-                JPanel requestPanel = createRequestPanel(user, SentRequestFriend);
+                JPanel requestPanel = createRequestPanel(SentRequestFriend);
                 requestsPanel.add(requestPanel);
             }
         }
@@ -96,7 +94,7 @@ public class FriendManagementPage extends javax.swing.JFrame {
         requestsPanel.repaint();
     }
 
-    private JPanel createRequestPanel(User currentUser, User friend) {
+    private JPanel createRequestPanel(User friend) {
         JPanel requestPanel = new JPanel();
          requestPanel.setLayout(new BoxLayout(requestPanel, BoxLayout.Y_AXIS));
         JPanel MYPhotoPanel = new JPanel() {
@@ -133,13 +131,13 @@ public class FriendManagementPage extends javax.swing.JFrame {
     acceptButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
     declineButton.setAlignmentX(Component.CENTER_ALIGNMENT);
        acceptButton.addActionListener(e -> {
-    FriendManagement.acceptFriendRequest(friend, currentUser);
-    populateRequestsPanel(currentUser); 
-    populateFriendsPanel(currentUser);
+    FriendManagement.acceptFriendRequest(getUpdatedUser(friend), getUpdatedUser(currentUser));
+    populateRequestsPanel(); 
+    populateFriendsPanel();
 });
 declineButton.addActionListener(e -> {
-    FriendManagement.declineFriendRequest(friend, currentUser);
-    populateRequestsPanel(currentUser);
+    FriendManagement.declineFriendRequest(getUpdatedUser(friend), getUpdatedUser(currentUser));
+    populateRequestsPanel();
 });
         requestPanel.add(MYPhotoPanel);
         requestPanel.add(friendLabel);
@@ -147,15 +145,15 @@ declineButton.addActionListener(e -> {
         requestPanel.add(declineButton);
         return requestPanel;
     }
-    private void populateFriendsPanel(User user) {
+    private void populateFriendsPanel() {
         saveData();
         FriendsPanel.removeAll();
         FriendsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        for (Map.Entry<Long, FriendshipStatus> entry : user.getRelationships().entrySet()) {
+        for (Map.Entry<Long, FriendshipStatus> entry : currentUser.getRelationships().entrySet()) {
             if (entry.getValue() == FriendshipStatus.ACCEPTED) {
                 System.out.println(entry.getKey());
                 User friend = Database.getUserFromId(entry.getKey());  //ERROR ARISE HERE get user from id doesnt function properly
-                JPanel friendPanel = createFriendPanelForBlocking(user, friend); //you are accepted and in my friends so i need 2 buttons beside u blocked,removed
+                JPanel friendPanel = createFriendPanelForBlocking(friend); //you are accepted and in my friends so i need 2 buttons beside u blocked,removed
                 FriendsPanel.add(friendPanel);
             }
         }
@@ -163,7 +161,7 @@ declineButton.addActionListener(e -> {
         FriendsPanel.repaint();
     }
 
- private JPanel createFriendPanelForBlocking(User currentUser, User friend) {
+ private JPanel createFriendPanelForBlocking(User friend) {
     JPanel friendPanel = new JPanel();
     friendPanel.setLayout(new BoxLayout(friendPanel, BoxLayout.Y_AXIS));
     JPanel MYPhotoPanel = new JPanel() {
@@ -199,14 +197,14 @@ declineButton.addActionListener(e -> {
     blockButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
     removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     blockButton.addActionListener(e -> {
-        FriendManagement.blockFriend(currentUser, friend);
+        FriendManagement.blockFriend(getUpdatedUser(currentUser), getUpdatedUser(friend));
         System.out.println(friend.getUsername() + " blocked successfully.");
-        populateFriendsPanel(currentUser);
+        populateFriendsPanel();
     });
     removeButton.addActionListener(e -> {
-        FriendManagement.removeFriend(currentUser, friend);
+        FriendManagement.removeFriend(getUpdatedUser(currentUser), getUpdatedUser(friend));
         System.out.println(friend.getUsername() + " removed successfully.");
-        populateFriendsPanel(currentUser);
+        populateFriendsPanel();
     });
        MYPhotoPanel.setPreferredSize(new Dimension(120,120)); 
     friendPanel.add(MYPhotoPanel);
@@ -215,7 +213,7 @@ declineButton.addActionListener(e -> {
     friendPanel.add(removeButton);
     return friendPanel;
 }
-    private void initializeSuggestionCandidates(User currentUser) {
+    private void initializeSuggestionCandidates() {
         suggestionCandidates.clear();
         ArrayList<User> SystemUsers = Database.getUsers();
         for (User user : SystemUsers) { 
@@ -225,7 +223,8 @@ declineButton.addActionListener(e -> {
         }
     }
 
-    private void populateSuggestionsPanel(User currentUser) {
+    private void populateSuggestionsPanel() {
+        initializeSuggestionCandidates();
         SuggestionsPanel.removeAll();
         SuggestionsPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -248,6 +247,7 @@ declineButton.addActionListener(e -> {
     }
 
   private JPanel createSuggestionPanel(User currentUser, User suggestedUser) {
+      System.out.println(currentUser);
     JPanel suggestionPanel = new JPanel();
     suggestionPanel.setLayout(new BoxLayout(suggestionPanel, BoxLayout.Y_AXIS)); 
     JPanel MYPhotoPanel = new JPanel() {
@@ -285,16 +285,16 @@ declineButton.addActionListener(e -> {
     declineButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     addFriendButton.addActionListener(e -> {
-        FriendManagement.sendFriendRequest(currentUser, suggestedUser); // Send friend request
-        System.out.println("Friend request sent to " + suggestedUser.getUsername());
+        FriendManagement.sendFriendRequest(getUpdatedUser(currentUser), getUpdatedUser(suggestedUser)); // Send friend request
+        System.out.println("Friend request sent to " + getUpdatedUser(suggestedUser).getUsername());
         suggestionCandidates.remove(suggestedUser.getUserId()); // Remove from candidates
-        populateSuggestionsPanel(currentUser); // Refresh suggestions panel
+        populateSuggestionsPanel(); // Refresh suggestions panel
     });
 
     declineButton.addActionListener(e -> {
         System.out.println("Declined suggestion: " + suggestedUser.getUsername());
         suggestionCandidates.remove(suggestedUser.getUserId()); // Remove from candidates
-        populateSuggestionsPanel(currentUser); // Refresh suggestions panel
+        populateSuggestionsPanel(); // Refresh suggestions panel
     });
     suggestionPanel.add(MYPhotoPanel); // Add photo panel
     suggestionPanel.add(usernameLabel); // Add username label
@@ -303,9 +303,14 @@ declineButton.addActionListener(e -> {
     return suggestionPanel;
 }
   
+    private User getUpdatedUser(User myUser){
+        return this.Database.getUserFromId(myUser.getUserId());
+    }
+  
     private void saveData(){
         try {
             this.Database.saveToFile();
+            this.currentUser = getUpdatedUser(currentUser);
         } catch (Exception e) {
         }
     }
@@ -336,16 +341,26 @@ declineButton.addActionListener(e -> {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        System.out.println("Before FINALLY");
-        try {
-            this.Database.saveToFile();
-        } catch (Exception ex) {}
-        finally{
-            System.out.println("IN FINALLY");
-            this.parent.setVisible(true);
-            this.dispose();
-        }
+        saveData();
+        this.parent.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_formWindowClosing
+
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+      
+java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+        
+    }
+});
+      
+    }
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

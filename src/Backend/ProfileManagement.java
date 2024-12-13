@@ -1,8 +1,7 @@
 package Backend;
 
-import Database.UserDatabase;
-import Database.StoryDatabase;
-import Database.PostDatabase;
+import Groups.*;
+import Database.*;
 import java.util.*;
 
 public class ProfileManagement {
@@ -54,6 +53,6 @@ public class ProfileManagement {
         }
        
        return friends;
-    }
+   }
 }
 

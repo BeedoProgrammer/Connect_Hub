@@ -8,6 +8,9 @@ import Database.UserDatabase;
 import Database.StoryDatabase;
 import Database.PostDatabase;
 import Backend.*;
+import Database.GroupDatabase;
+import Groups.Group;
+import Groups.GroupDetails;
 import java.util.*;
 
 /**
@@ -20,26 +23,32 @@ public class NewsFeed {
     private ArrayList<User> allUsers;
     private ArrayList<User> friendList;
     private ArrayList<User> friendSuggestions;
+    private ArrayList<Group> groupsList;
     private User currentUser;
     private Loader dataLoader;
     
-    public NewsFeed(User current) {
+    public NewsFeed(long userID) {
         this.friendSuggestions = new ArrayList<>();
         this.friendList = new ArrayList<>();
-        this.currentUser = current;
-        refresh();
+        this.postList = new ArrayList<>();
+        this.storyList = new ArrayList<>();
+        this.groupsList = new ArrayList<>();
+        refresh(userID);
     }
     
-    public void refresh(){
-        load();
+    public void refresh(long userID){
+        load(userID);
         assignUsers();
+        
     }
     
-    public void load(){
+    public void load(long userID){
         dataLoader = new Loader();
-        postList = dataLoader.getPosts();
-        storyList = dataLoader.getSories();
+        currentUser = dataLoader.getCurrentUser(userID);
         allUsers = dataLoader.getUsers();
+        updatePostList(dataLoader);
+        updateStoryList(dataLoader);
+        updateGroupList(dataLoader);
     }
     
     public void assignUsers(){
@@ -56,6 +65,43 @@ public class NewsFeed {
         return currentUser;
     }
 
+    private boolean doShowContent(Content myContent){
+        if(currentUser.getRelationshipStatus(myContent.getAuthorId()) == FriendshipStatus.ACCEPTED){
+            return true;
+        }
+        return false;
+    }
+    private void  updateGroupList(Loader dataLoader) {
+        ArrayList<Group> tempList = dataLoader.getGroups();
+        for (Group group : tempList) {
+            GroupDetails relationWithGroup = this.currentUser.getGroupRelationStatus(group.getGroupID());
+            if (relationWithGroup == GroupDetails.CREATOR || relationWithGroup == GroupDetails.ADMIN || relationWithGroup == GroupDetails.USER) {
+                this.groupsList.add(group);
+            }
+        }
+    }
+    private void updatePostList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getPosts();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.postList.add(i);
+            }
+        }
+    }
+    
+    private void updateStoryList(Loader dataLoader){
+        ArrayList<Content> tempList = dataLoader.getSories();
+        for(Content i : tempList){
+            if(doShowContent(i)){
+                this.storyList.add(i);
+            }
+        }
+    }
+
+    public ArrayList<Group> getGroupsList() {
+        return groupsList;
+    }
+    
     public ArrayList<Content> getPostList() {
         return postList;
     }
@@ -76,12 +122,14 @@ public class NewsFeed {
         private UserDatabase userDatabase;
         private PostDatabase postDatabase;
         private StoryDatabase storyDatabase;
+        private GroupDatabase groupDatabase;
         
         public Loader() {
             try {
                 userDatabase = UserDatabase.getInstance();
                 postDatabase = PostDatabase.getInstance();
                 storyDatabase = StoryDatabase.getInstance();
+                groupDatabase = GroupDatabase.getInstance();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -94,6 +142,13 @@ public class NewsFeed {
         }
         public ArrayList<User> getUsers(){
             return this.userDatabase.getUsers();
+        }
+        public ArrayList<Group> getGroups(){
+            return this.groupDatabase.getGroups();
+        }
+        
+        public User getCurrentUser(long userID){
+            return this.userDatabase.getUserFromId(userID);
         }
     }
 }
