@@ -1,7 +1,10 @@
 package Groups;
 
 import Backend.*;
+import Database.*;
+import java.io.*;
 import java.util.*;
+import org.json.simple.parser.ParseException;
 
 public class Group {
     private long groupID;
@@ -93,6 +96,21 @@ public class Group {
             user.addGroupRelation(groupID, GroupDetails.REMOVED);
             users.remove(user.getUserId());
         }
+    }
+    
+    public Group createGroup(String name, User creater) throws IOException, FileNotFoundException, ParseException{
+        GroupDatabase groupDatabase = GroupDatabase.getInstance();
+        Random random = new Random();
+        long uniqueId;
+                    
+        do {
+            uniqueId = Math.abs(random.nextLong());
+        }while(groupDatabase.getGroupFromId(uniqueId) != null);
+        
+        Group group = new GroupBuilder(uniqueId, name).build();
+        creater.addGroupRelation(uniqueId, GroupDetails.CREATOR);
+        
+        return group;
     }
     
     public static class GroupBuilder {
