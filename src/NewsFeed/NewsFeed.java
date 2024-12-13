@@ -8,6 +8,9 @@ import Database.UserDatabase;
 import Database.StoryDatabase;
 import Database.PostDatabase;
 import Backend.*;
+import Database.GroupDatabase;
+import Groups.Group;
+import Groups.GroupDetails;
 import java.util.*;
 
 /**
@@ -20,6 +23,7 @@ public class NewsFeed {
     private ArrayList<User> allUsers;
     private ArrayList<User> friendList;
     private ArrayList<User> friendSuggestions;
+    private ArrayList<Group> groupsList;
     private User currentUser;
     private Loader dataLoader;
     
@@ -28,6 +32,7 @@ public class NewsFeed {
         this.friendList = new ArrayList<>();
         this.postList = new ArrayList<>();
         this.storyList = new ArrayList<>();
+        this.groupsList = new ArrayList<>();
         refresh(userID);
     }
     
@@ -43,6 +48,7 @@ public class NewsFeed {
         allUsers = dataLoader.getUsers();
         updatePostList(dataLoader);
         updateStoryList(dataLoader);
+        updateGroupList(dataLoader);
     }
     
     public void assignUsers(){
@@ -66,6 +72,16 @@ public class NewsFeed {
         return false;
     }
     
+    private void  updateGroupList(Loader dataLoader) {
+        ArrayList<Group> tempList = dataLoader.getGroups();
+        for (Group group : tempList) {
+            GroupDetails relationWithGroup = this.currentUser.getGroupRelationStatus(group.getGroupID());
+            if (relationWithGroup == GroupDetails.CREATOR || relationWithGroup == GroupDetails.ADMIN || relationWithGroup == GroupDetails.USER) {
+                this.groupsList.add(group);
+            }
+        }
+    }
+    
     private void updatePostList(Loader dataLoader){
         ArrayList<Content> tempList = dataLoader.getPosts();
         for(Content i : tempList){
@@ -83,7 +99,11 @@ public class NewsFeed {
             }
         }
     }
-    
+
+    public ArrayList<Group> getGroupsList() {
+        
+        return groupsList;
+    }
     
     public ArrayList<Content> getPostList() {
         return postList;
@@ -105,12 +125,14 @@ public class NewsFeed {
         private UserDatabase userDatabase;
         private PostDatabase postDatabase;
         private StoryDatabase storyDatabase;
+        private GroupDatabase groupDatabase;
         
         public Loader() {
             try {
                 userDatabase = UserDatabase.getInstance();
                 postDatabase = PostDatabase.getInstance();
                 storyDatabase = StoryDatabase.getInstance();
+                groupDatabase = GroupDatabase.getInstance();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -123,6 +145,9 @@ public class NewsFeed {
         }
         public ArrayList<User> getUsers(){
             return this.userDatabase.getUsers();
+        }
+        public ArrayList<Group> getGroups(){
+            return this.groupDatabase.getGroups();
         }
         
         public User getCurrentUser(long userID){

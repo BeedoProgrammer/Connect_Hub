@@ -254,6 +254,9 @@ public class GroupWindow extends javax.swing.JFrame {
                     GroupDatabase myGroupData = GroupDatabase.getInstance();
                     Group myGroup = current.createGroup("My amazing group");
                     myGroupData.addGroup(myGroup);
+                    current = myD.getUsers().get(1);
+                    myGroup = current.createGroup("abdo's Groip");
+                    myGroupData.addGroup(myGroup);
                     new GroupWindow(current, myGroup, null).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
