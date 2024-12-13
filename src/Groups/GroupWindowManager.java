@@ -14,12 +14,12 @@ import java.util.HashMap;
  * @author Abdel
  */
 public class GroupWindowManager {
-    Group myGroup;
-    ArrayList<Content> myPosts;
-    ArrayList<Content> myStories;
-    ArrayList<User> groupMembers;
-    ArrayList<User> pendingMembers;
-    Loader dataLoader;
+    private Group myGroup;
+    private ArrayList<Content> myPosts;
+    private ArrayList<Content> myStories;
+    private ArrayList<User> groupMembers;
+    private ArrayList<User> pendingMembers;
+    private Loader dataLoader;
 
     public GroupWindowManager(Group myGroup) {
         this.myGroup = myGroup;
@@ -96,6 +96,10 @@ public class GroupWindowManager {
     public ArrayList<Content> getStories(){
         return myStories;
     }
+
+    public Group getMyGroup() {
+        return myGroup;
+    }
     
     class Loader{
         private PostDatabase postDatabase;
@@ -137,10 +141,6 @@ public class GroupWindowManager {
         
         public ArrayList<User> getUsers(){
             return this.userDatabase.getUsers();
-        }
-        
-        public User getCurrentUser(long userID){
-            return this.userDatabase.getUserFromId(userID);
         }
     }
 }

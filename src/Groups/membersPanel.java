@@ -2,24 +2,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package NewsFeed;
+package Groups;
 
 import Backend.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import Utilities.*;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
  * @author Abdel
  */
-public class friendsPanel{
+public class membersPanel{
     ArrayList<User> myFriends;
     Dimension myDimensions;
     final Color backgroundColor = Color.lightGray;
     
-    public friendsPanel(Dimension myDimension, ArrayList<User> myFriends) {
+    public membersPanel(Dimension myDimension, ArrayList<User> myFriends) {
         this.myDimensions = myDimension;
         this.myFriends = myFriends;
     }
