@@ -44,6 +44,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         postsPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getPostList()).getContentScrollable();
         friendsPanel = new friendsPanel(new Dimension(170, 200), this.myFeed.getFriendList()).getFriendsScrollable();
         suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
+        groupsPanel = new groupsPanel(new Dimension(170, 100), this.myFeed.getGroupsList()).getGroupsScrollable();
     }
     
     private JPanel getProfilePicture(int width, int height) throws IOException{
@@ -302,6 +303,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane friendsPanel;
+    private javax.swing.JScrollPane groupsPanel;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
