@@ -1,55 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Backend;
 
 import Groups.Group;
 
-/**
- *
- * @author user
- */
-public class NotificationMessageGenerator {
+public  class NotificationMessageGenerator {
 
-    // Method to generate custom messages based on notification type and senderId
+    // Overloaded method for messages that require both sender and group
     public static String generateMessage(NotificationType type, User senderUser, Group group) {
-        String message = "";
-
+        switch (type) {
+            case GROUP_INVITE_ACCEPTED:
+                return senderUser.getUsername() + " accepted your group invite to this group " + group.getName();
+            case GROUP_INVITE_REJECTED:
+                return senderUser.getUsername() + " rejected your group invite to this group " + group.getName();
+            case GROUP_REMOVED:
+                return "You were removed from this group " + group.getName() + " by " + senderUser.getUsername();
+            case POST_ADDED:
+                return senderUser.getUsername() + " has posted in this group " + group.getName();
+            case MY_POST_EDITED:
+                return senderUser.getUsername() + " edited your post in this group " + group.getName();
+            case MY_POST_DELETED:
+                return senderUser.getUsername() + " deleted your post in this group " + group.getName();
+            case PROMOTED:
+                return "You were promoted in this group " + group.getName() + " by " + senderUser.getUsername();
+            case DEMOTED:
+                return "You were demoted in this group " + group.getName() + " by " + senderUser.getUsername();
+            default:
+                throw new IllegalArgumentException("Unsupported notification type for this method: " + type);
+        }
+    }
+    public static String generateMessage(NotificationType type, User senderUser) {
         switch (type) {
             case FRIEND_REQUEST_RECEIVED:
-                message =   senderUser.getUsername() + " has sent you a friend request.";
-                break;
+                return senderUser.getUsername() + " has sent you a friend request.";
             case FRIEND_REQUEST_ACCEPTED:
-                message =   senderUser.getUsername() + " has accepted your  friend request.";
-                break;
-            case GROUP_INVITE_ACCEPTED:
-                message = senderUser.getUsername()+" accepted your group invite to this group" + group.getName();
-                break;
-            case GROUP_INVITE_REJECTED:
-                message = senderUser.getUsername()+ " rejected your group invite to this group"+ group.getName();
-                break;
-            case GROUP_REMOVED:
-                message = "You were removed from this group"+ group.getName()+" by " + senderUser.getUsername() ;
-                break;
-            case  POST_ADDED:
-                message = senderUser.getUsername() + " has posted in this group "+group.getName();
-                break;
-            case  MY_POST_EDITED:
-                message = senderUser.getUsername()+ " edited your post in this group."+group.getName();
-                break;
-            case  MY_POST_DELETED:
-                message = senderUser.getUsername()+ " deleted your post in this group."+group.getName();
-                break;
-            case PROMOTED:
-                message = "You were promoted in this group" + group.getName() + "by" + senderUser.getUsername();
-                break;
-            case DEMOTED:
-                message = "You were demoted in this group" + group.getName() + "by" + senderUser.getUsername();
-                break;
+                return senderUser.getUsername() + " has accepted your friend request.";
+            default:
+                throw new IllegalArgumentException("Unsupported notification type for this method: " + type);
         }
-
-        return message;
     }
 }
-
