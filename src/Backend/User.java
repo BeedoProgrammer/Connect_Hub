@@ -1,8 +1,13 @@
 package Backend;
 
+import Database.GroupDatabase;
 import Groups.*;
+import Groups.Group.GroupBuilder;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.*;
 import java.util.*;
+import org.json.simple.parser.ParseException;
 
 public class User {
 
@@ -140,8 +145,8 @@ public class User {
         this.relationships.remove(userId);
     }
     
-    public void addGroupRelation(long groupID, GroupDetails groupDetails){
-        groupRelation.put(groupID, groupDetails);
+    public void addGroupRelation(long groupId, GroupDetails groupDetails){
+        groupRelation.put(groupId, groupDetails);
     }
     
     public GroupDetails getGroupRelationStatus(long groupID){
@@ -154,6 +159,20 @@ public class User {
     
     public void deleteGroupRelation(long groupID){
         groupRelation.remove(groupID);
+    }
+    
+     public Group createGroup(String name) throws IOException, FileNotFoundException, ParseException{
+        GroupDatabase groupDatabase = GroupDatabase.getInstance();
+        Random random = new Random();
+        long uniqueId;
+                    
+        do {
+            uniqueId = Math.abs(random.nextLong());
+        }while(groupDatabase.getGroupFromId(uniqueId) != null);
+        
+        Group group = new GroupBuilder(uniqueId, name, this).build();
+        this.addGroupRelation(uniqueId, GroupDetails.CREATOR);
+        return group;
     }
 
     public static class UserBuilder {
