@@ -1,38 +1,28 @@
 [
     {
-        "relationships": "{}",
-        "password": "$2a$10$rEohIMVL3MaBctPA7vDYo.7a5yI9FT9teFXaBvJYBamJ5OMW7NIkW",
-        "profilePic": "C:\\Users\\Abdel\\OneDrive\\Pictures\\Mr_bean.jpg",
-        "bio": "I AM JOE",
-        "dateOfBirth": "2024-12-19",
+        "relationships": "{\"8718029310885153355\":PENDINGSENDER}",
+        "password": "$2a$10$ssKNtl\/zFtf73B0OjNI8uun8KxWqI\/NzpfCkqIXBwkxDfke7iGipC",
+        "profilePic": "",
+        "groupRelation": "{}",
+        "bio": "",
+        "dateOfBirth": "2024-12-12",
         "coverPic": "",
-        "userName": "youssef11",
-        "userId": 7312625115046948047,
-        "email": "youssef@gmail.com",
-        "status": true
+        "userName": "Joe123",
+        "userId": 5810920859683240953,
+        "email": "Joe@hot.com",
+        "status": false
     },
     {
-        "relationships": "{\"2590480537950074275\":ACCEPTED}",
-        "password": "$2a$10$aV.3Y.Id3R8E4v.58CseIeArnnVhVrRSI98ADc503hRRkn23MEVNS",
-        "profilePic": "C:\\Users\\Abdel\\Downloads\\01 (1).jpg",
-        "bio": "Hello my name is Abdo. And i cook",
+        "relationships": "{\"5810920859683240953\":PENDINGRECIEVER}",
+        "password": "$2a$10$aLyrQcbMt\/QViT4eYx8SWO9C4IDvmU.1GPRlXl4MIibCZTB8boLMG",
+        "profilePic": "",
+        "groupRelation": "{}",
+        "bio": "",
         "dateOfBirth": "2024-12-10",
         "coverPic": "",
-        "userName": "croissant4495",
-        "userId": 3342584623319331784,
-        "email": "Abdo@gmail.com",
-        "status": true
-    },
-    {
-        "relationships": "{\"3342584623319331784\":ACCEPTED}",
-        "password": "$2a$10$dNHURODB6SqCPbxKO03eNORUq20yWKnleVKc0Pfmz08VZ48LOQ1KK",
-        "profilePic": "",
-        "bio": "",
-        "dateOfBirth": "2024-12-28",
-        "coverPic": "",
-        "userName": "Senso_24",
-        "userId": 2590480537950074275,
-        "email": "senso@hotmail.com",
+        "userName": "Abdo231",
+        "userId": 8718029310885153355,
+        "email": "abdo@hot.com",
         "status": true
     }
 ]

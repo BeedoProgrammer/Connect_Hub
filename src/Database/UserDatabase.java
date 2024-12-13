@@ -55,6 +55,7 @@ public class UserDatabase extends Database {
             Type relationType = new TypeToken<HashMap<Long, FriendshipStatus>>() {}.getType();
             HashMap<Long, FriendshipStatus> relationships = gson.fromJson(jsonString, relationType);
         
+            jsonString = (String)mapOfUser.get("groupRelation"); // saved in json as string (JSONString)
             Type groupRelationType = new TypeToken<HashMap<Long, GroupDetails>>() {}.getType();
             HashMap<Long, GroupDetails> groupRelation = gson.fromJson(jsonString, groupRelationType);
             
