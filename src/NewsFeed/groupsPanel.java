@@ -3,19 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package NewsFeed;
-import Backend.AppManager.*;
 import Backend.User;
 import Groups.Group;
+import Groups.GroupWindow;
 import Utilities.ModernScrollBarUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,12 +27,16 @@ import javax.swing.JScrollPane;
  */
 public class groupsPanel {
     private ArrayList<Group> groups;
-    Dimension dimension;
+    private User currentUser;
+    private Dimension dimension;
+    private JFrame parent;
     final Color backgroundColor = Color.lightGray;
 
-    public groupsPanel (Dimension dimension, ArrayList<Group> groups) {
+    public groupsPanel (Dimension dimension, ArrayList<Group> groups, User currentUser, JFrame parent) {
         this.groups = groups;
         this.dimension = dimension;
+        this.currentUser = currentUser;
+        this.parent = parent;
     }
     
     private JPanel createGroupPanel(Group group) {
@@ -53,6 +59,17 @@ public class groupsPanel {
 
         groupPanel.revalidate();
         groupPanel.repaint();
+        
+        groupPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) { // Left mouse button
+                    System.out.println("Panel clicked!");
+                    createGroupWindow(group);
+                }
+            }
+        });
+        
         return groupPanel;
         
     }
@@ -79,5 +96,11 @@ public class groupsPanel {
         scrollPane.repaint();
 
         return scrollPane;
+    }
+    
+    private void createGroupWindow(Group myGroup){
+        JFrame newWindow = new GroupWindow(this.currentUser, myGroup, this.parent);
+        newWindow.setVisible(true);
+        parent.setVisible(false);
     }
 }

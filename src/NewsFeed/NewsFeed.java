@@ -71,6 +71,7 @@ public class NewsFeed {
         }
         return false;
     }
+    
     private void  updateGroupList(Loader dataLoader) {
         ArrayList<Group> tempList = dataLoader.getGroups();
         for (Group group : tempList) {
@@ -80,6 +81,7 @@ public class NewsFeed {
             }
         }
     }
+    
     private void updatePostList(Loader dataLoader){
         ArrayList<Content> tempList = dataLoader.getPosts();
         for(Content i : tempList){
@@ -99,6 +101,7 @@ public class NewsFeed {
     }
 
     public ArrayList<Group> getGroupsList() {
+        
         return groupsList;
     }
     

@@ -6,10 +6,10 @@ package NewsFeed;
 
 import Database.UserDatabase;
 import Backend.*;
+import Frontend.*;
 import Database.GroupDatabase;
 import Frontend.CreateContentWindow;
 import Frontend.FriendManagementPage;
-import Groups.Group;
 import Utilities.ImageFunctions;
 import java.awt.Component;
 import javax.swing.*;
@@ -17,14 +17,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.json.simple.parser.ParseException;
 
 public class NewsFeedWindow extends javax.swing.JFrame {
     NewsFeed myFeed;
@@ -47,7 +45,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         postsPanel = new contentPanel(new Dimension(100, 100), this.myFeed.getPostList()).getContentScrollable();
         friendsPanel = new friendsPanel(new Dimension(170, 200), this.myFeed.getFriendList()).getFriendsScrollable();
         suggestionsPanel = new SuggestionsPanel(new Dimension(170, 100), myFeed.getCurrentUser(), myFeed.getFriendSuggestions()).getSuggestionsPanel();
-        groupsPanel = new groupsPanel(new Dimension(170, 100), this.myFeed.getGroupsList()).getGroupsScrollable();
+        groupsPanel = new groupsPanel(new Dimension(170, 100), this.myFeed.getGroupsList(), myFeed.getCurrentUser(), this).getGroupsScrollable();
     }
     
     private JPanel getProfilePicture(int width, int height) throws IOException{
@@ -165,9 +163,22 @@ public class NewsFeedWindow extends javax.swing.JFrame {
 
         searchButton.setText("Search");
         searchButton.setPreferredSize(new java.awt.Dimension(90, 23));
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchButtonPressed();
+            }
+        });
 
         Notifications.setText("Notifications");
         Notifications.setPreferredSize(new java.awt.Dimension(90, 23));    
+        Notifications.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notificationsButtonPressed();
+            }
+        });
+        
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -283,6 +294,32 @@ public class NewsFeedWindow extends javax.swing.JFrame {
         myWindow.setLocationRelativeTo(null);
         myWindow.setVisible(true);
         this.dispose();
+    }
+    
+    private void searchButtonPressed(){
+        try {
+            SearchBarWindow myWindow = new SearchBarWindow(this.myFeed.getCurrentUser());
+            myWindow.setLocationRelativeTo(null);
+            myWindow.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(NewsFeedWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(NewsFeedWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void notificationsButtonPressed(){
+        try {
+            NotificationFront myWindow = new NotificationFront();
+            myWindow.setLocationRelativeTo(null);
+            myWindow.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(NewsFeedWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(NewsFeedWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
