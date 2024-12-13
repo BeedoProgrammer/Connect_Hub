@@ -6,8 +6,10 @@ package NewsFeed;
 
 import Database.UserDatabase;
 import Backend.*;
+import Database.GroupDatabase;
 import Frontend.CreateContentWindow;
 import Frontend.FriendManagementPage;
+import Groups.Group;
 import Utilities.ImageFunctions;
 import java.awt.Component;
 import javax.swing.*;
@@ -19,6 +21,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -245,7 +248,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     }
     
     private void newButtonPressed(){
-        JDialog newWindow = new CreateContentWindow(this, this.myFeed.getCurrentUser());
+        JDialog newWindow = new CreateContentWindow(this, this.myFeed.getCurrentUser(), null);
         newWindow.setLocationRelativeTo(null);
         newWindow.setVisible(true);
         newWindow.dispose();
@@ -292,6 +295,8 @@ public class NewsFeedWindow extends javax.swing.JFrame {
             public void run() {
                 try {
                     UserDatabase myD = UserDatabase.getInstance();
+                    GroupDatabase myGrD = GroupDatabase.getInstance();
+                    
                     new NewsFeedWindow(myD.getUsers().get(0)).setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();

@@ -3,6 +3,7 @@ package Database;
 
 import Backend.FriendshipStatus;
 import Backend.User;
+import Groups.GroupDetails;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileNotFoundException;
@@ -51,14 +52,19 @@ public class UserDatabase extends Database {
         // parsing string into hashmap
             Gson gson = new Gson();
             String jsonString = (String)mapOfUser.get("relationships"); // saved in json as string (JSONString)
-            Type type = new TypeToken<HashMap<Long, FriendshipStatus>>() {}.getType();
-            HashMap<Long, FriendshipStatus> relationships = gson.fromJson(jsonString, type);
-        User tempUser = new User.UserBuilder(userId, email, userName, password, LocalDate.parse(dateOfBirth), status)
+            Type relationType = new TypeToken<HashMap<Long, FriendshipStatus>>() {}.getType();
+            HashMap<Long, FriendshipStatus> relationships = gson.fromJson(jsonString, relationType);
+        
+            Type groupRelationType = new TypeToken<HashMap<Long, GroupDetails>>() {}.getType();
+            HashMap<Long, GroupDetails> groupRelation = gson.fromJson(jsonString, groupRelationType);
+            
+            User tempUser = new User.UserBuilder(userId, email, userName, password, LocalDate.parse(dateOfBirth), status)
         .bio(bio)
         .coverPhoto(coverPic)
         .profilePic(profilePic)
         .build();
         tempUser.setRelationships(relationships);
+        tempUser.setGroupRelation(groupRelation);
         
         return tempUser;
     }
@@ -80,6 +86,9 @@ public class UserDatabase extends Database {
 
         JSONObject relation = new JSONObject(tempUser.getRelationships());
         tempUserMap.put("relationships", relation.toJSONString());              // saved in json as string (JSONString)
+        
+        JSONObject groupRelation = new JSONObject(tempUser.getGroupRelation());
+        tempUserMap.put("groupRelation", groupRelation.toJSONString());              // saved in json as string (JSONString)
         return tempUserMap;
     }
 
@@ -103,6 +112,15 @@ public class UserDatabase extends Database {
         }
         return null;
     }
-    
+    void modifyUser(User user) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (user.getUserId() == ((User)records.get(i)).getUserId()) {
+                records.set(i, user);
+                saveToFile();
+                return;
+            }
+        }
+    }
 }
 

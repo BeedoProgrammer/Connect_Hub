@@ -63,4 +63,8 @@ public abstract class Content {
         this.contentImagePath = contentImagePath;
     }
     
+    public long getGroupID(){
+        return 1l;
+    }
+    
 }
