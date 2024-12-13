@@ -22,13 +22,15 @@ public class CreateContentWindow extends javax.swing.JDialog {
 
     private String imagePath;
     private User currentUser;
+    private Long groupID;
     
-    public CreateContentWindow(JFrame parent, User currentUser) {
+    public CreateContentWindow(JFrame parent, User currentUser, Long groupID) {
         super(parent, "Create New Content");
         this.setModal(true);
         initComponents();
         this.imagePath = "";
         this.currentUser = currentUser;
+        this.groupID = groupID;
         setLocationRelativeTo(null);
     }
 
@@ -223,7 +225,7 @@ public class CreateContentWindow extends javax.swing.JDialog {
             // TODO add your handling code here:
             PostDatabase postDb = PostDatabase.getInstance();
             long postId = generatePostId(postDb);
-            Content post = new Post(postId, currentUser.getUserId(), textContent.getText(), imagePath);
+            Content post = new Post(postId, currentUser.getUserId(), textContent.getText(), imagePath, groupID);
             try {
                 postDb.addPost((Post) post);
                 // return to main window
@@ -252,7 +254,7 @@ public class CreateContentWindow extends javax.swing.JDialog {
             // TODO add your handling code here:
             StoryDatabase storyDb = StoryDatabase.getInstance();
             long generatedId = generateStoryId(storyDb);
-            Content story = new Story(generatedId, currentUser.getUserId(), textContent.getText(), imagePath);
+            Content story = new Story(generatedId, currentUser.getUserId(), textContent.getText(), imagePath, groupID);
             try {
                 storyDb.addStory((Story)story);
             } catch (IOException ex) {
