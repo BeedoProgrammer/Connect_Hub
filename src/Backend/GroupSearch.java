@@ -4,6 +4,7 @@
  */
 package Backend;
 
+import Groups.Group;
 import java.util.ArrayList;
 
 /**

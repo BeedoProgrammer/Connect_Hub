@@ -15,6 +15,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,7 +28,15 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     
     public NewsFeedWindow(User currentUser) {
         myFeed = new NewsFeed(currentUser.getUserId());
+        
         initComponents();
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                // todo your log out code here
+                currentUser.changeStatus();
+            }
+        });
     }
     
     private void loadDataPanels(){
@@ -54,7 +64,6 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     }
     
     private void initComponents() {
-
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
         profilePanel = new javax.swing.JPanel();
@@ -225,6 +234,7 @@ public class NewsFeedWindow extends javax.swing.JFrame {
     
     private void friendsMouseClickEvent(){
         try{
+            System.out.println(this.myFeed.getCurrentUser());
             FriendManagementPage myPage = new FriendManagementPage(this, this.myFeed.getCurrentUser());
             myPage.setLocationRelativeTo(null);
             myPage.setVisible(true);

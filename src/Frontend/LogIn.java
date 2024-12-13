@@ -120,11 +120,6 @@ public class LogIn extends javax.swing.JDialog{
                 }
             }
             
-            System.out.println(BCrypt.checkpw(passwordString, user.getPassword()));
-            System.out.println(user.getEmail());
-            System.out.println(passwordString);
-            System.out.println(user.getPassword());
-            
             if(user == null)
                 JOptionPane.showMessageDialog(rootPane, "There is no account with this email");
             else if(!email.getText().equals(user.getEmail()) || !BCrypt.checkpw(passwordString, user.getPassword()))
@@ -135,6 +130,7 @@ public class LogIn extends javax.swing.JDialog{
                 NewsFeedWindow mainWindow = new NewsFeedWindow(user);
                 mainWindow.setVisible(true);
                 mainWindow.setLocationRelativeTo(null);
+                user.changeStatus();
             }  
         }
     }//GEN-LAST:event_loginActionPerformed

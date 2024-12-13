@@ -4,7 +4,7 @@
  */
 package Frontend;
 
-import Backend.Group;
+import Groups.Group;
 import Backend.GroupSearch;
 import Backend.User;
 import java.awt.BorderLayout;

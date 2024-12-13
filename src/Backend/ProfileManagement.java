@@ -1,14 +1,14 @@
 package Backend;
 
-import Database.UserDatabase;
-import Database.StoryDatabase;
-import Database.PostDatabase;
+import Groups.*;
+import Database.*;
 import java.util.*;
 
 public class ProfileManagement {
     private PostDatabase postDatabase;
     private UserDatabase userDatabase;
     private StoryDatabase storyDatabase;
+//    private GroupDatabase groupDatabase;
     private User currentUser;
     
     public ProfileManagement(User currentUser) {
@@ -17,6 +17,7 @@ public class ProfileManagement {
             postDatabase = PostDatabase.getInstance();
             userDatabase = UserDatabase.getInstance();
             storyDatabase = StoryDatabase.getInstance();
+//            groupDatabase = GroupDatabase.getInstance();
         }catch(Exception e){}
     }
     
@@ -55,5 +56,18 @@ public class ProfileManagement {
        
        return friends;
     }
+//   
+//   public ArrayList<Group> getGroups(){
+//        ArrayList<Group> groupData = groupDatabase.getGroups();
+//        ArrayList<Group> groups = new ArrayList<>();
+//        GroupDetails groupRelationStatus = currentUser.getGroupRelationStatus(currentUser.getUserId());
+//        
+//        for(int i = 0; i < groupData.size(); i++){
+//            if(groupRelationStatus == GroupDetails.ADMIN || groupRelationStatus == GroupDetails.CREATOR || groupRelationStatus == GroupDetails.USER)
+//                groups.add(groupData.get(i));
+//        }
+//        
+//        return groups;
+//    }
 }
 
