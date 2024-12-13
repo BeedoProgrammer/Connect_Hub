@@ -2,6 +2,7 @@ package Database;
 
 import Backend.Content;
 import Backend.Post;
+import Backend.Story;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -74,5 +75,14 @@ public class PostDatabase extends Database {
         }
         return null;
     }
-
+    void modifyPost(Post post) throws IOException, FileNotFoundException, ParseException {
+        ArrayList<Object> records = super.getRecords();
+        for (int i = 0; i < records.size(); i++) {
+            if (post.getContentId()== ((Content)records.get(i)).getContentId()) {
+                records.set(i, post);
+                saveToFile();
+                return;
+            }
+        }
+    }
 }
