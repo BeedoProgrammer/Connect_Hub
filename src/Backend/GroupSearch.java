@@ -10,7 +10,7 @@ public class GroupSearch {
     
     private User CurrentUser;
     private GroupDatabase groupDatabase;
-    private ArrayList<Group> MyDesiredGroups;  // groups with this search
+    public ArrayList<Group> MyDesiredGroups;  // groups with this search
     
     public GroupSearch (User CurrentUser) throws IOException, FileNotFoundException, ParseException {
         this.CurrentUser = CurrentUser;
@@ -25,7 +25,7 @@ public class GroupSearch {
             Group group = groups.get(i);
             if (group.getName().toLowerCase().contains(searchName.toLowerCase()))
                 MyDesiredGroups.add(group);
-        }
+        }        
     }
     
     public ArrayList<Group> joinedGroups() {
@@ -44,7 +44,7 @@ public class GroupSearch {
         for(int i = 0; i < MyDesiredGroups.size(); i++) {
             long groupID = MyDesiredGroups.get(i).getGroupID();
             GroupDetails status = CurrentUser.getGroupRelationStatus(groupID);
-            if (status == GroupDetails.PENDING || status == GroupDetails.BANNED || status == GroupDetails.REMOVED)
+            if (status == GroupDetails.PENDING || status == GroupDetails.BANNED || status == GroupDetails.REMOVED || status == null)
                 unjoinedGroups.add(MyDesiredGroups.get(i));
         }
         return unjoinedGroups;
